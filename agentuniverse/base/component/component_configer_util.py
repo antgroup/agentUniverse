@@ -13,8 +13,10 @@ from agentuniverse.agent.action.tool.tool_manager import ToolManager
 from agentuniverse.agent.agent_manager import AgentManager
 from agentuniverse.agent.memory.memory_manager import MemoryManager
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
+from agentuniverse.agent.security.security_manager import SecurityManager
 from agentuniverse.agent_serve.service_manager import ServiceManager
 from agentuniverse.agent_serve.service_configer import ServiceConfiger
+from agentuniverse.base.config.component_configer.configers.security_configer import SecurityConfiger
 from agentuniverse.base.config.component_configer.configers.workflow_configer import WorkflowConfiger
 from agentuniverse.database.sqldb_wrapper_manager import SQLDBWrapperManager
 from agentuniverse.base.config.component_configer.component_configer import ComponentConfiger
@@ -61,7 +63,8 @@ class ComponentConfigerUtil(object):
         ComponentEnum.STORE: ComponentConfiger,
         ComponentEnum.RAG_ROUTER: ComponentConfiger,
         ComponentEnum.QUERY_PARAPHRASER: ComponentConfiger,
-        ComponentEnum.DEFAULT: ComponentConfiger
+        ComponentEnum.DEFAULT: ComponentConfiger,
+        ComponentEnum.SECURITY: SecurityConfiger
     }
 
     __COMPONENT_MANAGER_CLZ_MAP = {
@@ -81,6 +84,7 @@ class ComponentConfigerUtil(object):
         ComponentEnum.STORE: StoreManager,
         ComponentEnum.RAG_ROUTER: RagRouterManager,
         ComponentEnum.QUERY_PARAPHRASER: QueryParaphraserManager,
+        ComponentEnum.SECURITY: SecurityManager
     }
 
     @classmethod

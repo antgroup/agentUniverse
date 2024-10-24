@@ -1,0 +1,16 @@
+name: 'default_security'
+description: 'default security check for agent outputs'
+compliance:
+  type: 'TOOL'
+  name: 'default_compliance_tool'
+  stream_step: 10
+  default_output: '输出内容不合规'
+  input_key: 'input'
+desensitization:
+  type: 'TOOL'
+  name: 'default_mask_tool'
+  input_key: 'input'
+metadata:
+  type: 'SECURITY'
+  module: 'agentuniverse.agent.security.default.default_security'
+  class: 'DefaultSecurity'

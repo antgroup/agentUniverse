@@ -4,17 +4,18 @@ info:
 profile:
   prompt_version: demo_rag_agent.cn
   llm_model:
-    name: 'qwen_llm'
+    name: 'qa_maya_stream_test'
 plan:
   planner:
     name: 'rag_planner'
 action:
   tool:
-    - 'google_search_tool'
+    -
   knowledge:
     -
 memory:
   name: 'demo_memory'
+security: 'default_security'
 metadata:
   type: 'AGENT'
   module: 'sample_standard_app.app.core.agent.rag_agent_case.demo_rag_agent'

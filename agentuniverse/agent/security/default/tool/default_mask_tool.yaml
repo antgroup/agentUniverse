@@ -1,0 +1,8 @@
+name: 'default_mask_tool'
+description: 'Default data mask for agent'
+tool_type: 'api'
+input_keys: [ 'input' ]
+metadata:
+  type: 'TOOL'
+  module: 'agentuniverse.agent.security.default.tool.default_mask_tool'
+  class: 'DefaultMaskTool'

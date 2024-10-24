@@ -3,7 +3,7 @@ info:
   description: 'demo nl2api agent'
 profile:
   llm_model:
-    name: 'default_qwen_llm'
+    name: 'qa_maya_test'
 action:
   tool:
     - 'add'
@@ -14,6 +14,7 @@ action:
 plan:
   planner:
     name: 'nl2api_planner'
+security: 'default_security'
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.default.nl2api_agent.nl2api_agent'

@@ -21,6 +21,7 @@ class AgentConfiger(ComponentConfiger):
         self.__plan: Optional[dict] = dict()
         self.__memory: Optional[dict] = dict()
         self.__action: Optional[dict] = dict()
+        self.__security: Optional[str] = None
 
     @property
     def memory(self) -> Optional[dict]:
@@ -47,6 +48,11 @@ class AgentConfiger(ComponentConfiger):
         """Return the name of the Agent."""
         return self.__info
 
+    @property
+    def security(self) -> Optional[str]:
+        """Return the security component of the Agent."""
+        return self.__security
+
     def load(self) -> 'AgentConfiger':
         """Load the configuration by the Configer object.
         Returns:
@@ -70,6 +76,7 @@ class AgentConfiger(ComponentConfiger):
             self.__plan = configer_value.get('plan') or self.__plan
             self.__memory = configer_value.get('memory') or self.__memory
             self.__action = configer_value.get('action') or self.__action
+            self.__security = configer_value.get('security') or self.__security
         except Exception as e:
             raise Exception(f"Failed to parse the Agent configuration: {e}")
         return self

@@ -28,6 +28,7 @@ class ComponentEnum(Enum):
     STORE = "STORE"
     RAG_ROUTER = "RAG_ROUTER"
     QUERY_PARAPHRASER = "QUERY_PARAPHRASER"
+    SECURITY = "SECURITY"
 
     @staticmethod
     def to_value_list():

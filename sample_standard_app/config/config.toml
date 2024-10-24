@@ -35,6 +35,8 @@ rag_router = ['sample_standard_app.app.core.rag_router']
 doc_processor = ['sample_standard_app.app.core.doc_processor']
 # Scan and register query_paraphraser components for all paths under this list, with priority over the default.
 query_paraphraser = ['sample_standard_app.app.core.query_paraphraser']
+# Scan and register security components for all paths under this list, with priority over the default.
+security = ['sample_standard_app.app.core.security']
 
 [SUB_CONFIG_PATH]
 # Log config file path, an absolute path or a relative path based on the dir where the current config file is located.
