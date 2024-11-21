@@ -78,7 +78,8 @@ class ChromaStore(Store):
         Returns:
             List[Document]: List of documents retrieved by the query.
         """
-
+        if self.collection is None:
+            self._new_client()
         embedding = query.embeddings
         if self.embedding_model is not None and len(embedding) == 0:
             embedding = EmbeddingManager().get_instance_obj(

@@ -178,6 +178,8 @@ class SQLiteStore(Store):
         # Get doc_id from inverted index.
         relevant_docs = set()
         inverted_index = {}
+        if not self.conn:
+            self._new_client()
         with self.conn:
             for keyword in query_terms:
                 cursor = self.conn.cursor()
