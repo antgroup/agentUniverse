@@ -65,7 +65,7 @@ metadata:
 以示例工程中的配置为例，如下：
 ```yaml
 [CORE_PACKAGE]
-query_paraphraser = ['sample_standard_app.app.core.query_paraphraser']
+query_paraphraser = ['sample_standard_app.intelligence.agentic.knowledge.query_paraphraser']
 ```
 
 ## agentUniverse目前内置有以下QueryParaphraser:

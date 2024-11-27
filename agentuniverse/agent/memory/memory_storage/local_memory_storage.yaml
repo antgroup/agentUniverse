@@ -1,0 +1,6 @@
+name: 'local_memory_storage'
+description: 'local memory storage'
+metadata:
+  type: 'MEMORY_STORAGE'
+  module: 'agentuniverse.agent.memory.memory_storage.local_memory_storage'
+  class: 'LocalMemoryStorage'

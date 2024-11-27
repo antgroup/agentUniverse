@@ -1,0 +1,8 @@
+name: 'default_memory_compressor'
+description: 'default memory compressor'
+compressor_prompt_version: 'chat_memory.summarizer_cn'
+compressor_llm_name: 'default_qwen_llm'
+metadata:
+  type: 'MEMORY_COMPRESSOR'
+  module: 'agentuniverse.agent.memory.memory_compressor.memory_compressor'
+  class: 'MemoryCompressor'

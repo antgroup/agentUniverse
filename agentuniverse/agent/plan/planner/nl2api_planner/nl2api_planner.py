@@ -5,20 +5,16 @@
 # @Email   : lc299034@antgroup.com
 # @FileName: expressing_planner.py
 """Expressing planner module."""
-import asyncio
-
-from langchain_core.chat_history import InMemoryChatMessageHistory
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain.tools import Tool as LangchainTool
+from langchain_core.output_parsers import StrOutputParser
 
 from agentuniverse.agent.action.tool.tool import Tool
 from agentuniverse.agent.action.tool.tool_manager import ToolManager
 from agentuniverse.agent.agent_model import AgentModel
 from agentuniverse.agent.input_object import InputObject
-from agentuniverse.agent.memory.chat_memory import ChatMemory
+from agentuniverse.agent.memory.memory import Memory
 from agentuniverse.agent.plan.planner.planner import Planner
-from agentuniverse.base.util.memory_util import generate_memories
+from agentuniverse.base.util.agent_util import assemble_memory_input, assemble_memory_output
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
 from agentuniverse.prompt.prompt import Prompt
@@ -39,7 +35,7 @@ class Nl2ApiPlanner(Planner):
         Returns:
             dict: The planner result.
         """
-        memory: ChatMemory = self.handle_memory(agent_model, planner_input)
+        memory: Memory = self.handle_memory(agent_model, planner_input)
 
         llm: LLM = self.handle_llm(agent_model)
 
@@ -47,17 +43,16 @@ class Nl2ApiPlanner(Planner):
 
         process_llm_token(llm, prompt.as_langchain(), agent_model.profile, planner_input)
 
-        chat_history = memory.as_langchain().chat_memory if memory else InMemoryChatMessageHistory()
+        memory_messages = assemble_memory_input(memory, planner_input)
 
-        chain_with_history = RunnableWithMessageHistory(
-            prompt.as_langchain() | llm.as_langchain_runnable(agent_model.llm_params()),
-            lambda session_id: chat_history,
-            history_messages_key="chat_history",
-            input_messages_key=self.input_key,
-        ) | JsonOutputParser()
-        res = asyncio.run(
-            chain_with_history.ainvoke(input=planner_input, config={"configurable": {"session_id": "unused"}}))
-        return {**planner_input, self.output_key: res, 'chat_history': generate_memories(chat_history)}
+        chain = prompt.as_langchain() | llm.as_langchain_runnable(agent_model.llm_params()) | StrOutputParser()
+        res = self.invoke_chain(agent_model, chain, planner_input, None, input_object)
+
+        memory_messages = assemble_memory_output(memory=memory,
+                                                 agent_input=planner_input,
+                                                 content=f"Human: {planner_input.get(self.input_key)}, AI: {res}",
+                                                 memory_messages=memory_messages)
+        return {**planner_input, self.output_key: res, 'chat_history': memory_messages}
 
     @staticmethod
     def acquire_tools(action) -> list[LangchainTool]:

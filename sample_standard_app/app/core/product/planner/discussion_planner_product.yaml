@@ -1,8 +1,0 @@
-id: discussion_planner
-nickname: 多智能体讨论组SOP
-type: PLANNER
-member_keys: ['participant.name']
-metadata:
-  type: 'PRODUCT'
-  module: 'agentuniverse_product.base.planner_product'
-  class: 'PlannerProduct'

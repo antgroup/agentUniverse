@@ -43,12 +43,12 @@ plan:
     dataset_evaluator: 'dataset_eval_agent'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.app.core.agent.data_agent_case.data_agent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.data_agent'
   class: 'DataAgent'
 ```
-[data_agent sample configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/data_agent.yaml)
+[data_agent sample configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.yaml)
 
-[data_agent sample python file](../../../sample_standard_app/app/core/agent/data_agent_case/data_agent.py)
+[data_agent sample python file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.py)
 
 ### Step3 Configure the agent for producing the evaluation dataset.
 Use the **dataset_build_agent** configured in step2 `dataset_builder`, and the following is the configuration file of dataset_build_agent. In addition to the basic configuration of the agent, the configuration file mainly includes two important items: `candidate` configures the name of the agent to be evaluated (for example, to evaluate the effectiveness of demo_rag_agent, candidate is configured as demo_rag_agent), and `concurrency_level` configures the level of concurrency when executing batch agent invocation (for example, setting it to 5 represents calling the candidate agent concurrently with 5).
@@ -63,12 +63,12 @@ plan:
     candidate: 'demo_rag_agent'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.app.core.agent.data_agent_case.dataset_build_agent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_build_agent'
   class: 'DatasetBuildAgent'
 ```
-[dataset_build_agent sample configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.yaml)
+[dataset_build_agent sample configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.yaml)
 
-[dataset_build_agent sample python file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.py)
+[dataset_build_agent sample python file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.py)
 
 ### Step4 Configure the agent for dataset evaluation and annotation
 Use the **dataset_eval_agent** configured in step2 `dataset_evaluator`, and the following is the configuration file of dataset_eval_agent. In addition to the basic configuration of the agent, the configuration file mainly includes two important items: `llm_model` configures the agent model, and `max_eval_lines` configures the number of evaluation data lines (for example, setting it to 10 means only evaluate the first 10 rows of data, to avoid global evaluation and the consumption of a large number of tokens).
@@ -85,15 +85,15 @@ profile:
     temperature: 0.1
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.app.core.agent.data_agent_case.dataset_eval_agent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_eval_agent'
   class: 'DatasetEvalAgent'
 ```
-[dataset_eval_agent sample configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.yaml)
+[dataset_eval_agent sample configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.yaml)
 
-[dataset_eval_agent sample python file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.py)
+[dataset_eval_agent sample python file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.py)
 
 ### step5 Run DataAgent
-Through the [dataAgent code entry](../../../sample_standard_app/app/examples/data_agent.py), configure two parameters: `queryset_path` representing the path to the queryset, and `turn` representing the total number of rounds for the queryset execution, to start the dataAgent with one click.
+Through the [dataAgent code entry](../../../sample_standard_app/intelligence/test/data_agent.py), configure two parameters: `queryset_path` representing the path to the queryset, and `turn` representing the total number of rounds for the queryset execution, to start the dataAgent with one click.
 
 Tips: please configure the queryset and specific evaluation rows reasonably to avoid excessive computational and token consumption.
 
@@ -108,7 +108,7 @@ As shown in the figure below:
 
 ![data_agent_dataset](../_picture/data_agent_dataset_en.png)
 
-[dataAgent sample evaluation dataset](../../../sample_standard_app/app/examples/data/dataset_turn_1_2024-07-10-15-06-24.jsonl)
+[dataAgent sample evaluation dataset](../../../sample_standard_app/intelligence/test/data/dataset_turn_1_2024-07-10-15-06-24.jsonl)
 
 
 ### Complete Evaluation Results
@@ -124,7 +124,7 @@ As shown in the figure below:
 - More dimensions Score/Suggestion: similar to the Relevance dimension.
 ![data_agent_eval_result](../_picture/data_agent_eval_result_en.png)
 
-[dataAgent sample eval result](../../../sample_standard_app/app/examples/data/eval_result_turn_1_2024-07-10-15-06-24.xlsx)
+[dataAgent sample eval result](../../../sample_standard_app/intelligence/test/data/eval_result_turn_1_2024-07-10-15-06-24.xlsx)
 
 
 
@@ -139,7 +139,7 @@ As shown in the figure below:
 
 ![data_agent_eval_report](../_picture/data_agent_eval_report_en.png)
 
-[dataAgent sample evaluation report](../../../sample_standard_app/app/examples/data/eval_report_2024-07-10-15-06-24.xlsx)
+[dataAgent sample evaluation report](../../../sample_standard_app/intelligence/test/data/eval_report_2024-07-10-15-06-24.xlsx)
 
 ### Comparative Experiment
 Adjust the llm model in demo_rag_agent within aU from the previous `qwen1.5-72b-chat` to `qwen1.5-7b-chat`, and after evaluation by dataAgent, the comprehensive evaluation reports are as follows:
@@ -153,17 +153,17 @@ Comparing the two comprehensive evaluation reports, it can be observed that afte
 
 ## DataAgent Detailed Description
 ### data_agent
-- [configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/data_agent.yaml)
-- [agent file](../../../sample_standard_app/app/core/agent/data_agent_case/data_agent.py)
+- [configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.yaml)
+- [agent file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.py)
 
 ### dataset_build_agent
-- [configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.yaml)
-- [agent file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.py)
+- [configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.yaml)
+- [agent file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.py)
 - The evaluation data produced by dataset_build_agent is stored locally in jsonl format (the jsonl file name is dataset_turn_{i}_{date}, `i` represents the round, and `date` represents the generation time)
 
 ### dataset_eval_agent
-- [configuration file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.yaml)
-- [agent file](../../../sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.py)
-- [prompt file](../../../sample_standard_app/app/core/prompt/dataset_eval_agent_en.yaml)：agentUniverse currently opens six agent evaluation dimensions that are validated in the industry (the MVP version does not open **comprehensive dimension**. The current comprehensive evaluation standard is biased towards the financial field, so it is not mentioned in the open source community)
+- [configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.yaml)
+- [agent file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.py)
+- [prompt file](../../../sample_standard_app/intelligence/agentic/prompt/dataset_eval_agent_en.yaml)：agentUniverse currently opens six agent evaluation dimensions that are validated in the industry (the MVP version does not open **comprehensive dimension**. The current comprehensive evaluation standard is biased towards the financial field, so it is not mentioned in the open source community)
 - The **complete evaluation results** produced by dataset_eval_agent are stored locally in Excel format (the file name is eval_result_turn_{i}_{date}, `i` represents the round, and `date` represents the generation time)
 - The **comprehensive evaluation report** of dataset_eval_a_agent production is stored locally in Excel format (the file name is eval_report_{date}, and date represents the generation time)

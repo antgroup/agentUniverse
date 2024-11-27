@@ -1,0 +1,13 @@
+name: 'info_sql_database_tool'
+description: ''
+tool_type: 'api'
+input_keys: ['input']
+langchain:
+  module: langchain_community.tools
+  class_name: InfoSQLDatabaseTool
+  init_params:
+    db_wrapper:
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.intelligence.agentic.tool.langchain_tool.sql_langchain_tool'
+  class: 'SqlLangchainTool'

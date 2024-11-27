@@ -18,10 +18,6 @@ def get_project_root_path() -> Path:
     if PROJECT_ROOT_PATH:
         return PROJECT_ROOT_PATH
     current_work_directory = Path.cwd()
-    if current_work_directory.name != 'bootstrap':
-        print(f"Warn: Boot file is not located under directory 'bootstrap', "
-              f"but under '{current_work_directory.name}'")
-
     root_path = current_work_directory.parents[1]
     PROJECT_ROOT_PATH = root_path
     return root_path

@@ -11,9 +11,9 @@ from langchain.memory.chat_memory import BaseChatMemory
 
 from agentuniverse.agent.memory.enum import MemoryTypeEnum
 from agentuniverse.agent.memory.memory import Memory
-from agentuniverse.agent.memory.message import Message
 from agentuniverse.agent.memory.langchain_instance import AuConversationSummaryBufferMemory, \
     AuConversationTokenBufferMemory
+from agentuniverse.agent.memory.message import Message
 from agentuniverse.base.config.component_configer.configers.memory_configer import MemoryConfiger
 from agentuniverse.llm.llm import LLM
 
@@ -27,14 +27,15 @@ class ChatMemory(Memory):
         round of conversations.
         output_key (Optional[str]): The output key in the model output parameters is used to find the specific result
         in a round of conversations.
+        prompt_version (Optional[str]): The version of the prompt used for compressing the memory.
         messages (Optional[List[Message]]): The list of conversation messages to send to the LLM memory.
     """
 
     llm: Optional[LLM] = None
-    input_key: Optional[str] = None
-    output_key: Optional[str] = None
-    messages: Optional[List[Message]] = None
+    input_key: Optional[str] = 'input'
+    output_key: Optional[str] = 'output'
     prompt_version: Optional[str] = None
+    messages: Optional[List[Message]] = None
 
     def as_langchain(self) -> BaseChatMemory:
         """Convert the agentUniverse(aU) chat memory class to the langchain chat memory class."""
@@ -53,8 +54,6 @@ class ChatMemory(Memory):
     def set_by_agent_model(self, **kwargs):
         """ Assign values of parameters to the ChatMemory model in the agent configuration."""
         copied_obj = super().set_by_agent_model(**kwargs)
-        if 'messages' in kwargs and kwargs['messages']:
-            copied_obj.messages = kwargs['messages']
         if 'llm' in kwargs and kwargs['llm']:
             copied_obj.llm = kwargs['llm']
         if 'input_key' in kwargs and kwargs['input_key']:
@@ -78,3 +77,13 @@ class ChatMemory(Memory):
         if hasattr(component_configer, 'prompt_version') and component_configer.prompt_version:
             self.prompt_version = component_configer.prompt_version
         return self
+
+    def add(self, message_list: List[Message], **kwargs) -> None:
+        """Add messages to the memory."""
+        if not message_list:
+            return
+        self.messages = message_list
+
+    def get(self, **kwargs) -> List[Message]:
+        """Get messages from the memory."""
+        return self.prune(self.messages)

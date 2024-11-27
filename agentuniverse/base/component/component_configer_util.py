@@ -11,12 +11,14 @@ from typing import Type, Callable
 from agentuniverse.agent.action.knowledge.knowledge_manager import KnowledgeManager
 from agentuniverse.agent.action.tool.tool_manager import ToolManager
 from agentuniverse.agent.agent_manager import AgentManager
+from agentuniverse.agent.memory.memory_compressor.memory_compressor_manager import MemoryCompressorManager
 from agentuniverse.agent.memory.memory_manager import MemoryManager
+from agentuniverse.agent.memory.memory_storage.memory_storage_manager import MemoryStorageManager
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
-from agentuniverse.agent.security.security_manager import SecurityManager
+from agentuniverse.agent.work_pattern.work_pattern_manager import WorkPatternManager
 from agentuniverse.agent_serve.service_manager import ServiceManager
 from agentuniverse.agent_serve.service_configer import ServiceConfiger
-from agentuniverse.base.config.component_configer.configers.security_configer import SecurityConfiger
+from agentuniverse.base.config.component_configer.configers.work_pattern_configer import WorkPatternConfiger
 from agentuniverse.base.config.component_configer.configers.workflow_configer import WorkflowConfiger
 from agentuniverse.database.sqldb_wrapper_manager import SQLDBWrapperManager
 from agentuniverse.base.config.component_configer.component_configer import ComponentConfiger
@@ -42,7 +44,6 @@ from agentuniverse.agent.action.knowledge.store.store_manager import StoreManage
 from agentuniverse.agent.action.knowledge.rag_router.rag_router_manager import RagRouterManager
 
 
-
 class ComponentConfigerUtil(object):
     """The ComponentConfigerUtil class, which is used to load and manage the component configuration."""
 
@@ -63,8 +64,10 @@ class ComponentConfigerUtil(object):
         ComponentEnum.STORE: ComponentConfiger,
         ComponentEnum.RAG_ROUTER: ComponentConfiger,
         ComponentEnum.QUERY_PARAPHRASER: ComponentConfiger,
-        ComponentEnum.DEFAULT: ComponentConfiger,
-        ComponentEnum.SECURITY: SecurityConfiger
+        ComponentEnum.MEMORY_COMPRESSOR: ComponentConfiger,
+        ComponentEnum.MEMORY_STORAGE: ComponentConfiger,
+        ComponentEnum.WORK_PATTERN: WorkPatternConfiger,
+        ComponentEnum.DEFAULT: ComponentConfiger
     }
 
     __COMPONENT_MANAGER_CLZ_MAP = {
@@ -84,7 +87,9 @@ class ComponentConfigerUtil(object):
         ComponentEnum.STORE: StoreManager,
         ComponentEnum.RAG_ROUTER: RagRouterManager,
         ComponentEnum.QUERY_PARAPHRASER: QueryParaphraserManager,
-        ComponentEnum.SECURITY: SecurityManager
+        ComponentEnum.MEMORY_COMPRESSOR: MemoryCompressorManager,
+        ComponentEnum.MEMORY_STORAGE: MemoryStorageManager,
+        ComponentEnum.WORK_PATTERN: WorkPatternManager,
     }
 
     @classmethod

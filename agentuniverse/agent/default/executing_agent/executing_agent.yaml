@@ -3,16 +3,13 @@ info:
   description: 'executing agent'
 profile:
   llm_model:
-    name: 'default_openai_llm'
-    model_name: 'gpt-3.5-turbo'
-    temperature: 0.7
-plan:
-  planner:
-    name: 'executing_planner'
+    name: 'default_qwen_llm'
+    model_name: 'qwen2.5-72b-instruct'
+    temperature: 0.5
 memory:
   name: ''
 action:
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.executing_agent.executing_agent'
-  class: 'ExecutingAgent'
+  module: 'agentuniverse.agent.template.executing_agent_template'
+  class: 'ExecutingAgentTemplate'

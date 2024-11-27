@@ -3,8 +3,6 @@ target: Your goal is to select the appropriate tools based on the user's questio
 instruction: |
   Your task is to select one or several tools from those provided by the user, based on their question and the context, in order to answer the user's query.
   You must analyze the user's problem from multiple angles and dimensions, taking into account the background and context of the question, and decide which tools can be used to answer the user's question.
-  You may use the following tools:  
-  {tools}
 
   Previous conversation:
   {chat_history}
@@ -12,11 +10,14 @@ instruction: |
   The background information is:
   {background}
   
+  You may use the following tools:  
+  {tools}
+  
   The response must follow the format below as a formatted JSON code snippet.
   1. The tools field represents the full names of the selected tools in a list format, such as:[add, sub, mul, div]
   2. The thought field represents the thinking process and reasons behind the selection of tools.
   ```{{
-    "tools": list,
+    "tools": list[string],
     "thought": string
   }}```
   

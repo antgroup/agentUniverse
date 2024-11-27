@@ -18,36 +18,31 @@ SERPER_API_KEY='xxx'
 OPENAI_API_KEY='xxx'
 ```
 ### Modify Prompt Version
-Modify the prompt version of agents to the english version, the discussion group multi-agent configuration file is located in the app/core/agent/discussion_agent_case directory in the `sample_standard_app` sample project. Find the host_agent.yaml and change `prompt_version` to `host_agent.en`, similarly find the participants yaml file and change the `prompt_version` to `participant_agent.en`.
+Modify the prompt version of agents to the english version, the discussion group multi-agent configuration file is located in the intelligence/agentic/agent/agent_instance/discussion_agent_case directory in the `sample_standard_app` sample project. Find the discussion_group_agent.yaml and change `prompt_version` to `dicussion_group_agent.en`, similarly find the participants yaml file and change the `prompt_version` to `participant_agent.en`.
 
 ```yaml
 info:
-  name: 'host_agent'
-  description: 'host agent'
+  name: 'discussion_group_agent'
+  description: 'discussion group agent'
 profile:
-  prompt_version: host_agent.en
   llm_model:
-    name: 'demo_llm'
+    name: 'qwen_llm'
     temperature: 0.6
-plan:
-  planner:
-    name: 'discussion_planner'
-    round: 2
-    participant:
-      name:
-        - 'participant_agent_one'
-        - 'participant_agent_two'
+  total_round: 2
+  participant_names:
+    - 'participant_agent_one'
+    - 'participant_agent_two'
 memory:
-  name: 'demo_memory'
+  name: 'demo_memory_b'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.app.core.agent.discussion_agent_case.host_agent'
-  class: 'HostAgent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_template.discussion_group_template'
+  class: 'DiscussionGroupTemplate'
 ```
 
 
 ### Run Discussion Group
-In the sample project of agentUnvierse `sample_standard_app`, find the `discussion_chat_bots.py` file in the app/examples directory, enter the question you want to answer in the chat method, and run it.
+In the sample project of agentUniverse `sample_standard_app`, find the `discussion_chat_bots.py` file in the intelligence/test directory, enter the question you want to answer in the chat method, and run it.
 
 For example, enter the question: Which tastes better, Coca-Cola or Pepsi
 ```python
@@ -73,50 +68,42 @@ Which tastes better, Coca-Cola or Pepsi：
 
 ## More Details
 ### Agent Configuration
-The discussion group multi-agent configuration files are located in the app/core/agent/discussion_agent_case directory in the `sample_standard_app` sample project.
+The discussion group multi-agent configuration files are located in the intelligence/agentic/agent/agent_instance/discussion_agent_case directory in the `sample_standard_app` sample project.
 
-The host corresponds to `host_agent.yaml` and the participant corresponds to `participant_agent_*.yaml`.
+The discussion group corresponds to `discussion_group_agent.yaml` and the participant corresponds to `participant_agent_*.yaml`.
 
 
-The prompt is managed by the prompt version. For example, the default prompt_version of host_agent is `host_agent.cn`, and the corresponding prompt file is `host_agent.cn.yaml` under the app/core/prompt directory.
+The prompt is managed by the prompt version. For example, the default prompt_version of discussion group agent is `discussion_group_agent.cn`, and the corresponding prompt file is `discussion_group_agent_cn.yaml` under the intelligence/agentic/prompt directory.
 
 If the LLM Model will be modified to another, such as the Qwen model, change the `llm_model` name information (such as the `qwen_llm` built into the aU system).
 
-The number of discussion rounds in agent plan defaults to 2, which users can adjust as needed. The default participants are two agents built into aU, which can add discussion group members by creating new agents and configuring the agent name parameter to the `participant` of the planner.
+The number of discussion rounds in agent defaults to 2, which users can adjust as needed. The default participants are two agents built into aU, which can add discussion group members by creating new agents and configuring the agent name parameter to the `participant_names` of the discussion group agent profile.
 
 ```yaml
 info:
-  name: 'host_agent'
-  description: 'host agent'
+  name: 'discussion_group_agent'
+  description: 'discussion group agent'
 profile:
-  prompt_version: host_agent.cn
   llm_model:
     name: 'qwen_llm'
     temperature: 0.6
-plan:
-  planner:
-    name: 'discussion_planner'
-    round: 2
-    participant:
-      name:
-        - 'participant_agent_one'
-        - 'participant_agent_two'
+  total_round: 2
+  participant_names:
+    - 'participant_agent_one'
+    - 'participant_agent_two'
 memory:
-  name: 'demo_memory'
+  name: 'demo_memory_b'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.app.core.agent.discussion_agent_case.host_agent'
-  class: 'HostAgent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_template.discussion_group_template'
+  class: 'DiscussionGroupTemplate'
 ```
 
 ### Memory Configuration
-Participants in the aU discussion group configure `demo_memory` in the `sample_standard_app` sample project by default to store common memory information for the entire discussion group.
-
-### Planner Configuration
-The planner configuration file is located in the app/core/planner directory of the `sample_standard_app` sample project, where the `discussion_planner.py` file is the specific plan process code of the discussion group. If you are interested, you can read it yourself.
+Participants in the aU discussion group configure `demo_memory_b` in the `sample_standard_app` sample project by default to store common memory information for the entire discussion group.
 
 ### Prompt Configuration
-The prompt is managed by the prompt version, and the default prompt files of the aU discussion group agent are configured in the app/core/prompt directory. Corresponding to the Chinese and English versions (host_agent_xx.yaml/participant_agent_xx.yaml), users can change the prompt_version in the agent configuration to complete fast switching.
+The prompt is managed by the prompt version, and the default prompt files of the aU discussion group agent are configured in the intelligence/agentic/prompt directory. Corresponding to the Chinese and English versions (discussion_group_agent_xx.yaml/participant_agent_xx.yaml), users can change the prompt_version in the agent configuration to complete fast switching.
 
 ### Tool Configuration
-Two participants in the aU discussion group are configured with google_search_tool by default. Users can change the `tool name` in the `participant_agent_xxx.yaml` under the app/core/agent/discussion_agent_case directory in the `sample_standard_app` sample project to switch tool calls.
+Two participants in the aU discussion group are configured with google_search_tool by default. Users can change the `tool name` in the `participant_agent_xxx.yaml` under the intelligence/agentic/agent/agent_instance/discussion_agent_case directory in the `sample_standard_app` sample project to switch tool calls.

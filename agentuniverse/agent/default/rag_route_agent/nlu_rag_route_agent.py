@@ -5,13 +5,15 @@
 # @Author  : fanen.lhy
 # @Email   : fanen.lhy@antgroup.com
 # @FileName: nlu_rag_route_agent.py
-
-from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.input_object import InputObject
+from agentuniverse.agent.template.rag_agent_template import RagAgentTemplate
+from agentuniverse.base.config.component_configer.configers.agent_configer import AgentConfiger
+from agentuniverse.llm.llm import LLM
+from agentuniverse.llm.llm_manager import LLMManager
 
 
-class NluRagRouteAgent(Agent):
-    """Rag Agent class."""
+class NluRagRouteAgent(RagAgentTemplate):
+    """Nlu Rag Route Agent class."""
 
     def input_keys(self) -> list[str]:
         """Return the input keys of the Agent."""
@@ -33,16 +35,23 @@ class NluRagRouteAgent(Agent):
         agent_input['query'] = input_object.get_data('query')
         agent_input['store_info'] = input_object.get_data('store_info')
         agent_input['store_amount'] = input_object.get_data('store_amount')
-        self.agent_model.profile.setdefault('prompt_version',
-                                            'nlu_rag_route_prompt.cn')
         return agent_input
 
-    def parse_result(self, planner_result: dict) -> dict:
-        """Planner result parser.
+    def parse_result(self, agent_result: dict) -> dict:
+        """Agent result parser.
 
         Args:
-            planner_result(dict): Planner result
+            agent_result(dict): The raw result of the agent.
         Returns:
-            dict: Agent result object.
+            dict: The parsed result of the agent
         """
-        return planner_result
+        return agent_result
+
+    def process_llm(self, **kwargs) -> LLM:
+        llm_name = self.agent_model.profile.get('llm_model', {}).get('name') or self.llm_name
+        return LLMManager().get_instance_obj(llm_name)
+
+    def initialize_by_component_configer(self, component_configer: AgentConfiger) -> 'NluRagRouteAgent':
+        super().initialize_by_component_configer(component_configer)
+        self.prompt_version = self.agent_model.profile.get('prompt_version', 'nlu_rag_route_prompt.cn')
+        return self

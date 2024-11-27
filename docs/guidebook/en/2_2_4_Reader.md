@@ -44,7 +44,7 @@ In the config.toml file of the agentUniverse project, you must configure the pac
 For example, in the configuration of the sample project:
 ```yaml
 [CORE_PACKAGE]
-reader = ['sample_standard_app.app.core.reader']
+reader = ['sample_standard_app.intelligence.agentic.knowledge.reader']
 ```
 
 ## Prebuilt Readers in agentUniverse:
@@ -53,3 +53,4 @@ reader = ['sample_standard_app.app.core.reader']
 - [default_pptx_reader](../../../agentuniverse/agent/action/knowledge/reader/file/pptx_reader.yaml): Reads text content from local PPTX files.
 - [default_txt_reader](../../../agentuniverse/agent/action/knowledge/reader/file/txt_reader.yaml): Reads text content from TXT files.
 - [default_web_pdf_reader](../../../agentuniverse/agent/action/knowledge/reader/file/web_pdf_reader.yaml): Reads text content from PDF files found on the web.
+- [default_markdown_reader](../../../agentuniverse/agent/action/knowledge/reader/file/markdown_reader.yaml): Reads text content from local Markdown files. 

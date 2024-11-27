@@ -1,0 +1,19 @@
+info:
+  name: 'demo_executing_agent'
+  description: 'demo executing agent'
+profile:
+  prompt_version: demo_executing_agent.cn
+  llm_model:
+    name: 'qwen_llm'
+    temperature: 0.4
+memory:
+  name: ''
+action:
+  knowledge:
+    - ''
+  tool:
+    - 'google_search_tool'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.executing_agent_template'
+  class: 'ExecutingAgentTemplate'

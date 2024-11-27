@@ -15,6 +15,7 @@ from agentuniverse_product.service.model.plugin_dto import PluginDTO
 from agentuniverse_product.service.model.tool_dto import ToolDTO
 from agentuniverse_product.service.tool_service.tool_service import ToolService
 from agentuniverse_product.service.util.agent_util import register_product
+from agentuniverse_product.service.util.common_util import get_core_path
 from agentuniverse_product.service.util.plugin_util import assemble_plugin_product_config_data, \
     parse_openapi_yaml_to_tool_bundle, validate_create_plugin_parameters
 from agentuniverse_product.service.util.tool_util import parse_tool_input
@@ -77,7 +78,9 @@ class PluginService:
         product_config_data = assemble_plugin_product_config_data(plugin_dto, tool_id_list)
         # write product YAML file
         product_file_name = f"{plugin_dto.id}_product"
-        product_file_path = os.path.join('..', 'core', 'product', 'plugin', f"{product_file_name}.yaml")
-        write_yaml_file(product_file_path, product_config_data)
-        register_product(product_file_path)
+        path = get_core_path()
+        product_file_path = path / 'product' / 'plugin' / f"{product_file_name}.yaml" if path\
+            else os.path.join('..', '..', 'platform', 'difizen', 'product', 'plugin', f"{product_file_name}.yaml")
+        write_yaml_file(str(product_file_path), product_config_data)
+        register_product(str(product_file_path))
         return plugin_dto.id

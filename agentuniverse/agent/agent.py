@@ -7,7 +7,7 @@
 # @FileName: agent.py
 """The definition of agent paradigm."""
 import json
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from datetime import datetime
 from typing import Optional
 
@@ -27,10 +27,9 @@ from agentuniverse.base.config.application_configer.application_config_manager \
 from agentuniverse.base.config.component_configer.configers.agent_configer \
     import AgentConfiger
 from agentuniverse.base.util.logging.logging_util import LOGGER
-from agentuniverse.llm.llm import LLM
 
 
-class Agent(ComponentBase):
+class Agent(ComponentBase, ABC):
     """The parent class of all agent models, containing only attributes."""
 
     agent_model: Optional[AgentModel] = None
@@ -62,13 +61,13 @@ class Agent(ComponentBase):
         pass
 
     @abstractmethod
-    def parse_result(self, planner_result: dict) -> dict:
-        """Planner result parser.
+    def parse_result(self, agent_result: dict) -> dict:
+        """Agent result parser.
 
         Args:
-            planner_result(dict): Planner result
+            agent_result(dict): The raw result of the agent.
         Returns:
-            dict: Agent result object.
+            dict: The parsed result of the agent
         """
         pass
 
@@ -96,6 +95,21 @@ class Agent(ComponentBase):
         security_base.final_invoke(output_object)
         return output_object
 
+    @trace_agent
+    async def async_run(self, **kwargs) -> OutputObject:
+        self.input_check(kwargs)
+        input_object = InputObject(kwargs)
+
+        agent_input = self.pre_parse_input(input_object)
+
+        agent_result = await self.async_execute(input_object, agent_input)
+
+        agent_result = self.parse_result(agent_result)
+
+        self.output_check(agent_result)
+        output_object = OutputObject(agent_result)
+        return output_object
+
     def execute(self, input_object: InputObject, agent_input: dict) -> dict:
         """Execute agent instance.
 
@@ -110,6 +124,9 @@ class Agent(ComponentBase):
         planner_result = planner_base.invoke(self.agent_model, agent_input, input_object)
         return planner_result
 
+    async def async_execute(self, input_object: InputObject, agent_input: dict) -> dict:
+        pass
+
     def pre_parse_input(self, input_object) -> dict:
         """Agent execution parameter pre-parsing.
 
@@ -123,7 +140,8 @@ class Agent(ComponentBase):
         agent_input['background'] = input_object.get_data('background') or ''
         agent_input['image_urls'] = input_object.get_data('image_urls') or []
         agent_input['date'] = datetime.now().strftime('%Y-%m-%d')
-
+        agent_input['session_id'] = input_object.get_data('session_id') or ''
+        agent_input['agent_id'] = self.agent_model.info.get('name', '')
         self.parse_input(input_object, agent_input)
         return agent_input
 
@@ -149,12 +167,12 @@ class Agent(ComponentBase):
                 raise Exception(f'Output must have key: {key}.')
 
     def initialize_by_component_configer(self, component_configer: AgentConfiger) -> 'Agent':
-        """Initialize the LLM by the ComponentConfiger object.
+        """Initialize the Agent by the AgentConfiger object.
 
         Args:
-            component_configer(LLMConfiger): the ComponentConfiger object
+            component_configer(AgentConfiger): the ComponentConfiger object
         Returns:
-            LLM: the LLM object
+            Agent: the Agent object
         """
         agent_config: Optional[AgentConfiger] = component_configer.load()
         info: Optional[dict] = agent_config.info

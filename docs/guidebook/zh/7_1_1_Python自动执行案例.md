@@ -40,13 +40,13 @@ metadata:
 ```
 
 这里使用了google_search_tool与python_runner两个工具，相关工具代码链接如下：
-- [google_search_tool](../../../sample_standard_app/app/core/tool/google_search_tool.yaml)
-- [python_runner](../../../sample_standard_app/app/core/tool/python_repl_tool.yaml)
+- [google_search_tool](../../../sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)
+- [python_runner](../../../sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)
 
 
 ### 代码运行
 1. 测试用例运行
-直接使用测试代码运行[test_case](../../../sample_standard_app/app/test/test_react_agent.py)
+直接使用测试代码运行[test_case](../../../sample_standard_app/intelligence/test/test_react_agent.py)
 2. 接口运行
 配置好相关key之后，启动web服务，使用下面的curl进行测试
 ```shell

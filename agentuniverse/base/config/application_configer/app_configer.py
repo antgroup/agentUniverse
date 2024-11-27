@@ -34,7 +34,9 @@ class AppConfiger(object):
         self.__core_store_package_list: Optional[list[str]] = None
         self.__core_rag_router_package_list: Optional[list[str]] = None
         self.__core_query_paraphraser_package_list: Optional[list[str]] = None
-        self.__core_security_package_list: Optional[list[str]] = None
+        self.__core_memory_compressor_package_list: Optional[list[str]] = None
+        self.__core_memory_storage_package_list: Optional[list[str]] = None
+        self.__core_work_pattern_package_list: Optional[list[str]] = None
 
     @property
     def base_info_appname(self) -> Optional[str]:
@@ -129,9 +131,19 @@ class AppConfiger(object):
         return self.__core_query_paraphraser_package_list
 
     @property
-    def core_security_package_list(self) -> Optional[list[str]]:
-        """Return the security package list of the core."""
-        return self.__core_security_package_list
+    def core_memory_compressor_package_list(self) -> Optional[list[str]]:
+        """Return the memory compressor package list of the core."""
+        return self.__core_memory_compressor_package_list
+
+    @property
+    def core_memory_storage_package_list(self) -> Optional[list[str]]:
+        """Return the memory storage package list of the core."""
+        return self.__core_memory_storage_package_list
+
+    @property
+    def core_work_pattern_package_list(self) -> Optional[list[str]]:
+        """Return the work pattern package list of the core."""
+        return self.__core_work_pattern_package_list
 
     def load_by_configer(self, configer: Configer) -> 'AppConfiger':
         """Load the AppConfiger by the given Configer.
@@ -161,5 +173,7 @@ class AppConfiger(object):
         self.__core_store_package_list = configer.value.get('CORE_PACKAGE', {}).get('store')
         self.__core_rag_router_package_list = configer.value.get('CORE_PACKAGE', {}).get('rag_router')
         self.__core_query_paraphraser_package_list = configer.value.get('CORE_PACKAGE', {}).get('query_paraphraser')
-        self.__core_security_package_list = configer.value.get('CORE_PACKAGE', {}).get('security')
+        self.__core_memory_compressor_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_compressor')
+        self.__core_memory_storage_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_storage')
+        self.__core_work_pattern_package_list = configer.value.get('CORE_PACKAGE', {}).get('work_pattern')
         return self

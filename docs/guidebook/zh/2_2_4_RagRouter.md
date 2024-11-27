@@ -44,7 +44,7 @@ metadata:
 以示例工程中的配置为例，如下：
 ```yaml
 [CORE_PACKAGE]
-rag_router = ['sample_standard_app.app.core.rag_router']
+rag_router = ['sample_standard_app.intelligence.agentic.knowledge.rag_router']
 ```
 
 

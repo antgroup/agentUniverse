@@ -1,6 +1,0 @@
-name: 'discussion_planner'
-description: 'discussion_planner'
-metadata:
-  type: 'PLANNER'
-  module: 'sample_standard_app.app.core.planner.discussion_planner'
-  class: 'DiscussionPlanner'

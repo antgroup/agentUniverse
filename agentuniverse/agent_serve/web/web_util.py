@@ -46,8 +46,8 @@ def request_param(func):
                 continue
             if name == "session_id":
                 kwargs[name] = request.headers.get("X-Session-Id")
-            elif param.annotation in (str, int, dict, list):
-                kwargs[name] = req_data.get(name)
+            elif param.annotation in (str, int, dict, list, bool):
+                kwargs[name] = req_data.get(name, param.default)
             else:
                 kwargs[name] = param.annotation(**req_data)
         return func(*args, **kwargs)

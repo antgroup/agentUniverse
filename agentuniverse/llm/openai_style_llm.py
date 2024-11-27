@@ -102,6 +102,8 @@ class OpenAIStyleLLM(LLM):
             **kwargs: Arbitrary keyword arguments.
         """
         streaming = kwargs.pop("streaming") if "streaming" in kwargs else self.streaming
+        if 'stream' in kwargs:
+            streaming = kwargs.pop('stream')
         self.async_client = self._new_async_client()
         async_client = self.async_client
         chat_completion = await async_client.chat.completions.create(

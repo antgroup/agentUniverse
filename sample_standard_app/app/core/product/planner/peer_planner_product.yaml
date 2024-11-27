@@ -1,8 +1,0 @@
-id: peer_planner
-nickname: 多智能体PEER范式
-type: PLANNER
-member_keys: ['planning', 'executing', 'expressing', 'reviewing']
-metadata:
-  type: 'PRODUCT'
-  module: 'agentuniverse_product.base.planner_product'
-  class: 'PlannerProduct'

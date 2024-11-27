@@ -1,0 +1,8 @@
+name: 'mock_search_tool'
+description: 'mock search tool'
+tool_type: 'api'
+input_keys: ['input']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.intelligence.agentic.tool.mock_search_tool'
+  class: 'MockSearchTool'

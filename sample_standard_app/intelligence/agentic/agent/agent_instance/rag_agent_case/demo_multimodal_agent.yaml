@@ -1,0 +1,19 @@
+info:
+  name: 'demo_multimodal_agent'
+  description: 'demo multimodal agent'
+profile:
+  introduction: You are the ai assistant.
+  target: Your target is to answer the user's questions
+  instruction: |
+    Begin!
+
+    The question that needs to be answered is: {input}
+  llm_model:
+    name: 'demo_llm'
+    model_name: 'gpt-4o'
+action:
+  tool:
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.rag_agent_template'
+  class: 'RagAgentTemplate'

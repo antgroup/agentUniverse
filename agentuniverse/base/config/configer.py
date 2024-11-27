@@ -5,13 +5,38 @@
 # @Author  : jerry.zzw 
 # @Email   : jerry.zzw@antgroup.com
 # @FileName: config_manager.py
+import os
 import re
 from typing import Optional, Callable
 import tomli
 import yaml
 
+from agentuniverse.base.annotation.singleton import singleton
 from agentuniverse.base.config.config_type_enum import ConfigTypeEnum
 
+@singleton
+class PlaceholderResolver:
+    def __init__(self):
+        self._resolvers = []
+        self.register_resolver(r'\${(.+?)}',
+                                   lambda match: os.getenv(match.group(1),
+                                                           match.group(0)))
+    def register_resolver(self, pattern, func):
+        """Register a new resolver with a regex pattern and its corresponding function."""
+        self._resolvers.append((re.compile(pattern), func))
+
+    def resolve(self, value):
+        """Resolve placeholders in a given value based on registered resolvers."""
+        if isinstance(value, dict):
+            return {k: self.resolve(v) for k, v in value.items()}
+        elif isinstance(value, list):
+            return [self.resolve(item) for item in value]
+        elif isinstance(value, str):
+            for pattern, func in self._resolvers:
+                value = pattern.sub(func, value)
+            return value
+        else:
+            return value
 
 class Configer(object):
     """Configger object, responsible for the configuration file load, update, etc."""
@@ -147,6 +172,7 @@ class Configer(object):
         """
         with open(path, 'rb') as f:
             config_data = tomli.load(f)
+        config_data = PlaceholderResolver().resolve(config_data)
         return config_data
 
     @staticmethod
@@ -160,4 +186,5 @@ class Configer(object):
         """
         with open(path, 'r', encoding='utf-8') as stream:
             config_data = yaml.safe_load(stream)
+        config_data = PlaceholderResolver().resolve(config_data)
         return config_data

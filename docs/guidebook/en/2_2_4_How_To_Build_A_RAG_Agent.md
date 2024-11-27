@@ -24,15 +24,15 @@ readers:
 
 metadata:
   type: 'KNOWLEDGE'
-  module: 'sample_standard_app.app.core.knowledge.law_knowledge'
+  module: 'sample_standard_app.intelligence.agentic.knowledge.law_knowledge'
   class: 'LawKnowledge'
 ```
 
 ## Building the Knowledge Index
 
 Origin docs：
-- [民法典.pdf](../../../sample_standard_app/app/resources/民法典.pdf)
-- [刑法.pdf](../../../sample_standard_app/app/resources/刑法.pdf)
+- [民法典.pdf](../../../sample_standard_app/intelligence/agentic/knowledge/raw_knowledge_file/民法典.pdf)
+- [刑法.pdf](../../../sample_standard_app/intelligence/agentic/knowledge/raw_knowledge_file/刑法.pdf)
 
 ### Extracting Text from PDFs
 Since the original documents in this case are in PDF format, we configured the Knowledge component as follows:
@@ -55,7 +55,7 @@ This case includes four Stores: the Civil Law and Criminal Law are stored separa
 ```yaml
 name: 'civil_law_chroma_store'
 description: '保存了中国民法典的所有内容，以文本向量形式存储'
-persist_path: '../../DB/civil_law.db'
+persist_path: '../../db/civil_law.db'
 embedding_model: 'dashscope_embedding'
 similarity_top_k: 100
 metadata:

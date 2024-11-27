@@ -76,23 +76,37 @@ As demonstrated by the recommended directory structure for the project, the proj
 ```toml
 [CORE_PACKAGE]
 # Perform a full component scan and registration for all the paths under this list.
-default = ['sample_standard_app.app.core']
+default = ['sample_standard_app.intelligence.agentic']
 # Scan and register agent components for all paths under this list, with priority over the default.
-agent = ['sample_standard_app.app.core.agent']
-# Scan and register agent components for all paths under this list, with priority over the default.
-knowledge = ['sample_standard_app.app.core.knowledge']
+agent = ['sample_standard_app.intelligence.agentic.agent']
 # Scan and register knowledge components for all paths under this list, with priority over the default.
-llm = ['sample_standard_app.app.core.llm']
+knowledge = ['sample_standard_app.intelligence.agentic.knowledge']
 # Scan and register llm components for all paths under this list, with priority over the default.
-planner = ['sample_standard_app.app.core.planner']
-# Scan and register planner components for all paths under this list, with priority over the default.
-tool = ['sample_standard_app.app.core.tool']
+llm = ['sample_standard_app.intelligence.agentic.llm']
+# Scan and register tool components for all paths under this list, with priority over the default.
+tool = ['sample_standard_app.intelligence.agentic.tool']
 # Scan and register memory components for all paths under this list, with priority over the default.
-memory = ['sample_standard_app.app.core.memory']
+memory = ['sample_standard_app.intelligence.agentic.memory']
 # Scan and register service components for all paths under this list, with priority over the default.
-service = ['sample_standard_app.app.core.service']
+service = ['sample_standard_app.intelligence.service.agent_service']
 # Scan and register prompt components for all paths under this list, with priority over the default.
-prompt = []
+prompt = ['sample_standard_app.intelligence.agentic.prompt']
+# Scan and register store components for all paths under this list, with priority over the default.
+store = ['sample_standard_app.intelligence.agentic.knowledge.store']
+# Scan and register rag_router components for all paths under this list, with priority over the default.
+rag_router = ['sample_standard_app.intelligence.agentic.knowledge.rag_router']
+# Scan and register doc_processor components for all paths under this list, with priority over the default.
+doc_processor = ['sample_standard_app.intelligence.agentic.knowledge.doc_processor']
+# Scan and register query_paraphraser components for all paths under this list, with priority over the default.
+query_paraphraser = ['sample_standard_app.intelligence.agentic.knowledge.query_paraphraser']
+# Scan and register memory_compressor components for all paths under this list, with priority over the default.
+memory_compressor = ['sample_standard_app.intelligence.agentic.memory.memory_compressor']
+# Scan and register memory_storage components for all paths under this list, with priority over the default.
+memory_storage = ['sample_standard_app.intelligence.agentic.memory.memory_storage']
+# Scan and register product components for all paths under this list, with priority over the default.
+product = ['sample_standard_app.platform.difizen.product']
+# Scan and register workflow components for all paths under this list, with priority over the default.
+workflow = ['sample_standard_app.platform.difizen.workflow']
 ```
 The format for defining packages follows the standard Python package path format. The framework will register, scan, and manage all types of component packages uniformly based on the defined package paths during startup.
 

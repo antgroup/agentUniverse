@@ -1,0 +1,27 @@
+info:
+  name: 'demo_multillm_agent'
+  description: 'demo multillm agent'
+profile:
+  introduction: You are the ai assistant.
+  target: Your target is to answer the user's questions
+  instruction: |
+    Begin!
+
+    The question that needs to be answered is: {input}
+  llm_model:
+#    name: 'kimi_llm'
+#    model_name: 'moonshot-v1-8k'
+#    name: 'baichuan_llm'
+#    model_name: 'Baichuan2-Turbo'
+#    name: 'qwen_llm'
+#    model_name: 'qwen-turbo'
+#    name: 'wenxin_llm'
+#    model_name: 'ERNIE-3.5-8K'
+#    name: 'deep_seek_llm'
+    name: 'default_deepseek_llm'
+action:
+  tool:
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.rag_agent_template'
+  class: 'RagAgentTemplate'

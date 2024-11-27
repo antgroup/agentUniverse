@@ -1,0 +1,17 @@
+info:
+  name: 'participant_agent_one'
+  description: 'demo participant agent'
+profile:
+  prompt_version: participant_agent.cn
+  llm_model:
+    name: 'qwen_llm'
+    temperature: 0.3
+action:
+  tool:
+    - 'google_search_tool'
+memory:
+  name: 'demo_memory_b'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.discussion_agent_case.participant_agent'
+  class: 'ParticipantAgent'

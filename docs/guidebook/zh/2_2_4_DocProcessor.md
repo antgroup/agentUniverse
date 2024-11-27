@@ -77,7 +77,7 @@ metadata:
 以示例工程中的配置为例，如下：
 ```yaml
 [CORE_PACKAGE]
-doc_processor = ['sample_standard_app.app.core.doc_processor']
+doc_processor = ['sample_standard_app.intelligence.agentic.knowledge.doc_processor']
 ```
 
 
@@ -170,3 +170,30 @@ metadata:
   class: 'DashscopeReranker'
 ```
 该组件需要在环境变量中配置`DASHSCOPE_API_KEY`。
+
+### [HierarchicalRegexTextSplitter](../../../agentuniverse/agent/action/knowledge/doc_processor/hierarchical_regex_text_spliter.py)
+
+该组件使用通过指定的正则规则对原始文本进行多层级的拆分，形成树状的文档结构。
+该组件需要用户自行创建定义文件，一个示例定义文件如下：
+```yaml
+name: 'hierarchical_regex_text_spliter'
+description: 'extract keywords from query'
+merge_first: True
+hierarchical_index:
+  - "reg_exp": "第[零一二三四五六七八九十百千]+章"
+    "need_summary": True
+  - "reg_exp": "第[零一二三四五六七八九十百千]+条"
+    "need_summary": False
+summary_agent: "simple_summary_agent"
+llm:
+  name: qwen_llm
+  model_name: qwen-plus
+metadata:
+  type: 'DOC_PROCESSOR'
+  module: 'agentuniverse.agent.action.knowledge.doc_processor.hierarchical_regex_text_spliter'
+  class: 'HierarchicalRegexTextSplitter'
+```
+- merge_first: 设置为True的话会将输入的List[Document]合并为一份文档后再进行拆分
+- hierarchical_index: 表示不同层级的拆分规则，`reg_exp`为正则表达式，`need_summary`为True的话则表示该层级会使用总结文本取代原始文本
+- summary_agent: `hierarchical_index`中设置`need_summary`为True的时候生成总结文本的Agent， 默认为`simple_summary_agent`
+- llm: 如指定的话，则会用指定的llm取代原本`summary_agent`中的llm。

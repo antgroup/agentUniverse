@@ -1,61 +1,12 @@
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
-# @Time    : 2024/3/19 19:37
-# @Author  : heji
-# @Email   : lc299034@antgroup.com
+
+# @Time    : 2024/10/17 21:08
+# @Author  : wangchongshi
+# @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: expressing_agent.py
-"""Expressing Agent module."""
-from agentuniverse.agent.agent import Agent
-from agentuniverse.agent.input_object import InputObject
+from agentuniverse.agent.template.expressing_agent_template import ExpressingAgentTemplate
 
 
-class ExpressingAgent(Agent):
+class ExpressingAgent(ExpressingAgentTemplate):
     """Expressing Agent class."""
-
-    def input_keys(self) -> list[str]:
-        """Return the input keys of the Agent."""
-        return ['input']
-
-    def output_keys(self) -> list[str]:
-        """Return the output keys of the Agent."""
-        return ['output']
-
-    def parse_input(self, input_object: InputObject, agent_input: dict) -> dict:
-        """Agent parameter parsing.
-
-        Args:
-            input_object (InputObject): input parameters passed by the user.
-            agent_input (dict): agent input preparsed by the agent.
-        Returns:
-            dict: agent input parsed from `input_object` by the user.
-        """
-        agent_input['input'] = input_object.get_data('input')
-        agent_input['background'] = self.build_background(input_object)
-        self.agent_model.profile.setdefault('prompt_version', 'default_expressing_agent.cn')
-        return agent_input
-
-    def parse_result(self, planner_result: dict) -> dict:
-        """Planner result parser.
-
-        Args:
-            planner_result(dict): Planner result
-        Returns:
-            dict: Agent result object.
-        """
-        return planner_result
-
-    def build_background(self, input_object: InputObject) -> str:
-        """Build the background knowledge.
-
-        Args:
-            input_object(InputObject): agent parameter object
-        Returns:
-            str: Background knowledge.
-        """
-        executing_result = input_object.get_data('executing_result').get_data('executing_result', [])
-        knowledge_list = []
-        for execution in executing_result:
-            knowledge_list.append("question:" + execution.get('input'))
-            knowledge_list.append("answer:" + execution.get('output'))
-
-        return '\n\n'.join(knowledge_list)

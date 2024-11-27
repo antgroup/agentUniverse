@@ -19,12 +19,17 @@ class Message(BaseModel):
     """The basic class for memory message.
 
     Attributes:
+        id (int): The id of the message.
         type (Optional[str]): The type of the message.
         content (Optional[str]): The content of the message.
+        source (Optional[str]): The source of the message.
+        metadata (Optional[dict]): The metadata of the message.
     """
-
+    id: Optional[str] = None
     type: Optional[str] = None
     content: Optional[Union[str, List[Union[str, Dict]]]] = None
+    source: Optional[str] = None
+    metadata: Optional[dict] = None
 
     def as_langchain(self):
         """Convert the agentUniverse(aU) message class to the langchain message class."""
@@ -49,3 +54,23 @@ class Message(BaseModel):
         for message in message_list:
             langchain_message_list.append(message.as_langchain())
         return langchain_message_list
+
+    def to_dict(self) -> dict:
+        """Convert the agentUniverse(aU) message class to the dict."""
+        return {"type": self.type, "content": self.content, "metadata": self.metadata, "source": self.source}
+
+    @staticmethod
+    def from_dict(message_dict: dict) -> 'Message':
+        """Convert the dict to agentUniverse(aU) message class.
+
+        Args:
+            message_dict (dict): The dict of the message.
+        Returns:
+            Message: The agentUniverse(aU) message class.
+        """
+        message = Message()
+        attributes = ['id', 'content', 'type', 'source', 'metadata']
+        for attr in attributes:
+            if attr in message_dict:
+                setattr(message, attr, message_dict[attr])
+        return message

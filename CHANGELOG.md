@@ -26,11 +26,11 @@ Note - Additional remarks regarding the version.
 # Version Update History
 # [0.0.13] - 2024-09-12
 ### Added
-- RAG(Retrieval-Augmented Generation) Component Version Update
-- This version provides a standard operating procedure for knowledge base construction and the RAG retrieval recall stage. The component covers a series of RAG atomic capabilities, including data loading, data processing, index construction, knowledge storage, intent rewriting, and retrieval re-ranking, helping users to quickly build a general RAG intelligent agent solution in open-source scenarios.
+- RAG(Retrieval-Augmented Generation) Component Version Update  
+This version provides a standard operating procedure for knowledge base construction and the RAG retrieval recall stage. The component covers a series of RAG atomic capabilities, including data loading, data processing, index construction, knowledge storage, intent rewriting, and retrieval re-ranking, helping users to quickly build a general RAG intelligent agent solution in open-source scenarios.
 
-- Intelligent Agent Product Platform Update
-- This version introduces new capabilities such as intelligent agent canvas orchestration, private knowledge base construction, and custom plugin support, enabling users to quickly build and orchestrate intelligent agents through a low-code, visual approach.
+- Intelligent Agent Product Platform Update  
+This version introduces new capabilities such as intelligent agent canvas orchestration, private knowledge base construction, and custom plugin support, enabling users to quickly build and orchestrate intelligent agents through a low-code, visual approach.
 
 - Added GLM Default Model Component for Zhipu
 - Added SQLiteStore Storage Component
@@ -139,7 +139,7 @@ If your system has external access, we strongly recommend installing version v0.
 - Added LLM integration methods for Qwen, WenXin, Kimi, Baichuan, etc.
 
 ### Note
-- Added a multimodal example agent, see the invocation details in `sample_standard_app.app.test.test_multimodal_agent.MultimodalAgentTest`.
+- Added a multimodal example agent, see the invocation details in `sample_standard_app.intelligence.test.test_multimodal_agent.MultimodalAgentTest`.
 - Some code optimizations and documentation updates.
 
 ## [0.0.6] - 2024-05-15

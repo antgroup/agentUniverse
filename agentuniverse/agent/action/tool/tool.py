@@ -71,9 +71,10 @@ class Tool(ComponentBase):
 
     def input_check(self, kwargs: dict) -> None:
         """Check whether the input parameters of the tool contain input keys of the tool"""
-        for key in self.input_keys:
-            if key not in kwargs.keys():
-                raise Exception(f'{self.get_instance_code()} - The input must include key: {key}.')
+        if self.input_keys:
+            for key in self.input_keys:
+                if key not in kwargs.keys():
+                    raise Exception(f'{self.get_instance_code()} - The input must include key: {key}.')
 
     @trace_tool
     def langchain_run(self, *args, callbacks=None, **kwargs):

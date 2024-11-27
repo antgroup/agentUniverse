@@ -77,7 +77,7 @@ In the config.toml file of the agentUniverse project, you need to configure the 
 For example, the configuration in the sample project is as follows:
 ```yaml
 [CORE_PACKAGE]
-doc_processor = ['sample_standard_app.app.core.doc_processor']
+doc_processor = ['sample_standard_app.intelligence.agentic.knowledge.doc_processor']
 ```
 
 
@@ -170,3 +170,29 @@ metadata:
   class: 'DashscopeReranker'
 ```
 This component requires configuring DASHSCOPE_API_KEY in the environment variables.
+
+### [HierarchicalRegexTextSplitter](../../../agentuniverse/agent/action/knowledge/doc_processor/hierarchical_regex_text_spliter.py)
+
+This component splits the original text into multiple hierarchical levels using specified regex rules, forming a tree-like document structure. Users need to create a custom definition file, with an example as follows:
+```yaml
+name: 'hierarchical_regex_text_spliter'
+description: 'extract keywords from query'
+merge_first: True
+hierarchical_index:
+  - "reg_exp": "第[零一二三四五六七八九十百千]+章"
+    "need_summary": True
+  - "reg_exp": "第[零一二三四五六七八九十百千]+条"
+    "need_summary": False
+summary_agent: "simple_summary_agent"
+llm:
+  name: qwen_llm
+  model_name: qwen-plus
+metadata:
+  type: 'DOC_PROCESSOR'
+  module: 'agentuniverse.agent.action.knowledge.doc_processor.hierarchical_regex_text_spliter'
+  class: 'HierarchicalRegexTextSplitter'
+```
+- merge_first: If set to True, it merges the input List[Document] into a single document before splitting.
+- hierarchical_index: Represents the splitting rules for different levels. `reg_exp` is the regular expression, and if `need_summary` is set to True, the summary text will replace the original text at that level.
+- summary_agent: The Agent responsible for generating the summary text when `need_summary` is set to True in `hierarchical_index`. The default is simple_summary_agent.
+- llm: If specified, it will replace the original LLM in the `summary_agent`.

@@ -67,14 +67,14 @@ python -u bootstrap.py
 ```shell
 pip install agentuniverse==0.0.12
 ```  
-最后，使用vscode调试，打开sample_standard_app/app/bootstrap/server_application.py,点击右上角中的调试按钮，即可进行启动进行调试。
+最后，使用vscode调试，打开sample_standard_app/bootstrap/intelligence/server_application.py,点击右上角中的调试按钮，即可进行启动进行调试。
 
 ### 1.4 Pycharm 配置
 如果使用pycharm，请使用Pycharm打开agentUniverse项目，点击右上角选择Python解释器，选择你想使用的python环境。选择好python环境之后，在terminal中运行命令：
 ```shell
 pip install agentuniverse==0.0.12
 ```
-命令执行完成之后，双击打开sample_standard_app/app/bootstrap/server_application.py，点击右上角中的调试或者运行按钮，即可进行启动进行调试。
+命令执行完成之后，双击打开sample_standard_app/bootstrap/intelligence/server_application.py，点击右上角中的调试或者运行按钮，即可进行启动进行调试。
 
 ## 2. 项目配置
 复制一份config目录custom_key.toml.sample下的配置模板，重命名为custom_key.yaml
@@ -105,20 +105,20 @@ key的获取方式请参考：[千问](https://dashscope.console.aliyun.com/apiK
 
 ```shell
 source ~/.bashrc
-cd app/examples
+cd intelligence/test
 bash example_start.sh
 ```
 或者
 
 ```shell
-cd app/examples
+cd intelligence/test
 export PYTHONPATH=$PWD/../../../..
 python react_chat_bot.py
 ```
 
 对于 Windows 系统，运行如下命令：
 ```shell
-cd app/examples
+cd intelligence/test
 set PYTHONPATH=%CD%\..\..\..\..\
 example_start.ps1
 ```
@@ -126,7 +126,7 @@ example_start.ps1
 或者
   
 ```shell
-cd app/examples
+cd intelligence/test
 set PYTHONPATH=%CD%\..\..\..\..\
 python react_chat_bot.py
 ```
@@ -135,11 +135,11 @@ python react_chat_bot.py
 
 ## 4.为agent添加工具
 当前bot当中已经配置了一个google工具，可以通过修改agent配置来修改或添加工具。针对当前的ragchatbot所绑定的agent，修改agent配置文件config/agent_config.yaml,  
-其配置文件为：agentUniverse/sample_standard_app/app/core/agent/react_agent_case/demo_react_agent.yaml，新增一个human_input_run工具,可以让模型询问用户问题。
+其配置文件为：agentUniverse/sample_standard_app/intelligence/agentic/agent/agent_instance/react_agent_case/demo_react_agent.yaml，新增一个human_input_run工具,可以让模型询问用户问题。
 ![新增工具](../_picture/react_chat_bot_tool.png)
 重新测试，修改问题为： 我想知道我的公历生日对应的农历生日是哪一天？
 ```shell
-cd app/examples
+cd intelligence/test
 export PYTHONPATH=$PWD/../../../..
 python react_chat_bot.py --question "我可以购买好医保么，你可以询问我的健康状况，但是每次只能询问一个问题"
 ```

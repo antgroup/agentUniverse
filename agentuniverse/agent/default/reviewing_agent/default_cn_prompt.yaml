@@ -16,9 +16,6 @@ instruction: |
   之前的对话:
   {chat_history}
   
-  背景信息是:
-  {background}
-  
   今天的日期是: {date}
 
   开始!

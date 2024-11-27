@@ -12,32 +12,32 @@ During the translation process, the priority is to ascertain whether the model's
 
 Implementing this translation in aU involves the following steps:
 1. Define prompts related to translation, with three for short text and three for long text. Relevant files include:
-   - [Short Text Init Prompt](../../../sample_standard_app/app/core/prompt/translation/translation_init_en.yaml)
-   - [Short Text Reflection Prompt](../../../sample_standard_app/app/core/prompt/translation/translation_reflection_en.yaml)
-   - [Short Text Improve Prompt](../../../sample_standard_app/app/core/prompt/translation/translation_improve_en.yaml)
-   - [Long Text Init Prompt](../../../sample_standard_app/app/core/prompt/translation/multi_translation_init_en.yaml)
-   - [Long Text Reflection Prompt](../../../sample_standard_app/app/core/prompt/translation/multi_translation_improve_en.yaml)
-   - [Long Text Improve Prompt](../../../sample_standard_app/app/core/prompt/translation/multi_translation_improve_en.yaml)  
+   - [Short Text Init Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/translation_init_en.yaml)
+   - [Short Text Reflection Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/translation_reflection_en.yaml)
+   - [Short Text Improve Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/translation_improve_en.yaml)
+   - [Long Text Init Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/multi_translation_init_en.yaml)
+   - [Long Text Reflection Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/multi_translation_improve_en.yaml)
+   - [Long Text Improve Prompt](../../../sample_standard_app/intelligence/agentic/prompt/translation/multi_translation_improve_en.yaml)  
 2. Define three agents  
-   - [Short Text Translation Work Agent](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_work_agent.yaml)  
-   - [Short Text Translation Reflection Agent](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_reflection_agent.yaml)  
-   - [Short Text Translation Improvement Agent](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_improve_agent.yaml)  
-   These agents switch their prompts based on whether the task involves translating long or short texts. The specific logic for this switching mechanism is detailed in the [agent file](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_agent.py).
+   - [Short Text Translation Work Agent](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_work_agent.yaml)  
+   - [Short Text Translation Reflection Agent](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_reflection_agent.yaml)  
+   - [Short Text Translation Improvement Agent](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_improve_agent.yaml)  
+   These agents switch their prompts based on whether the task involves translating long or short texts. The specific logic for this switching mechanism is detailed in the [agent file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_agent.py).
 
 3. Define the collaborative work process of the three agents  
 The collaborative process is illustrated in the earlier-mentioned flowchart of multi-agent collaboration.  
 ![Collaborative Work](../_picture/translation_execute_flow.png)  
-For a deeper dive into the processes, refer to the [detailed code file](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_by_token_agent.py).  
-The [configuration file](../../../sample_standard_app/app/core/agent/translation_agent_case/translation_agent.yaml) for the collaborative agents.
+For a deeper dive into the processes, refer to the [detailed code file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_by_token_agent.py).  
+The [configuration file](../../../sample_standard_app/intelligence/agentic/agent/agent_instance/translation_agent_case/translation_agent.yaml) for the collaborative agents.
 
 ### Demonstration Code  
-[Code Link](../../../sample_standard_app/app/test/test_translation_agent.py)
+[Code Link](../../../sample_standard_app/intelligence/test/test_translation_agent.py)
 
-[Long Text](../../../sample_standard_app/app/test/translation_data/long_text.txt)  
-[Short Text](../../../sample_standard_app/app/test/translation_data/short_text.txt)  
+[Long Text](../../../sample_standard_app/intelligence/test/translation_data/long_text.txt)  
+[Short Text](../../../sample_standard_app/intelligence/test/translation_data/short_text.txt)  
 
-[Translation Of Long Text](../../../sample_standard_app/app/test/translation_data/short_text_result.txt)  
-[Translation Of Short Text](../../../sample_standard_app/app/test/translation_data/long_text_result.txt)  
+[Translation Of Long Text](../../../sample_standard_app/intelligence/test/translation_data/short_text_result.txt)  
+[Translation Of Short Text](../../../sample_standard_app/intelligence/test/translation_data/long_text_result.txt)  
 
 ### 演示结果
 We can see that using aU maintains consistency with the original translation_agent project results, successfully replicated.

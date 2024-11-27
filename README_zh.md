@@ -62,7 +62,7 @@ pip install magent-ui ruamel.yaml
 
 **一键运行**
 
-运行sample_standard_app/app/boostrap下的[product_application.py](sample_standard_app/app/bootstrap/product_application.py)文件，一键启动。
+运行sample_standard_app/boostrap下的[product_application.py](sample_standard_app/boostrap/platform/product_application.py)文件，一键启动。
 
 更多详情参考 [产品化平台快速开始](./docs/guidebook/zh/10_1_1_产品化平台快速开始.md)
 与 [产品化平台进阶指南](./10_1_2_产品化平台进阶指南.md) 。

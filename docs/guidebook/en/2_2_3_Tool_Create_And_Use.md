@@ -32,7 +32,7 @@ metadata:
 
 The above is an actual example of a Tool configuration sample. 
 
-In addition to the standard configuration items introduced above, you can find more examples of tool configuration YAML files in the `sample_standard_app.app.core.tool` directory of our sample project.
+In addition to the standard configuration items introduced above, you can find more examples of tool configuration YAML files in the `sample_standard_app.intelligence.agentic.tool` directory of our sample project.
 
 Moreover, agentUniverse does not restrict users from extending the Tool YAML configuration content. You can create any custom configuration keys according to your own requirements, but please be careful not to duplicate the names of the default configuration keywords mentioned above.
 
@@ -81,14 +81,14 @@ Taking the configuration in the example project as an example, it is as follows.
 ```yaml
 [CORE_PACKAGE]
 # Scan and register tool components for all paths under this list, with priority over the default.
-tool = ['sample_standard_app.app.core.tool']
+tool = ['sample_standard_app.intelligence.agentic.tool']
 ```
 
 # How to Use the Tool Component
 ## Configure for use in an Agent
 You can set up any tool you have created in the tool of your agent according to the contents of [Agent Creation and Usage section](2_2_1_Agent_Create_And_Use.md).
 
-Refer to the example: `demo_rag_agent`, with the specific file path being `sample_standard_app/app/core/agent/rag_agent_case/demo_rag_agent.yaml`.
+Refer to the example: `demo_rag_agent`, with the specific file path being `sample_standard_app/intelligence/agentic/agent/agent_instance/rag_agent_case/demo_rag_agent.yaml`.
 
 ## Using the Tool Manager
 You can obtain the instance of the tool with the corresponding name through the `.get_instance_obj(xx_tool_name)` method in the Tool manager, and call it using the `run` method.
@@ -102,7 +102,7 @@ tool.run(**tool_input)
 ```
 
 # Learn More About Existing Tools
-More examples of tools provided by the framework can be found in the `sample_standard_app.app.core.tool` package path, where you can further explore the corresponding tools.
+More examples of tools provided by the framework can be found in the `sample_standard_app.intelligence.agentic.tool` package path, where you can further explore the corresponding tools.
 
 # Conclusion
 By now, you have mastered the definition and usage of Tool components. Go ahead and try creating and using tools.

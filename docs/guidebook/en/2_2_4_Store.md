@@ -73,7 +73,7 @@ In the config.toml file of the agentUniverse project, you must configure the pac
 For example, in the configuration of the sample project:
 ```yaml
 [CORE_PACKAGE]
-store = ['sample_standard_app.app.core.store']
+store = ['sample_standard_app.intelligence.agentic.knowledge.store']
 ```
 
 ## Prebuilt Stores in agentUniverse:

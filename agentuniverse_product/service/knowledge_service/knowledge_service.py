@@ -22,6 +22,7 @@ from agentuniverse_product.base.util.yaml_util import (
     update_nested_yaml_value,
     read_yaml_file,
 )
+from agentuniverse_product.service.util.common_util import get_core_path, get_resources_path
 from agentuniverse_product.service.util.knowledge_util import (
     register_knowledge,
     unregister_knowledge,
@@ -64,26 +65,30 @@ class KnowledgeService:
         knowledge_id = knowledge_dto.id
 
         product_file_name = f"{knowledge_id}_product"
-        product_file_path = os.path.join("..", "core", "product", "knowledge", f"{product_file_name}.yaml")
+
+        path = get_core_path()
+        product_file_path = path / 'product' / 'knowledge' / f"{product_file_name}.yaml" if path\
+            else os.path.join("..", "..", "platform", "difizen", "product", "knowledge", f"{product_file_name}.yaml")
 
         product_config_data = assemble_knowledge_product_config_data(knowledge_dto)
 
         try:
-            write_yaml_file(product_file_path, product_config_data)
+            write_yaml_file(str(product_file_path), product_config_data)
         except Exception as e:
             raise e
 
-        knowledge_file_path = os.path.join("..", "core", "knowledge", f"{knowledge_id}.yaml")
+        knowledge_file_path = path / 'knowledge' / f"{knowledge_id}.yaml" if path\
+            else os.path.join("..", "..", "intelligence", "agentic", "knowledge", f"{knowledge_id}.yaml")
 
         knowledge_config = assemble_knowledge_config(knowledge_dto)
 
         try:
-            write_yaml_file(knowledge_file_path, knowledge_config)
+            write_yaml_file(str(knowledge_file_path), knowledge_config)
         except Exception as e:
             raise e
 
-        register_knowledge(knowledge_file_path)
-        register_product(product_file_path)
+        register_knowledge(str(knowledge_file_path))
+        register_product(str(product_file_path))
 
         return knowledge_id
 
@@ -168,12 +173,13 @@ class KnowledgeService:
         Returns:
             bool: True if the file is uploaded successfully, False otherwise.
         """
+        path = get_core_path()
 
-        upload_file_path = os.path.join("..", "resources")
+        upload_file_path = get_resources_path()
 
         try:
             if not os.path.exists(upload_file_path):
-                os.makedirs(os.path.dirname(upload_file_path), exist_ok=True)
+                os.makedirs(upload_file_path, exist_ok=True)
 
             file_location = os.path.join(upload_file_path, file.filename)
 
@@ -184,7 +190,9 @@ class KnowledgeService:
             print(f"upload file failed: {e}")
             raise e
 
-        knowledge_store_file_path = os.path.join("..", "core", "store", f"{knowledge_id}_store.yaml")
+        knowledge_store_file_path = path / 'store' / f"{knowledge_id}_store.yaml" if path\
+            else str(os.path.join("..", "..", "intelligence",
+                                  "agentic", "knowledge", "store", f"{knowledge_id}_store.yaml"))
         knowledge_store_name = f"{knowledge_id}_chroma_store"
 
         knowledge = KnowledgeManager().get_instance_obj(component_instance_name=knowledge_id)
@@ -195,15 +203,15 @@ class KnowledgeService:
                 knowledge_store_config = {
                     "name": knowledge_store_name,
                     "description": knowledge_store_name,
-                    "persist_path": f"../../DB/{knowledge_store_name}.db",
+                    "persist_path": f"../../intelligence/db/{knowledge_store_name}.db",
                     "metadata": {
                         "type": "STORE",
                         "module": "agentuniverse.agent.action.knowledge.store.chroma_store",
                         "class": "ChromaStore",
                     },
                 }
-                write_yaml_file(knowledge_store_file_path, knowledge_store_config)
-                register_store(knowledge_store_file_path)
+                write_yaml_file(str(knowledge_store_file_path), knowledge_store_config)
+                register_store(str(knowledge_store_file_path))
 
                 knowledge_path = knowledge.component_config_path
 

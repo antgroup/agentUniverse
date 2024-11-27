@@ -44,7 +44,7 @@ metadata:
 以示例工程中的配置为例，如下：
 ```yaml
 [CORE_PACKAGE]
-reader = ['sample_standard_app.app.core.reader']
+reader = ['sample_standard_app.intelligence.agentic.knowledge.reader']
 ```
 
 ## agentUniverse目前内置有以下Reader:
@@ -53,3 +53,4 @@ reader = ['sample_standard_app.app.core.reader']
 - [default_pptx_reader](../../../agentuniverse/agent/action/knowledge/reader/file/pptx_reader.yaml)：读取本地Pptx文件中的文本内容
 - [default_txt_reader](../../../agentuniverse/agent/action/knowledge/reader/file/txt_reader.yaml)：读取txt文件中的文本内容
 - [default_web_pdf_reader](../../../agentuniverse/agent/action/knowledge/reader/file/web_pdf_reader.yaml)：读取本地Docx文件中的文本内容
+- [default_markdown_reader](../../../agentuniverse/agent/action/knowledge/reader/file/markdown_reader.yaml)：读取本地Markdown文件中的文本内容

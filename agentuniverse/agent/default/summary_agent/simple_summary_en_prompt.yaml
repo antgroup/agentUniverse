@@ -1,0 +1,13 @@
+introduction: You are an AI assistant proficient in text summary.
+target: Your goal is to summary the given long text.
+instruction: |
+  Write a concise summary of the following:
+
+
+  "{input}"
+
+
+  CONCISE SUMMARY:""
+metadata:
+  type: 'PROMPT'
+  version: 'simple_summary_agent.en'

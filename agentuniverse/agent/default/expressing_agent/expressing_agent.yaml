@@ -3,15 +3,12 @@ info:
   description: 'expressing agent'
 profile:
   llm_model:
-    name: 'default_openai_llm'
-    model_name: 'gpt-3.5-turbo'
+    name: 'default_qwen_llm'
+    model_name: 'qwen2.5-72b-instruct'
     temperature: 0.7
-plan:
-  planner:
-    name: 'expressing_planner'
 memory:
   name: ''
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.expressing_agent.expressing_agent'
-  class: 'ExpressingAgent'
+  module: 'agentuniverse.agent.template.expressing_agent_template'
+  class: 'ExpressingAgentTemplate'

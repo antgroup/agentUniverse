@@ -1,0 +1,6 @@
+name: 'default_markdown_reader'
+description: 'default markdown reader'
+metadata:
+  type: 'READER'
+  module: 'agentuniverse.agent.action.knowledge.reader.file.markdown_reader'
+  class: 'MarkdownReader'

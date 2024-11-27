@@ -67,7 +67,7 @@ In the config.toml file of the agentUniverse project, you need to configure the 
 For example, the configuration in the sample project is as follows:
 ```yaml
 [CORE_PACKAGE]
-query_paraphraser = ['sample_standard_app.app.core.query_paraphraser']
+query_paraphraser = ['sample_standard_app.intelligence.agentic.knowledge.query_paraphraser']
 ```
 
 ## The following QueryParaphraser are built into agentUniverse:

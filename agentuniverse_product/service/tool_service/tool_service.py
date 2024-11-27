@@ -16,6 +16,7 @@ from agentuniverse_product.base.product_manager import ProductManager
 from agentuniverse_product.base.util.yaml_util import write_yaml_file
 from agentuniverse_product.service.model.tool_dto import ToolDTO
 from agentuniverse_product.service.util.agent_util import register_product
+from agentuniverse_product.service.util.common_util import get_core_path
 from agentuniverse_product.service.util.tool_util import assemble_api_tool_config_data, \
     assemble_tool_product_config_data, register_tool, validate_create_api_tool_parameters
 
@@ -80,17 +81,20 @@ class ToolService:
 
         # write product YAML file
         product_file_name = f"{tool_dto.id}_product"
-        product_file_path = os.path.join('..', 'core', 'product', 'tool', f"{product_file_name}.yaml")
-        write_yaml_file(product_file_path, product_config_data)
+        path = get_core_path()
+        product_file_path = path / 'product' / 'tool' / f"{product_file_name}.yaml" if path \
+            else os.path.join('..', '..', 'platform', 'difizen', 'product', 'tool', f"{product_file_name}.yaml")
+        write_yaml_file(str(product_file_path), product_config_data)
 
         # assemble tool config data
         tool_config_data = assemble_api_tool_config_data(tool_dto)
 
         # write tool YAML file
-        tool_file_path = os.path.join('..', 'core', 'tool', f"{tool_dto.id}.yaml")
-        write_yaml_file(tool_file_path, tool_config_data)
+        tool_file_path = path / 'tool' / f"{tool_dto.id}.yaml" if path \
+            else os.path.join('..', '..', 'intelligence', 'agentic', 'tool', f"{tool_dto.id}.yaml")
+        write_yaml_file(str(tool_file_path), tool_config_data)
 
         # register product and tool instance
-        register_tool(tool_file_path)
-        register_product(product_file_path)
+        register_tool(str(tool_file_path))
+        register_product(str(product_file_path))
         return tool_dto.id

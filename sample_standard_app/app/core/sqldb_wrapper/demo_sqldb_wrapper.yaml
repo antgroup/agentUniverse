@@ -1,7 +1,0 @@
-name: 'demo_sqldb_wrapper'
-description: 'demo_sqldb_wrapper'
-db_uri: "sqlite:///./demo_sqldb_wrapper.db"
-engine_args:
-  pool_size: 5
-metadata:
-  type: 'SQLDB_WRAPPER'

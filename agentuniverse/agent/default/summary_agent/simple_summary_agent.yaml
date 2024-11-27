@@ -1,0 +1,14 @@
+info:
+  name: 'simple_summary_agent'
+  description: 'agent used to summary a long text'
+profile:
+  llm_model:
+    name: 'default_openai_llm'
+    model_name: 'gpt-4o'
+plan:
+  planner:
+    name: 'rag_planner'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.default.summary_agent.simple_summary_agent'
+  class: 'SimpleSummaryAgent'

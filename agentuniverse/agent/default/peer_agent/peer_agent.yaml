@@ -1,16 +1,20 @@
 info:
   name: 'PeerAgent'
   description: 'peer agent'
-plan:
-  planner:
-    name: 'peer_planner'
-    eval_threshold: 60
-    retry_count: 2
-    planning: 'PlanningAgent'
-    executing: 'ExecutingAgent'
-    expressing: 'ExpressingAgent'
-    reviewing: 'ReviewingAgent'
+profile:
+  planning: 'PlanningAgent'
+  executing: 'ExecutingAgent'
+  expressing: 'ExpressingAgent'
+  reviewing: 'ReviewingAgent'
+  expert_framework:
+    context:
+      planning:
+      executing:
+      expressing:
+      reviewing:
+memory:
+  name: ''
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.peer_agent.peer_agent'
-  class: 'PeerAgent'
+  module: 'agentuniverse.agent.template.peer_agent_template'
+  class: 'PeerAgentTemplate'

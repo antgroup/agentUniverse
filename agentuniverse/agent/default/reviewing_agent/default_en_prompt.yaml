@@ -16,9 +16,6 @@ instruction: |
   Previous conversation:
   {chat_history}
   
-  Background information:
-  {background}
-  
   Today's date is: {date}
 
   Let's begin!

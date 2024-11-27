@@ -5,17 +5,13 @@
 # @Email   : lc299034@antgroup.com
 # @FileName: planning_planner.py
 """Planning planner module."""
-import asyncio
-
-from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from agentuniverse.agent.agent_model import AgentModel
 from agentuniverse.agent.input_object import InputObject
-from agentuniverse.agent.memory.chat_memory import ChatMemory
+from agentuniverse.agent.memory.memory import Memory
 from agentuniverse.agent.plan.planner.planner import Planner
-from agentuniverse.base.util.memory_util import generate_memories
+from agentuniverse.base.util.agent_util import assemble_memory_input, assemble_memory_output
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
 from agentuniverse.prompt.prompt import Prompt
@@ -37,23 +33,23 @@ class PlanningPlanner(Planner):
         Returns:
             dict: The planner result.
         """
-        memory: ChatMemory = self.handle_memory(agent_model, planner_input)
+        memory: Memory = self.handle_memory(agent_model, planner_input)
 
         llm: LLM = self.handle_llm(agent_model)
 
         prompt: Prompt = self.handle_prompt(agent_model, planner_input)
         process_llm_token(llm, prompt.as_langchain(), agent_model.profile, planner_input)
 
-        chat_history = memory.as_langchain().chat_memory if memory else InMemoryChatMessageHistory()
+        memory_messages = assemble_memory_input(memory, planner_input)
+        chain = prompt.as_langchain() | llm.as_langchain_runnable(agent_model.llm_params()) | StrOutputParser()
 
-        chain_with_history = RunnableWithMessageHistory(
-            prompt.as_langchain() | llm.as_langchain_runnable(agent_model.llm_params()),
-            lambda session_id: chat_history,
-            history_messages_key="chat_history",
-            input_messages_key=self.input_key,
-        ) | StrOutputParser()
-        res = self.invoke_chain(agent_model, chain_with_history, planner_input, chat_history, input_object)
-        return {**planner_input, self.output_key: res, 'chat_history': generate_memories(chat_history)}
+        res = self.invoke_chain(agent_model, chain, planner_input, None, input_object)
+
+        memory_messages = assemble_memory_output(memory=memory,
+                                                 agent_input=planner_input,
+                                                 content=f"Human: {planner_input.get(self.input_key)}, AI: {res}",
+                                                 memory_messages=memory_messages)
+        return {**planner_input, self.output_key: res, 'chat_history': memory_messages}
 
     def handle_prompt(self, agent_model: AgentModel, planner_input: dict) -> Prompt:
         """Prompt module processing.

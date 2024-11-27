@@ -117,7 +117,7 @@ class AuConversationSummaryBufferMemory(ConversationSummaryBufferMemory):
         prompt_version = self.prompt_version if self.prompt_version else 'chat_memory.summarizer_cn'
         prompt: Prompt = PromptManager().get_instance_obj(prompt_version)
         chain = prompt.as_langchain() | self.llm | StrOutputParser()
-        return chain.invoke(input={'summary': existing_summary, 'new_lines': new_lines})
+        return chain.invoke(input={'summary': existing_summary, 'new_lines': new_lines, 'max_tokens': 500})
 
 
 class AuConversationTokenBufferMemory(ConversationTokenBufferMemory):

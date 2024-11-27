@@ -44,7 +44,7 @@ In the config.toml file of the agentUniverse project, you need to configure the 
 For example, the configuration in the sample project is as follows:
 ```yaml
 [CORE_PACKAGE]
-rag_router = ['sample_standard_app.app.core.rag_router']
+rag_router = ['sample_standard_app.intelligence.agentic.knowledge.rag_router']
 ```
 
 

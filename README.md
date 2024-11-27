@@ -65,7 +65,7 @@ pip install magent-ui ruamel.yaml
 
 **One-click Run**
 
-Run the [product_application.py](sample_standard_app/app/bootstrap/product_application.py) file located in sample_standard_app/app/bootstrap for a one-click start.
+Run the [product_application.py](sample_standard_app/boostrap/platform/product_application.py) file located in sample_standard_app/bootstrap for a one-click start.
 
 For more details, refer to [Quick Start for Product Platform](./docs/guidebook/en/10_1_1_Product%20Platform%20Quick%20Start.md) and the [Advanced Guide](./docs/guidebook/en/10_1_2_Product_Platform_Advancement_Guide.md).
 

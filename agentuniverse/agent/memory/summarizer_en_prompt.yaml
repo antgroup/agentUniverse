@@ -1,27 +1,32 @@
 summarizer: |
-  Progressively summarize the lines of conversation provided,
-   adding onto the previous summary returning a new summary, the result must be output in English..
-  
+  Summarize the provided conversation content step by step, compressing the memory information.
+  Based on the previous memory summary, return a new memory summary, and the answer must be in English.
+
   EXAMPLE
-  Current summary:
+  
+  The previous memory summary is:
   The human asks what the AI thinks of artificial intelligence. The AI thinks artificial intelligence is a force for good.
   
   New lines of conversation:
   Human: Why do you think artificial intelligence is a force for good?
   AI: Because artificial intelligence will help humans reach their full potential.
   
-  New summary:
+  The memory summary is:
   The human asks what the AI thinks of artificial intelligence.
   The AI thinks artificial intelligence is a force for good because it will help humans reach their full potential.
+  
   END OF EXAMPLE
   
-  Current summary:
+  The previous memory summary is:
   {summary}
   
   New lines of conversation:
   {new_lines}
   
-  New summary:
+  Request:
+  The newly generated summary should not exceed {max_tokens} characters in total.
+  
+  The memory summary is:
 metadata:
   type: 'PROMPT'
   version: 'chat_memory.summarizer_en'

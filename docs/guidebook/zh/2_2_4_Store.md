@@ -73,7 +73,7 @@ metadata:
 以示例工程中的配置为例，如下：
 ```yaml
 [CORE_PACKAGE]
-store = ['sample_standard_app.app.core.store']
+store = ['sample_standard_app.intelligence.agentic.knowledge.store']
 ```
 
 ## agentUniverse目前内置Store：

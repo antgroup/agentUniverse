@@ -5,7 +5,7 @@ In the current au's sample project, the following tools are integrated.
 ## 1. Search Tools
 
 ### 1.1 Google Search
-[工具地址](../../../sample_standard_app/app/core/tool/google_search_tool.yaml)  
+[工具地址](../../../sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)  
 Detailed Configuration Information:
 
 ```yaml
@@ -19,7 +19,7 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.google_search_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.google_search_tool'
   class: 'GoogleSearchTool'
 ```
 To use this API, you must apply for a BING_SUBSCRIPTION_KEY at https://serper.dev and configure it in your environment variables. 
@@ -37,7 +37,7 @@ SERPER_API_KEY="xxxx"
 
 ### 1.2 Bing Search 
 Currently, it integrates with the official Bing search.
-[工具地址](../../../sample_standard_app/app/core/tool/bing_search_tool.yaml)  
+[工具地址](../../../sample_standard_app/intelligence/agentic/tool/bing_search_tool.yaml)  
 Tool configuration:
 ```yaml
 name: 'bing_search_tool'
@@ -46,7 +46,7 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.bing_search_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.bing_search_tool'
   class: 'BingSearchTool'
 ```
 To use this API, you must apply for BING_SUBSCRIPTION_KEY and configure it in environment variables. 
@@ -67,8 +67,8 @@ BING_SUBSCRIPTION_KEY="xxxx"
 
 ### 1.3 Search API
 Supports multiple search tools, such as: 
-- [Baidu search](../../../sample_standard_app/app/core/tool/search_api_baidu_tool.yaml)
-- [Bing search](../../../sample_standard_app/app/core/tool/search_api_bing_tool.yaml)  
+- [Baidu search](../../../sample_standard_app/intelligence/agentic/tool/search_api_baidu_tool.yaml)
+- [Bing search](../../../sample_standard_app/intelligence/agentic/tool/search_api_bing_tool.yaml)  
 Other search engines also include: Google search, Amazon search, YouTube search, etc. For more information, please refer to: https://www.searchapi.io/
 Tool configuration:
 ```yaml
@@ -82,7 +82,7 @@ search_params:
   num: 10
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.search_api_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.search_api_tool'
   class: 'SearchAPITool'
 ```
 Parameter description:
@@ -107,7 +107,7 @@ SEARCHAPI_API_KEY="xxxxxx"
 ## 2. Code Tool
 
 ### 2.1 PythonRepl
-[Tool address](../../../sample_standard_app/app/core/tool/python_repl_tool.yaml)  
+[Tool address](../../../sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)  
 This tool can execute a piece of Python code, the configuration information of the tool:  
 ```yaml
 name: 'python_runner'
@@ -127,7 +127,7 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.python_repl'
+  module: 'sample_standard_app.intelligence.agentic.tool.python_repl'
   class: 'PythonREPLTool'
 ```
 
@@ -137,7 +137,7 @@ This tool can be used directly without any key, but for system security, please 
 ## 3.HTTP Tool
 
 ### 3.1 HTTP GET
-[Tool address](../../../sample_standard_app/app/core/tool/request_get_tool.yaml)
+[Tool address](../../../sample_standard_app/intelligence/agentic/tool/request_get_tool.yaml)
 The tool can send a GET request, with its configuration information being:
 ```yaml
 name: 'requests_get'
@@ -154,7 +154,7 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.request_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.request_tool'
   class: 'RequestTool'
 ```
 Configuration to Refer to When Sending a POST Request：
@@ -177,7 +177,7 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.request_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.request_tool'
   class: 'RequestTool'
 ```
 Parameter Description:

@@ -23,10 +23,9 @@ post_processors:
     - "another_doc_processor"
 readers:
     pdf: "default_pdf_reader"
-
 metadata:
   type: 'KNOWLEDGE'
-  module: 'sample_standard_app.app.core.knowledge.sample_knowledge'
+  module: 'sample_standard_app.intelligence.agentic.knowledge.sample_knowledge'
   class: 'SampleKnowledge'
 ```
 - stores: All associated Stores. A list of strings, where each string represents the name of a Store component.
@@ -75,7 +74,7 @@ For example, in the configuration of the sample project:
 ```yaml
 [CORE_PACKAGE]
 # Scan and register knowledge components for all paths under this list, with priority over the default.
-knowledge = ['sample_standard_app.app.core.knowledge']
+knowledge = ['sample_standard_app.intelligence.agentic.knowledge']
 ```
 
 # How to Use the Knowledge Component

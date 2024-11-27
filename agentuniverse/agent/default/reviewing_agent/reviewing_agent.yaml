@@ -3,15 +3,12 @@ info:
   description: 'reviewing agent'
 profile:
   llm_model:
-    name: 'default_openai_llm'
-    model_name: 'gpt-3.5-turbo'
-    temperature: 0.7
-plan:
-  planner:
-    name: 'reviewing_planner'
+    name: 'default_qwen_llm'
+    model_name: 'qwen2.5-72b-instruct'
+    temperature: 0.3
 memory:
   name: ''
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.reviewing_agent.reviewing_agent'
-  class: 'ReviewingAgent'
+  module: 'agentuniverse.agent.template.reviewing_agent_template'
+  class: 'ReviewingAgentTemplate'

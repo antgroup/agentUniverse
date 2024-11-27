@@ -1,8 +1,0 @@
-name: 'bing_search_tool'
-description: 'demo bing search tool'
-tool_type: 'api'
-input_keys: ['input']
-metadata:
-  type: 'TOOL'
-  module: 'sample_standard_app.app.core.tool.bing_search_tool'
-  class: 'BingSearchTool'

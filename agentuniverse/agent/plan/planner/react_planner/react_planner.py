@@ -5,14 +5,11 @@
 # @Author  : wangchongshi
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: react_planner.py
-
-
 from typing import Sequence, Optional, Union, List
 
 from langchain.agents.format_scratchpad import format_log_to_str
 from langchain.agents.output_parsers import ReActSingleInputOutputParser
 
-from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain.agents import AgentExecutor, AgentOutputParser
 from langchain.tools import Tool as LangchainTool
 from langchain_core.language_models import BaseLanguageModel
@@ -28,9 +25,10 @@ from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.agent_manager import AgentManager
 from agentuniverse.agent.agent_model import AgentModel
 from agentuniverse.agent.input_object import InputObject
-from agentuniverse.agent.memory.chat_memory import ChatMemory
+from agentuniverse.agent.memory.memory import Memory
 from agentuniverse.agent.plan.planner.planner import Planner
 from agentuniverse.agent.plan.planner.react_planner.stream_callback import StreamOutPutCallbackHandler
+from agentuniverse.base.util.agent_util import assemble_memory_input
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
 from agentuniverse.prompt.chat_prompt import ChatPrompt
@@ -56,13 +54,13 @@ class ReActPlanner(Planner):
             dict: The planner result.
         """
 
-        memory: ChatMemory = self.handle_memory(agent_model, planner_input)
+        memory: Memory = self.handle_memory(agent_model, planner_input)
 
         llm: LLM = self.handle_llm(agent_model)
         tools = self.acquire_tools(agent_model.action)
         prompt: Prompt = self.handle_prompt(agent_model, planner_input)
         process_llm_token(llm, prompt.as_langchain(), agent_model.profile, planner_input)
-        chat_history = memory.as_langchain().chat_memory if memory else InMemoryChatMessageHistory()
+        assemble_memory_input(memory, planner_input)
         stop_sequence = []
         if agent_model.plan.get('stop_sequence'):
             stop_sequence = agent_model.profile.get('stop_sequence')
@@ -74,7 +72,8 @@ class ReActPlanner(Planner):
                                        max_iterations=agent_model.plan.get('planner').get("max_iterations", 15))
 
         return agent_executor.invoke(input=planner_input, memory=memory.as_langchain() if memory else None,
-                                     chat_history=chat_history, config=self.get_run_config(agent_model, input_object))
+                                     chat_history=planner_input.get(memory.memory_key) if memory else '',
+                                     config=self.get_run_config(agent_model, input_object))
 
     @staticmethod
     def get_run_config(agent_model: AgentModel, input_object: InputObject) -> RunnableConfig:

@@ -6,7 +6,6 @@
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: agentuniverse_product.py
 import sys
-from typing import List
 
 from agentuniverse.base.agentuniverse import AgentUniverse
 from agentuniverse.base.component.application_component_manager import ApplicationComponentManager
@@ -41,9 +40,7 @@ class AgentUniverseProduct(object):
         # get default config path
         project_root_path = get_project_root_path()
         sys.path.append(str(project_root_path.parent))
-        app_path = project_root_path / 'app'
-        if app_path.exists():
-            sys.path.append(str(app_path))
+        self._add_to_sys_path(project_root_path, ['platform', 'app'])
         if not config_path:
             config_path = project_root_path / 'config' / 'config.toml'
             config_path = str(config_path)
@@ -62,7 +59,7 @@ class AgentUniverseProduct(object):
         # start the product ui server
         config = configer.value.get('MAGENT_UI', {})
         try:
-            from magent_ui import launch 
+            from magent_ui import launch
         except ImportError as e:
             print(e)
             raise ImportError(
@@ -70,8 +67,6 @@ class AgentUniverseProduct(object):
                 " Please install it with `pip install magent-ui ruamel.yaml`."
             )
         launch(**config)
-        
-            
 
     def __init_product_tables(self):
         """Initialize the product tables including session and message tables."""
@@ -119,3 +114,9 @@ class AgentUniverseProduct(object):
                 continue
             product_instance.component_config_path = product_configer.configer.path
             ProductManager().register(product_instance.get_instance_code(), product_instance)
+
+    def _add_to_sys_path(self, root_path, sub_dirs):
+        for sub_dir in sub_dirs:
+            app_path = root_path / sub_dir
+            if app_path.exists():
+                sys.path.append(str(app_path))

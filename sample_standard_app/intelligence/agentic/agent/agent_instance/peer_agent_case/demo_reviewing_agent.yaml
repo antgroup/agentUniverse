@@ -1,0 +1,13 @@
+info:
+  name: 'demo_reviewing_agent'
+  description: 'demo reviewing agent'
+profile:
+  llm_model:
+    name: 'qwen_llm'
+    temperature: 0.5
+memory:
+  name: ''
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.reviewing_agent_template'
+  class: 'ReviewingAgentTemplate'

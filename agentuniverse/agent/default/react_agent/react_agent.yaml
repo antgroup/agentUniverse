@@ -3,15 +3,13 @@ info:
   description: 'react agent'
 profile:
   llm_model:
-    name: 'default_openai_llm'
-    model_name: 'gpt-4o'
+    name: 'default_qwen_llm'
+    model_name: 'qwen-max'
+    stop: 'Observation'
+    temperature: 0.1
 action:
   tool:
-    - ''
-plan:
-  planner:
-    name: 'react_planner'
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.react_agent.react_agent'
-  class: 'ReActAgent'
+  module: 'agentuniverse.agent.template.react_agent_template'
+  class: 'ReActAgentTemplate'

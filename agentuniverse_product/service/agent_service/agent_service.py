@@ -30,6 +30,7 @@ from agentuniverse_product.service.session_service.session_service import Sessio
 from agentuniverse_product.service.util.agent_util import validate_create_agent_parameters, \
     assemble_product_config_data, assemble_agent_config_data, assemble_agent_dto, update_agent_product_config, \
     update_agent_config, register_agent, register_product, validate_and_assemble_agent_input
+from agentuniverse_product.service.util.common_util import get_core_path
 
 
 class AgentService:
@@ -113,8 +114,7 @@ class AgentService:
 
         # invoke agent
         start_time = time.time()
-        output_object: OutputObject = agent.run(input=input,
-                                                chat_history=AgentService().get_agent_chat_history(session_id))
+        output_object: OutputObject = agent.run(input=input, session_id=session_id)
         end_time = time.time()
         # calculate response time
         response_time = round((end_time - start_time) * 1000, 2)
@@ -146,8 +146,7 @@ class AgentService:
         Returns:
             Iterator: Response.
         """
-        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input,
-                                                             AgentService().get_agent_chat_history(session_id))
+        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input)
 
         # init the invocation chain and token usage of the monitor module
         Monitor.init_invocation_chain()
@@ -212,8 +211,7 @@ class AgentService:
         Returns:
             AsyncIterator: Response.
         """
-        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input,
-                                                             AgentService().get_agent_chat_history(session_id))
+        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input)
 
         # init the invocation chain and token usage of the monitor module
         Monitor.init_invocation_chain()
@@ -283,19 +281,23 @@ class AgentService:
 
         # write product YAML file
         product_file_name = f"{agent_dto.id}_product"
-        product_file_path = os.path.join('..', 'core', 'product', 'agent', f"{product_file_name}.yaml")
-        write_yaml_file(product_file_path, product_config_data)
+
+        path = get_core_path()
+        product_file_path = path / 'product' / 'agent' / f"{product_file_name}.yaml" if path \
+            else os.path.join('..', '..', 'platform', 'difizen', 'product', 'agent', f"{product_file_name}.yaml")
+        write_yaml_file(str(product_file_path), product_config_data)
 
         # assemble agent config data
         agent_config_data = assemble_agent_config_data(agent_dto)
 
         # write agent YAML file
-        agent_file_path = os.path.join('..', 'core', 'agent', f"{agent_dto.id}.yaml")
-        write_yaml_file(agent_file_path, agent_config_data)
+        agent_file_path = path / 'agent' / f"{agent_dto.id}.yaml" if path \
+            else os.path.join('..', '..', 'intelligence', 'agentic', 'agent', f"{agent_dto.id}.yaml")
+        write_yaml_file(str(agent_file_path), agent_config_data)
 
         # register product and agent instance
-        register_agent(agent_file_path)
-        register_product(product_file_path)
+        register_agent(str(agent_file_path))
+        register_product(str(product_file_path))
         return agent_dto.id
 
     @staticmethod

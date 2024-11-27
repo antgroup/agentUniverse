@@ -26,21 +26,21 @@ Note - 对于版本的额外说明。
 # 版本更新记录
 ## [0.0.13] - 2024-09-12
 ### Added
-- RAG检索增强能力组件版本更新
-- 本版本提供知识库构建、RAG检索召回环节标准作业流程，组件覆盖数据加载、数据处理、索引构建、知识入库、意图改写、检索重排等一系列RAG原子能力，帮助用户在开源场景下快速构建通用RAG智能体方案。
+- RAG检索增强能力组件版本更新  
+本版本提供知识库构建、RAG检索召回环节标准作业流程，组件覆盖数据加载、数据处理、索引构建、知识入库、意图改写、检索重排等一系列RAG原子能力，帮助用户在开源场景下快速构建通用RAG智能体方案。
 
-- 智能体产品化平台更新
-- 本版本新增支持智能体画布编排、私有知识库构建、自定义插件等能力，通过低代码、可视化的方式帮助用户快速构建与编排智能体。
+- 智能体产品化平台更新  
+本版本新增支持智能体画布编排、私有知识库构建、自定义插件等能力，通过低代码、可视化的方式帮助用户快速构建与编排智能体。
 
 - 新增智谱GLM默认模型组件
 - 新增SQLiteStore存储组件
 - 新增flow编排执行引擎
 
 ### Note 
-- system_db_uri默认路径优化
-  - 默认路径已兼容windows平台，详情见[issue142](https://github.com/alipay/agentUniverse/issues/142)
-- ReactAgent支持链停止词配置化
-  - ReactAgent yaml配置目前已经支持stop_sequence关键词，用户可以自行配置链停止词,详情见[issue127](https://github.com/alipay/agentUniverse/issues/127)
+- system_db_uri默认路径优化  
+默认路径已兼容windows平台，详情见[issue142](https://github.com/alipay/agentUniverse/issues/142)
+- ReactAgent支持链停止词配置化  
+ReactAgent yaml配置目前已经支持stop_sequence关键词，用户可以自行配置链停止词,详情见[issue127](https://github.com/alipay/agentUniverse/issues/127)
 - 新增RAG原理介绍与RAG快速构建指导文档，请关注README与用户指南相应部分。
 - 新增智能体产品化平台高阶指导文档，请关注README与用户指南相应部分。
 - 部分代码优化与文档更新
@@ -139,7 +139,7 @@ Note - 对于版本的额外说明。
 - 新增通义千问、文心一言、Kimi、百川等常用LLM接入方式
 
 ### Note 
-- 添加多模态样例agent调用详情见`sample_standard_app.app.test.test_multimodal_agent.MultimodalAgentTest`
+- 添加多模态样例agent调用详情见`sample_standard_app.intelligence.test.test_multimodal_agent.MultimodalAgentTest`
 - 部分代码优化与文档更新
 
 ## [0.0.6] - 2024-05-15

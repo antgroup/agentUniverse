@@ -4,7 +4,7 @@ type: 'long_term'
 memory_key: 'chat_history'
 input_key: 'input'
 output_key: 'output'
-max_tokens: 1000
+max_tokens: 3000
 prompt_version: 'chat_memory.summarizer_cn'
 metadata:
   type: 'MEMORY'
