@@ -7,6 +7,7 @@
 # @FileName: knowledge.py
 import os
 import re
+import traceback
 from typing import Optional, Dict, List, Any
 from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 
@@ -163,6 +164,7 @@ class Knowledge(ComponentBase):
             try:
                 future.result()
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge insert: {e}")
         LOGGER.info("Knowledge insert complete.")
 
@@ -188,6 +190,7 @@ class Knowledge(ComponentBase):
             try:
                 future.result()
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge update: {e}")
         LOGGER.info("Knowledge update complete.")
 
@@ -219,6 +222,7 @@ class Knowledge(ComponentBase):
                     if _doc.id not in retrieved_docs:
                         retrieved_docs[_doc.id] = _doc
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge query: {e}")
         retrieved_docs = list(retrieved_docs.values())
         retrieved_docs = self._rag_post_process(retrieved_docs, query)

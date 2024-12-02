@@ -6,7 +6,10 @@
 # @Email   : fanen.lhy@antgroup.com
 # @FileName: thread_with_result.py
 
+import threading
 from threading import Thread
+import weakref
+from concurrent.futures.thread import ThreadPoolExecutor, _worker, _threads_queues
 
 from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 
@@ -54,3 +57,28 @@ class ThreadWithReturnValue(Thread):
         if self.error is not None:
             raise self.error
         return self._return
+
+
+class ThreadPoolExecutorWithReturnValue(ThreadPoolExecutor):
+    def _adjust_thread_count(self):
+        # if idle threads are available, don't spin new threads
+        if self._idle_semaphore.acquire(timeout=0):
+            return
+
+        # When the executor gets lost, the weakref callback will wake up
+        # the worker threads.
+        def weakref_cb(_, q=self._work_queue):
+            q.put(None)
+
+        num_threads = len(self._threads)
+        if num_threads < self._max_workers:
+            thread_name = '%s_%d' % (self._thread_name_prefix or self,
+                                     num_threads)
+            t = threading.Thread(name=thread_name, target=_worker,
+                                 args=(weakref.ref(self, weakref_cb),
+                                       self._work_queue,
+                                       self._initializer,
+                                       self._initargs))
+            t.start()
+            self._threads.add(t)
+            _threads_queues[t] = self._work_queue

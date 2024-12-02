@@ -16,13 +16,13 @@ from agentuniverse.llm.llm_output import LLMOutput
 from agentuniverse.llm.openai_style_llm import OpenAIStyleLLM
 
 QWen_Max_CONTEXT_LENGTH = {
-    "qwen-turbo": 6000,
-    "qwen-plus": 300000,
-    "qwen-max": 6000,
-    "qwen-max-0428": 6000,
-    "qwen-max-0403": 6000,
-    "qwen-max-0107": 6000,
-    "qwen-max-longcontext": 28000
+    "qwen-turbo": 131072,
+    "qwen-plus": 131072,
+    "qwen-max": 32768,
+    "qwen-max-0428": 8000,
+    "qwen-max-0403": 8000,
+    "qwen-max-0107": 8000,
+    "qwen-long": 10000000
 }
 
 
