@@ -89,6 +89,7 @@ class ElasticsearchMemoryStorage(MemoryStorage):
                         "timestamp": {"type": "date"},
                         "params": {"type": "text"},
                         "pair_id": {"type": "keyword"},
+                        "additional_args": {"type": "object"}
                     }
                 }
             }
@@ -273,7 +274,8 @@ class DefaultMemoryConverter:
                 'pair_id': es_hit['_source'].get('pair_id')
             },
             'type': es_hit['_source']['type'],
-            'trace_id': es_hit['_source']['trace_id']
+            'trace_id': es_hit['_source']['trace_id'],
+            'additional_args': es_hit['_source'].get('additional_args')
         })
 
     def to_es_action(self, message: ConversationMessage, session_id: str = None, agent_id: str = None, **kwargs) -> str:
@@ -290,7 +292,8 @@ class DefaultMemoryConverter:
             "prefix": message.metadata.get("prefix"),
             "timestamp": message.metadata.get("timestamp", datetime.datetime.now()).isoformat(),
             "params": message.metadata.get("params"),
-            "pair_id": message.metadata.get("pair_id")
+            "pair_id": message.metadata.get("pair_id"),
+            "additional_args": message.metadata.get("additional_args")
 
         }
         index_info = {

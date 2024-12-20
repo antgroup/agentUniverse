@@ -14,7 +14,7 @@ memory:
   input_field: 'input'
   output_field: 'output'
   top_k: 10
-  collection_types: ['user','agent','llm']
+  collection_types: ['user','llm']
 
 metadata:
   type: 'AGENT'

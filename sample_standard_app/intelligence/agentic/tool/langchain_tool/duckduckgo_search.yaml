@@ -3,7 +3,7 @@ description: ''
 tool_type: 'api'
 input_keys: ['input']
 langchain:
-  module: langchain.tools
+  module: langchain_community.tools
   class_name: DuckDuckGoSearchResults
   init_params:
     backend: news

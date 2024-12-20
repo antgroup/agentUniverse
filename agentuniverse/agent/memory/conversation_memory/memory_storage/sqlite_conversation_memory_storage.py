@@ -6,6 +6,7 @@
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: sql_alchemy_memory_storage.py
 import datetime
+import json
 import uuid
 from abc import abstractmethod
 from typing import Optional, List, Any
@@ -78,6 +79,7 @@ def create_memory_model(table_name: str, DynamicBase: Any) -> Any:
         params = Column(Text)
         pair_id = Column(String(50), default=0)
         message_id = Column(String(100), unique=True)
+        additional_args = Column(Text)
 
         __table_args__ = (
             Index(f"idx_{table_name}_session_id_source", 'session_id', 'source', 'source_type'),
@@ -112,41 +114,29 @@ class DefaultMemoryConverter(BaseMemoryConverter):
                                                   'pair_id': sql_message.pair_id
                                               },
                                               'type': sql_message.type,
-                                              'trace_id': sql_message.trace_id
+                                              'trace_id': sql_message.trace_id,
+                                              'additional_args': json.loads(sql_message.additional_args)
                                               })
 
     def to_sql_model(self, message: ConversationMessage, session_id: str = None, **kwargs) -> Any:
         """Convert a Message instance to a SQLAlchemy model."""
-        if isinstance(message, ConversationMessage):
-            return self.model_class(
-                session_id=session_id, content=message.content,
-                trace_id=message.trace_id,
-                source=message.source,
-                source_type=message.source_type,
-                target=message.target,
-                target_type=message.target_type,
-                type=message.type,
-                prefix=message.metadata.get('prefix'),
-                timestamp=message.metadata.get('timestamp', datetime.datetime.now()),
-                params=message.metadata.get('params'),
-                pair_id=message.metadata.get('pair_id'),
-                message_id=message.id or uuid.uuid4().hex
-            )
-        elif isinstance(message, Message):
-            return self.model_class(
-                session_id=session_id, content=message.content,
-                trace_id=message.trace_id,
-                source=kwargs.get('source'),
-                source_type='agent',
-                target=kwargs.get('agent_id'),
-                target_type='agent',
-                type=message.type,
-                prefix=message.metadata.get('prefix'),
-                timestamp=message.metadata.get('timestamp', datetime.datetime.now()),
-                params=message.metadata.get('params'),
-                pair_id=message.metadata.get('pair_id'),
-                message_id=message.id or uuid.uuid4().hex
-            )
+        return self.model_class(
+            session_id=session_id, content=message.content,
+            trace_id=message.trace_id,
+            source=message.source,
+            source_type=message.source_type,
+            target=message.target,
+            target_type=message.target_type,
+            type=message.type,
+            prefix=message.metadata.get('prefix'),
+            timestamp=message.metadata.get('timestamp', datetime.datetime.now()),
+            params=message.metadata.get('params'),
+            pair_id=message.metadata.get('pair_id'),
+            message_id=message.id or uuid.uuid4().hex,
+            additional_args=json.dumps(message.additional_args)
+        )
+
+
 
     def get_sql_model_class(self) -> Any:
         """Get the SQLAlchemy model class."""

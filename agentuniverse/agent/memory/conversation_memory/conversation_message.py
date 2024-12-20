@@ -9,6 +9,8 @@
 import uuid
 from typing import Optional, List
 
+from pydantic import Field
+
 from agentuniverse.agent.memory.enum import ChatMessageEnum
 from langchain_core.prompts import HumanMessagePromptTemplate, AIMessagePromptTemplate
 from langchain_core.prompts.chat import BaseStringMessagePromptTemplate
@@ -44,6 +46,7 @@ class ConversationMessage(Message):
     type: Optional[str] = None
     content: Optional[str] = None
     metadata: Optional[dict] = None
+    additional_args: Optional[dict] = Field(default_factory=dict)
 
     @staticmethod
     def as_langchain_list(message_list: List['ConversationMessage']):

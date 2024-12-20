@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
-
+import json
 # @Time    : 2024/10/10 19:10
 # @Author  : wangchongshi
 # @Email   : wangchongshi.wcs@antgroup.com
@@ -124,6 +124,7 @@ class ChromaConversationMemoryStorage(MemoryStorage):
             metadata['params'] = message.metadata.get('params')
             metadata['prefix'] = message.metadata.get('prefix')
             metadata['pair_id'] = message.metadata.get('pair_id')
+            metadata['additional_args'] = json.dumps(message.additional_args)
             self._collection.add(
                 ids=[message.id if message.id else str(uuid.uuid4())],
                 documents=[message.content],
@@ -252,7 +253,8 @@ class ChromaConversationMemoryStorage(MemoryStorage):
                         target=metadatas[0][i].get('target', None) if metadatas[0] else None,
                         target_type=metadatas[0][i].get('target_type', '') if metadatas[0] else '',
                         trace_id=metadatas[0][i].get('trace_id', '') if metadatas[0] else '',
-                        type=metadatas[0][i].get('type', '') if metadatas[0] else ''
+                        type=metadatas[0][i].get('type', '') if metadatas[0] else '',
+                        additional_args=json.loads(metadatas[0][i].get('additional_args', "{}"))
                     )
                     for i in range(len(result['ids'][0]))
                 ]
@@ -271,7 +273,8 @@ class ChromaConversationMemoryStorage(MemoryStorage):
                         source=metadatas[i].get('source', None) if metadatas[i] else None,
                         content=documents[i],
                         metadata=metadatas[i] if metadatas[i] else None,
-                        type=metadatas[i].get('type', '') if metadatas[i] else ''
+                        type=metadatas[i].get('type', '') if metadatas[i] else '',
+                        additional_args=json.loads(metadatas[i].get('additional_args', "{}"))
                     )
                     for i in range(len(result['ids']))
                 ]

@@ -1,0 +1,18 @@
+info:
+  name: 'question_agent_case'
+  description: 'rag agent case with conversation memory'
+profile:
+  prompt_version: question_parse_agent.cn
+  llm_model:
+    name: 'deep_seek_llm'
+action:
+
+memory:
+  conversation_memory: 'demo_conversation_memory'
+  auto_trace: false
+  agent_id: rag_agent_case
+
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_template.question_parse_agent_template'
+  class: 'QuestionParseAgentCaseTemplate'
