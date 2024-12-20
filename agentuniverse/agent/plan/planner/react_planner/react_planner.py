@@ -27,7 +27,8 @@ from agentuniverse.agent.agent_model import AgentModel
 from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.memory.memory import Memory
 from agentuniverse.agent.plan.planner.planner import Planner
-from agentuniverse.agent.plan.planner.react_planner.stream_callback import StreamOutPutCallbackHandler
+from agentuniverse.agent.plan.planner.react_planner.stream_callback import StreamOutPutCallbackHandler, \
+    InvokeCallbackHandler
 from agentuniverse.base.util.agent_util import assemble_memory_input
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
@@ -81,6 +82,8 @@ class ReActPlanner(Planner):
         callbacks = []
         output_stream = input_object.get_data('output_stream')
         callbacks.append(StreamOutPutCallbackHandler(output_stream, agent_info=agent_model.info))
+        callbacks.append(InvokeCallbackHandler(source=agent_model.info.get('name'),
+                                               llm_name=agent_model.profile.get('llm_model').get('name')))
         config.setdefault("callbacks", callbacks)
         return config
 

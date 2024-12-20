@@ -52,7 +52,8 @@ class PeerAgentTemplate(AgentTemplate):
         peer_work_pattern = peer_work_pattern.set_by_agent_model(**agents)
         work_pattern_result = self.customized_execute(input_object=input_object, agent_input=agent_input, memory=memory,
                                                       peer_work_pattern=peer_work_pattern)
-        self.add_peer_memory(memory, agent_input, work_pattern_result)
+        if self.memory_name:
+            self.add_peer_memory(memory, agent_input, work_pattern_result)
         return work_pattern_result
 
     async def async_execute(self, input_object: InputObject, agent_input: dict, **kwargs) -> dict:

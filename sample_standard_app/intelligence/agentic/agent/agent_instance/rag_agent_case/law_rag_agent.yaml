@@ -23,6 +23,8 @@ profile:
 plan:
   planner:
     name: 'rag_planner'
+memory:
+  conversation_memory: 'demo_memory_c'
 action:
   knowledge:
     - 'law_knowledge'

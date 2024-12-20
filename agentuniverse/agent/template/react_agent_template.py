@@ -27,7 +27,8 @@ from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.agent_manager import AgentManager
 from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.memory.memory import Memory
-from agentuniverse.agent.plan.planner.react_planner.stream_callback import StreamOutPutCallbackHandler
+from agentuniverse.agent.plan.planner.react_planner.stream_callback import StreamOutPutCallbackHandler, \
+    InvokeCallbackHandler
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
 from agentuniverse.prompt.prompt import Prompt
@@ -57,7 +58,7 @@ class ReActAgentTemplate(AgentTemplate):
 
     def customized_execute(self, input_object: InputObject, agent_input: dict, memory: Memory, llm: LLM, prompt: Prompt,
                            **kwargs) -> dict:
-        assemble_memory_input(memory, agent_input)
+        assemble_memory_input(memory, agent_input,self.get_memory_params(agent_input))
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         lc_tools: List[LangchainTool] = self._convert_to_langchain_tool()
         agent = self.create_react_agent(llm.as_langchain(), lc_tools, prompt.as_langchain(),
@@ -77,7 +78,7 @@ class ReActAgentTemplate(AgentTemplate):
 
     async def customized_async_execute(self, input_object: InputObject, agent_input: dict, memory: Memory,
                                        llm: LLM, prompt: Prompt, **kwargs) -> dict:
-        assemble_memory_input(memory, agent_input)
+        assemble_memory_input(memory, agent_input,self.get_memory_params(agent_input))
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         lc_tools: List[LangchainTool] = self._convert_to_langchain_tool()
         agent = self.create_react_agent(llm.as_langchain(), lc_tools, prompt.as_langchain(),
@@ -163,6 +164,8 @@ class ReActAgentTemplate(AgentTemplate):
         callbacks = []
         output_stream = input_object.get_data('output_stream')
         callbacks.append(StreamOutPutCallbackHandler(output_stream, agent_info=self.agent_model.info))
+        callbacks.append(InvokeCallbackHandler(source=self.agent_model.info.get('name'),
+                                               llm_name=self.agent_model.profile.get('llm_model').get('name')))
         config.setdefault("callbacks", callbacks)
         return config
 

@@ -10,7 +10,7 @@ from abc import abstractmethod, ABC
 from datetime import datetime
 from typing import Optional, Any, List
 
-from langchain_core.runnables import RunnableSerializable
+from langchain_core.runnables import RunnableSerializable, RunnableConfig
 from langchain_core.utils.json import parse_json_markdown
 
 from agentuniverse.agent.action.knowledge.knowledge import Knowledge
@@ -26,6 +26,7 @@ from agentuniverse.agent.memory.message import Message
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.agent.plan.planner.planner import Planner
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
+from agentuniverse.agent.plan.planner.react_planner.stream_callback import InvokeCallbackHandler
 from agentuniverse.base.annotation.trace import trace_agent
 from agentuniverse.base.component.component_base import ComponentBase
 from agentuniverse.base.component.component_enum import ComponentEnum
@@ -34,6 +35,7 @@ from agentuniverse.base.config.application_configer.application_config_manager \
 from agentuniverse.base.config.component_configer.configers.agent_configer \
     import AgentConfiger
 from agentuniverse.base.util.common_util import stream_output
+from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 from agentuniverse.base.util.logging.logging_util import LOGGER
 from agentuniverse.base.util.memory_util import generate_messages
 from agentuniverse.llm.llm import LLM
@@ -233,8 +235,12 @@ class Agent(ComponentBase, ABC):
 
     def process_memory(self, agent_input: dict, **kwargs) -> Memory | None:
         memory: Memory = MemoryManager().get_instance_obj(component_instance_name=self.memory_name)
-        if memory is None:
+        conversation_memory: Memory = MemoryManager().get_instance_obj(
+            component_instance_name=self.conversation_memory_name)
+        if memory is None and conversation_memory is None:
             return None
+        if memory is None:
+            memory = conversation_memory
 
         chat_history: list = agent_input.get('chat_history')
         # generate a list of temporary messages from the given chat history and add them to the memory instance.
@@ -249,10 +255,10 @@ class Agent(ComponentBase, ABC):
     def invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict, input_object: InputObject,
                      **kwargs):
         if not input_object.get_data('output_stream'):
-            res = chain.invoke(input=agent_input)
+            res = chain.invoke(input=agent_input,config=self.get_run_config())
             return res
         result = []
-        for token in chain.stream(input=agent_input):
+        for token in chain.stream(input=agent_input,config=self.get_run_config()):
             stream_output(input_object.get_data('output_stream', None), {
                 'type': 'token',
                 'data': {
@@ -266,10 +272,10 @@ class Agent(ComponentBase, ABC):
     async def async_invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict,
                                  input_object: InputObject, **kwargs):
         if not input_object.get_data('output_stream'):
-            res = await chain.ainvoke(input=agent_input)
+            res = await chain.ainvoke(input=agent_input, config=self.get_run_config())
             return res
         result = []
-        async for token in chain.astream(input=agent_input):
+        async for token in chain.astream(input=agent_input, config=self.get_run_config()):
             stream_output(input_object.get_data('output_stream', None), {
                 'type': 'token',
                 'data': {
@@ -341,3 +347,41 @@ class Agent(ComponentBase, ABC):
         if image_urls:
             chat_prompt.generate_image_prompt(image_urls)
         return chat_prompt
+
+    def get_memory_params(self, agent_input: dict) -> dict:
+        memory_info = self.agent_model.memory
+        memory_types = self.agent_model.memory.get('memory_types', None)
+        prune = self.agent_model.memory.get('prune', False)
+        top_k = self.agent_model.memory.get('top_k', 20)
+        session_id = agent_input.get('session_id')
+        agent_id = self.agent_model.info.get('name')
+        if not session_id:
+            session_id = FrameworkContextManager().get_context('session_id')
+        if "agent_id" in memory_info:
+            agent_id = memory_info.get('agent_id')
+        params = {
+            'session_id': session_id,
+            'agent_id': agent_id,
+            'types': memory_types,
+            'prune': prune,
+            'top_k': top_k
+        }
+        if agent_input.get('input'):
+            params['input'] = agent_input.get('input')
+        return params
+
+    def get_run_config(self, **kwargs) -> dict:
+        callbacks = [InvokeCallbackHandler(
+            source=self.agent_model.info.get('name'),
+            llm_name=self.llm_name
+        )]
+        return RunnableConfig(callbacks=callbacks)
+
+    def collect_current_memory(self, collect_type: str) -> bool:
+        collection_types = self.agent_model.memory.get('collection_types')
+        auto_trace = self.agent_model.memory.get('auto_trace', True)
+        if not auto_trace:
+            return False
+        if collection_types and collect_type not in collection_types:
+            return False
+        return True

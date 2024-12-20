@@ -4,11 +4,14 @@ info:
 profile:
   prompt_version: demo_planning_agent.cn
   llm_model:
-    name: 'qwen_llm'
-    model_name: 'qwen-max'
+    name: 'deep_seek_llm'
+#    model_name: 'qwen-max'
     temperature: 0.7
 memory:
-  name: 'demo_memory_a'
+#  name: 'demo_memory_a'
+  conversation_memory: 'demo_conversation_memory'
+  agent_id: peer_agent_case
+  collection_types: ['agent']
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.planning_agent_template'

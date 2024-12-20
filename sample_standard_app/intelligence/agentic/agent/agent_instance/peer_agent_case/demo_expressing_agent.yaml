@@ -4,12 +4,14 @@ info:
 profile:
   prompt_version: demo_expressing_agent.cn
   llm_model:
-    name: qwen_llm
+    name: deep_seek_llm
     temperature: 0.2
     prompt_processor:
       type: stuff
 memory:
-  name: 'demo_memory_a'
+#  name: 'demo_memory_a'
+  conversation_memory: 'demo_conversation_memory'
+  collection_types: [ 'agent']
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.expressing_agent_template'

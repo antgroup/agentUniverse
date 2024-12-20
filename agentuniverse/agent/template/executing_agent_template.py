@@ -6,6 +6,7 @@
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: executing_agent_template.py
 import asyncio
+import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 from typing import Optional
@@ -14,7 +15,9 @@ from langchain_core.output_parsers import StrOutputParser
 
 from agentuniverse.agent.action.tool.tool_manager import ToolManager
 from agentuniverse.agent.input_object import InputObject
+from agentuniverse.agent.memory.conversation_memory.conversation_memory_module import ConversationMemoryModule
 from agentuniverse.agent.memory.memory import Memory
+from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.agent.template.agent_template import AgentTemplate
 from agentuniverse.base.config.component_configer.configers.agent_configer import AgentConfiger
 from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
@@ -57,15 +60,19 @@ class ExecutingAgentTemplate(AgentTemplate):
     def _execute_tasks(self, input_object: InputObject, agent_input: dict, memory: Memory, llm: LLM,
                        prompt: Prompt, **kwargs) -> dict:
         self._context_values: dict = FrameworkContextManager().get_all_contexts()
-
+        _context_values: dict = FrameworkContextManager().get_all_contexts()
         framework = agent_input.get('framework', [])
+
+        if len(framework) == 0:
+            return {'executing_result': [],
+                    'output_stream': input_object.get_data('output_stream', None)}
 
         with ThreadPoolExecutor(max_workers=min(len(framework), 10),
                                 thread_name_prefix="executing_agent_template") as thread_executor:
             futures = []
             for i, subtask in enumerate(framework):
                 future = thread_executor.submit(self._execute_subtask, subtask, input_object, agent_input, i, memory,
-                                                llm, prompt)
+                                                llm, prompt, context_values=_context_values)
                 futures.append(future)
                 time.sleep(1)
 
@@ -75,13 +82,22 @@ class ExecutingAgentTemplate(AgentTemplate):
         return {'executing_result': [result for result in executing_result],
                 'output_stream': input_object.get_data('output_stream', None)}
 
-    def _execute_subtask(self, subtask, input_object, agent_input, index, memory, llm, prompt) -> dict:
+    def _execute_subtask(self, subtask, input_object, agent_input, index, memory, llm, prompt, **kwargs) -> dict:
         context_tokens = {}
+        FrameworkContextManager().set_all_contexts(kwargs.get('context_values', {}))
         try:
+            pair_id = uuid.uuid4().hex
+            ConversationMemoryModule().add_agent_input_info(
+                start_info=input_object.get_data('memory_source_info'),
+                instance=self,
+                params={'input': agent_input.get('framework')[index]},
+                pair_id=pair_id,
+                auto=False
+            )
             # pass the framework context into the thread.
-            for var_name, var_value in self._context_values.items():
-                token = FrameworkContextManager().set_context(var_name, var_value)
-                context_tokens[var_name] = token
+            # for var_name, var_value in self._context_values.items():
+            #     token = FrameworkContextManager().set_context(var_name, var_value)
+            #     context_tokens[var_name] = token
 
             input_object_copy = InputObject(input_object.to_dict())
             agent_input_copy = dict(agent_input)
@@ -94,15 +110,22 @@ class ExecutingAgentTemplate(AgentTemplate):
             agent_input_copy['input'] = subtask
 
             process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input_copy)
-            assemble_memory_input(memory, agent_input_copy)
+            assemble_memory_input(memory, agent_input_copy, self.get_memory_params(agent_input_copy))
 
             chain = prompt.as_langchain() | llm.as_langchain_runnable(
                 self.agent_model.llm_params()) | StrOutputParser()
             res = self.invoke_chain(chain, agent_input_copy, input_object_copy)
-
-            assemble_memory_output(memory=memory,
-                                   agent_input=agent_input,
-                                   content=f"Human: {agent_input.get('input')}, AI: {res}")
+            if self.memory_name:
+                assemble_memory_output(memory=memory,
+                                       agent_input=agent_input,
+                                       content=f"Human: {agent_input.get('input')}, AI: {res}")
+            ConversationMemoryModule().add_agent_result_info(
+                agent_instance=self,
+                agent_result={'output': res},
+                target_info=input_object.get_data('memory_source_info'),
+                pair_id=pair_id,
+                auto=False
+            )
             return {
                 'index': index,
                 'input': f"Question {index + 1}: {subtask}",

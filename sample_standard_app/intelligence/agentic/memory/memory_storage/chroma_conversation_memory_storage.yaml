@@ -1,0 +1,9 @@
+name: 'chroma_conversation_memory_storage'
+description: 'demo chroma memory storage'
+collection_name: 'memory'
+persist_path: '../../intelligence/db/memory2.db'
+embedding_model: 'dashscope_embedding'
+metadata:
+  type: 'MEMORY_STORAGE'
+  module: 'agentuniverse.agent.memory.conversation_memory.memory_storage.chroma_conversation_memory_storage'
+  class: 'ChromaConversationMemoryStorage'

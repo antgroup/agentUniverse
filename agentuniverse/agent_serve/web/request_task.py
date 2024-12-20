@@ -7,6 +7,7 @@
 # @FileName: request_task.py
 import asyncio
 import enum
+import traceback
 from enum import Enum
 import json
 import queue
@@ -83,7 +84,7 @@ class RequestTask:
             yield "data:" + json.dumps({"result": result},
                                        ensure_ascii=False) + "\n\n "
         except Exception as e:
-            LOGGER.error("request task execute Fail: " + str(e))
+            LOGGER.error("request task execute Fail: " + str(e)+traceback.format_exc())
             yield "data:" + json.dumps({"error": {"error_msg": str(e)}}) + "\n\n "
 
     async def async_receive_steps(self) -> AsyncIterator[str]:

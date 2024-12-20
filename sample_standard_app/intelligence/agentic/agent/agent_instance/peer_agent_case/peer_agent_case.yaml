@@ -1,6 +1,6 @@
 info:
-  name: 'demo_peer_agent'
-  description: 'demo peer agent'
+  name: 'peer_agent_case'
+  description: 'peer agent with conversation'
 profile:
   planning: 'demo_planning_agent'
   executing: 'demo_executing_agent'
@@ -14,10 +14,9 @@ profile:
       reviewing:
     selector:
 memory:
-#  name: 'demo_memory_a'
   conversation_memory: 'demo_conversation_memory'
-  agent_id: peer_agent_case
-  collection_types: [ 'agent' ]
+  input_field: 'input'
+  output_field: 'output'
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.peer_agent_template'

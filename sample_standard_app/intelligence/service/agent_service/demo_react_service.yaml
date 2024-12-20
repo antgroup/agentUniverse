@@ -1,5 +1,5 @@
 name: 'demo_react_service'
 description: 'demo react service of demo agent'
-agent: 'demo_react_agent'
+agent: 'react_agent_case'
 metadata:
   type: 'SERVICE'

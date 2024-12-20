@@ -3,10 +3,13 @@ info:
   description: 'demo reviewing agent'
 profile:
   llm_model:
-    name: 'qwen_llm'
+    name: 'deep_seek_llm'
     temperature: 0.5
 memory:
   name: ''
+  auto_trace: False
+  conversation_memory: 'demo_conversation_memory'
+  output_field: 'suggestion'
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.reviewing_agent_template'

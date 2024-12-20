@@ -27,6 +27,7 @@ class AgentTemplate(Agent, ABC):
     tool_names: Optional[list[str]] = None
     knowledge_names: Optional[list[str]] = None
     prompt_version: Optional[str] = None
+    conversation_memory_name: Optional[str] = None
 
     def execute(self, input_object: InputObject, agent_input: dict, **kwargs) -> dict:
         memory: Memory = self.process_memory(agent_input, **kwargs)
@@ -42,27 +43,29 @@ class AgentTemplate(Agent, ABC):
 
     def customized_execute(self, input_object: InputObject, agent_input: dict, memory: Memory, llm: LLM, prompt: Prompt,
                            **kwargs) -> dict:
-        assemble_memory_input(memory, agent_input)
+        assemble_memory_input(memory, agent_input, self.get_memory_params(agent_input))
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         chain = prompt.as_langchain() | llm.as_langchain_runnable(
             self.agent_model.llm_params()) | StrOutputParser()
         res = self.invoke_chain(chain, agent_input, input_object, **kwargs)
-        assemble_memory_output(memory=memory,
-                               agent_input=agent_input,
-                               content=f"Human: {agent_input.get('input')}, AI: {res}")
+        if self.memory_name:
+            assemble_memory_output(memory=memory,
+                                   agent_input=agent_input,
+                                   content=f"Human: {agent_input.get('input')}, AI: {res}")
         self.add_output_stream(input_object.get_data('output_stream'), res)
         return {**agent_input, 'output': res}
 
     async def customized_async_execute(self, input_object: InputObject, agent_input: dict, memory: Memory,
                                        llm: LLM, prompt: Prompt, **kwargs) -> dict:
-        assemble_memory_input(memory, agent_input)
+        assemble_memory_input(memory, agent_input, self.get_memory_params(agent_input))
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         chain = prompt.as_langchain() | llm.as_langchain_runnable(
             self.agent_model.llm_params()) | StrOutputParser()
         res = await self.async_invoke_chain(chain, agent_input, input_object, **kwargs)
-        assemble_memory_output(memory=memory,
-                               agent_input=agent_input,
-                               content=f"Human: {agent_input.get('input')}, AI: {res}")
+        if self.memory_name:
+            assemble_memory_output(memory=memory,
+                                   agent_input=agent_input,
+                                   content=f"Human: {agent_input.get('input')}, AI: {res}")
         self.add_output_stream(input_object.get_data('output_stream'), res)
         return {**agent_input, 'output': res}
 
@@ -78,4 +81,5 @@ class AgentTemplate(Agent, ABC):
         self.memory_name = self.agent_model.memory.get('name')
         self.tool_names = self.agent_model.action.get('tool', [])
         self.knowledge_names = self.agent_model.action.get('knowledge', [])
+        self.conversation_memory_name = self.agent_model.memory.get('conversation_memory', '')
         return self

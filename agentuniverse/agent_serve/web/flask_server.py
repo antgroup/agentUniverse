@@ -1,6 +1,7 @@
 import traceback
 
-from flask import Flask, Response
+from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
+from flask import Flask, Response, request
 from werkzeug.exceptions import HTTPException
 
 from ..service_instance import ServiceInstance, ServiceNotFoundError
@@ -8,10 +9,18 @@ from .request_task import RequestTask
 from .web_util import request_param, service_run_queue, make_standard_response
 from ...base.util.logging.logging_util import LOGGER
 
-
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 app.json.ensure_ascii = False
+
+
+@app.before_request
+def add_session_info():
+    trace_id = request.headers.get("x-trace-id")
+    session_id = request.headers.get("x-session-id")
+    FrameworkContextManager().set_context('trace_id', trace_id)
+    FrameworkContextManager().set_context('session_id', session_id)
+    LOGGER.info(f"request path{request.path} trace_id: {trace_id}, session_id: {session_id} params:{request.json}")
 
 
 @app.route("/echo")

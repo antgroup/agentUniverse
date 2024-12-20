@@ -63,3 +63,15 @@ server_port = 50051
 [MONITOR]
 activate = false
 dir = './monitor'
+
+[CONVERSATION_MEMORY]
+# Whether to activate conversation memory.
+activate = true
+# The name of the memory.
+instance_name = 'global_conversation_memory'
+# Whether to enable logging.
+logging = true
+# The language of the memory cn/en.
+conversation_format = 'cn'
+# The types you want to collection
+collection_types = ['llm','tool','agent','knowledge']
