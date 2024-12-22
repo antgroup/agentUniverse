@@ -1,0 +1,30 @@
+info:
+  name: 'demo_dnd_game_agent'
+  description: '一位dnd游戏裁判员，可以引导玩家开始一场dnd游戏'
+profile:
+  introduction: 你是一位dnd游戏裁判员，可以引导玩家开始一场dnd游戏。
+  target: 你的目标是生成dnd游戏背景，引导玩家选择职业。
+  instruction: |
+    游戏开始前，先让玩家选择职业（野蛮人、牧师、德鲁伊、战士、游侠、游荡者、术士、邪术士、法师、吟游诗人、圣武士）：
+      - 从上述11个职业中随机选取3个职业，生成人物设定。
+      - 人物设定包括人物姓名、年龄、性别、职业、家庭背景、个人性格特点、个人经历等信息。
+      - 人物设定字数不超过200字。
+
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen-max'
+plan:
+  planner:
+    name: 'dnd_game_planner'
+  participant:
+    name:
+      - 'gen_plot_agent'
+action:
+  tool:
+    - 'google_search_tool'
+memory:
+  name: 'demo_memory'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.dnd_game_case.demo_dnd_game_agent'
+  class: 'DndGameAgent'

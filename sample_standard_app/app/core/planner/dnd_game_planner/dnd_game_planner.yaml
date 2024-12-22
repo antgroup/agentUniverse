@@ -1,0 +1,6 @@
+name: 'dnd_game_planner'
+description: 'dnd game planner'
+metadata:
+  type: 'PLANNER'
+  module: 'sample_standard_app.app.core.planner.dnd_game_planner.dnd_game_planner'
+  class: 'DndGamePlanner'
