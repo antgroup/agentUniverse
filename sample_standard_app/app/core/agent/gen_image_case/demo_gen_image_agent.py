@@ -1,10 +1,11 @@
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-# @Time    : 2024/6/12 19:56
-# @Author  : wangchongshi
-# @Email   : wangchongshi.wcs@antgroup.com
-# @FileName: law_rag_agent.py
+# @Time    : 2024/12/03 19:10
+# @Author  : xutingdong
+# @Email   : xutingdong.xtd@antgroup.com
+# @FileName: demo_gen_image_agent.py
+
 from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.action.tool.tool_manager import ToolManager

@@ -1,10 +1,11 @@
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-# @Time    : 2024/5/8 11:44
-# @Author  : wangchongshi
-# @Email   : wangchongshi.wcs@antgroup.com
-# @FileName: rag_chat_bot.py
+# @Time    : 2024/12/03 19:10
+# @Author  : xutingdong
+# @Email   : xutingdong.xtd@antgroup.com
+# @FileName: gen_image_bot.py
+
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.agent_manager import AgentManager
