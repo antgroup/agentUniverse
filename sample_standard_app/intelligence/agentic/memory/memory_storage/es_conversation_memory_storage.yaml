@@ -2,7 +2,7 @@ name: 'es_conversation_memory_storage'
 description: 'demo es memory storage'
 es_index_name: 'conversation_memory'
 es_user: ${es_user}
-es_password: ${es_password}
+es_password: ${password}
 es_timeout: 1000
 metadata:
   type: 'MEMORY_STORAGE'
