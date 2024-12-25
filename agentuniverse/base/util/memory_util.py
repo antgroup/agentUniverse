@@ -76,11 +76,11 @@ def get_memory_string(messages: List[Message], agent_id=None) -> str:
         else:
             role = ""
         m_str = ""
+        if m.source:
+            m_str += f" Message source: {m.source} "
         if role:
             m_str += f"Message role: {role} "
-        if m.source:
-            m_str += f"Message source: {m.source} "
-        m_str += f"Message content: \n {m.content} "
+        m_str += f"{m.metadata.get('gmt_created')}: {m.content} "
         string_messages.append(m_str)
     return "\n\n".join(string_messages)
 

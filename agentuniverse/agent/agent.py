@@ -6,8 +6,10 @@
 # @Email   : lc299034@antgroup.com
 # @FileName: agent.py
 import json
+import uuid
 from abc import abstractmethod, ABC
 from datetime import datetime
+from threading import Thread
 from typing import Optional, Any, List
 
 from langchain_core.runnables import RunnableSerializable, RunnableConfig
@@ -34,10 +36,11 @@ from agentuniverse.base.config.application_configer.application_config_manager \
     import ApplicationConfigManager
 from agentuniverse.base.config.component_configer.configers.agent_configer \
     import AgentConfiger
+from agentuniverse.base.util.agent_util import assemble_memory_input
 from agentuniverse.base.util.common_util import stream_output
 from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 from agentuniverse.base.util.logging.logging_util import LOGGER
-from agentuniverse.base.util.memory_util import generate_messages
+from agentuniverse.base.util.memory_util import generate_messages, get_memory_string
 from agentuniverse.llm.llm import LLM
 from agentuniverse.llm.llm_manager import LLMManager
 from agentuniverse.prompt.chat_prompt import ChatPrompt
@@ -255,10 +258,10 @@ class Agent(ComponentBase, ABC):
     def invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict, input_object: InputObject,
                      **kwargs):
         if not input_object.get_data('output_stream'):
-            res = chain.invoke(input=agent_input,config=self.get_run_config())
+            res = chain.invoke(input=agent_input, config=self.get_run_config())
             return res
         result = []
-        for token in chain.stream(input=agent_input,config=self.get_run_config()):
+        for token in chain.stream(input=agent_input, config=self.get_run_config()):
             stream_output(input_object.get_data('output_stream', None), {
                 'type': 'token',
                 'data': {
@@ -362,7 +365,7 @@ class Agent(ComponentBase, ABC):
         params = {
             'session_id': session_id,
             'agent_id': agent_id,
-            'types': memory_types,
+            'memory_types': memory_types,
             'prune': prune,
             'top_k': top_k
         }
@@ -385,3 +388,60 @@ class Agent(ComponentBase, ABC):
         if collection_types and collect_type not in collection_types:
             return False
         return True
+
+    def load_memory(self, memory, agent_input: dict):
+        if memory:
+            params = self.get_memory_params(agent_input)
+            memory_messages = memory.get(**params)
+            memory_str = get_memory_string(memory_messages, agent_input.get('agent_id'))
+        else:
+            return "Up to Now, No Chat History"
+        agent_input[memory.memory_key] = memory_str
+        return memory_str
+
+    def add_memory(self, memory: Memory, content: Any, type: str = 'Q&A', agent_input: dict[str, Any] = {}):
+        if not memory:
+            return
+        session_id = agent_input.get('session_id')
+        if not session_id:
+            session_id = FrameworkContextManager().get_context('session_id')
+        agent_id = self.agent_model.info.get('name')
+        message = Message(id=str(uuid.uuid4().hex),
+                          source=agent_id,
+                          content=content if isinstance(content, str) else json.dumps(content, ensure_ascii=False),
+                          type=type,
+                          metadata={
+                              'agent_id': agent_id,
+                              'session_id': session_id,
+                              'type': type,
+                              'timestamp': datetime.now(),
+                              'gmt_created': datetime.now().isoformat()
+                          })
+        memory.add([message], session_id=session_id, agent_id=agent_id)
+
+    def summarize_memory(self, agent_input: dict[str, Any] = {}, memory: Memory = None):
+        def do_summarize(params):
+            content = memory.summarize_memory(**params)
+            memory.add([
+                Message(
+                    id=str(uuid.uuid4().hex),
+                    source=self.agent_model.info.get('name'),
+                    content=content,
+                    type='summarize'
+                )
+            ], session_id=params['session_id'], agent_id=params['agent_id'])
+
+        if memory:
+            params = self.get_memory_params(agent_input)
+            Thread(target=do_summarize, args=(params,)).start()
+
+    def load_summarize_memory(self, memory: Memory, agent_input: dict[str, Any] = {}) -> str:
+        if memory:
+            params = self.get_memory_params(agent_input)
+            params['type'] = 'summarize'
+            memory_messages = memory.get(**params)
+            if len(memory_messages) == 0:
+                return "Up to Now, No Summarize Memory"
+            else:
+                return memory_messages[-1].content
+        return "Up to Now, No Summarize Memory"

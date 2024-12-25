@@ -31,27 +31,27 @@ def generate_relation_str(source: str, target: str, source_type: str, target_typ
     if source_type == 'agent' and target_type == 'agent' and type == 'input':
         return f"智能体 {source} 向智能体 {target} 提出了一个问题"
     if source_type == 'agent' and target_type == 'agent' and type == 'output':
-        return f"智能体 {source} 回答了智能体 {target} 的问题"
+        return f"智能体 {target} 回答了智能体 {source} 的问题"
     if source_type == 'agent' and target_type == 'tool' and type == 'input':
         return f"智能体 {source} 调用了工具 {target}，执行的参数是"
-    if source_type == 'tool' and target_type == 'agent' and type == 'output':
-        return f"工具 {source} 返回给给智能体 {target} 的执行结果"
+    if source_type == 'agent' and target_type == 'tool' and type == 'output':
+        return f"工具 {target} 返回给智能体 {source} 的执行结果"
     if source_type == 'agent' and target_type == 'knowledge' and type == 'input':
         return f"智能体 {source} 在知识库 {target} 中进行了搜索，关键词是"
-    if source_type == 'knowledge' and target_type == 'agent' and type == 'output':
-        return f"知识库 {source} 返回给给智能体 {target} 的搜索结果"
+    if source_type == 'agent' and target_type == 'knowledge' and type == 'output':
+        return f"知识库 {target} 返回给智能体 {source} 的搜索结果"
     if source_type == 'agent' and target_type == 'llm' and type == 'input':
         return f"智能体 {source} 向大模型 {target} 提问"
-    if source_type == 'llm' and target_type == 'agent' and type == 'output':
-        return f"大模型 {source} 返回给智能体 {target} 的答案"
+    if source_type == 'agent' and target_type == 'llm' and type == 'output':
+        return f"大模型 {target} 返回给智能体 {source} 的答案"
     if source_type == 'unknown' and target_type == 'agent' and type == 'input':
         return f"未知类型 {source} 向智能体 {target} 提出了一个问题"
     if source_type == 'agent' and target_type == 'unknown' and type == 'output':
         return f"智能体 {source} 回答了未知 {target} 的问题"
     if source_type == "user" and target_type == 'agent' and type == 'input':
         return f"用户向智能体 {target} 提出了一个问题"
-    if source_type == 'agent' and target_type == 'user' and type == 'output':
-        return f"智能体 {source} 回答了用户的问题"
+    if source_type == 'user' and target_type == 'agent' and type == 'output':
+        return f"智能体 {target} 回答了用户的问题"
     elif type == 'input':
         return f"{source} 向 {target} 询问了一个问题"
     elif type == 'output':
@@ -65,31 +65,31 @@ def generate_relation_str_en(source: str, target: str, source_type: str, target_
     if source_type == 'agent' and target_type == 'agent' and type == 'input':
         return f"Agent {source} asked a question to agent {target}"
     if source_type == 'agent' and target_type == 'agent' and type == 'output':
-        return f"Agent {source} answered the question asked by agent {target}"
+        return f"Agent {target} answered the question asked by agent {source}"
     if source_type == 'agent' and target_type == 'tool' and type == 'input':
         return f"Agent {source} called tool {target}, the parameters are"
-    if source_type == 'tool' and target_type == 'agent':
-        return f"Tool {source} returned the result to agent {target}"
+    if source_type == 'agent' and target_type == 'tool' and type == 'output':
+        return f"Tool {target} returned the result to agent {source}"
     if source_type == 'agent' and target_type == 'knowledge' and type == 'input':
         return f"Agent {source} searched in knowledge {target}, the keywords are"
-    if source_type == 'knowledge' and target_type == 'agent' and type == 'output':
-        return f"Knowledge {source} returned the result to agent {target}"
+    if source_type == 'agent' and target_type == 'knowledge' and type == 'output':
+        return f"Knowledge {target} returned the result to agent {target}"
     if source_type == 'agent' and target_type == 'llm' and type == 'input':
         return f"Agent {source} asked a question to llm {target}"
-    if source_type == 'llm' and target_type == 'agent' and type == 'output':
-        return f"LLM {source} returned the answer to agent {target}"
+    if source_type == 'agent' and target_type == 'llm' and type == 'output':
+        return f"LLM {target} returned the answer to agent {source}"
     if source_type == 'unknown' and target_type == 'agent' and type == 'input':
         return f"Unknown type {source} asked a question to agent {target}"
-    if source_type == 'agent' and target_type == 'unknown' and type == 'output':
-        return f"Agent {source} answered the unknown {target} question"
+    if source_type == 'unknown' and target_type == 'agent' and type == 'output':
+        return f"Agent {target} answered the unknown {source} question"
     if source_type == "user" and target_type == 'agent' and type == 'input':
         return f"User asked a question to agent {target}"
-    if source_type == 'agent' and target_type == 'user' and type == 'output':
-        return f"Agent {source} answered the user's question"
+    if source_type == 'user' and target_type == 'agent' and type == 'output':
+        return f"Agent {target} answered the user's question"
     if type == 'input':
         return f"{source} asked a question to {target}"
     elif type == 'output':
-        return f"{source} answered {target}'s question"
+        return f"{target} answered {source}'s question"
     elif type == 'summary':
         return f"{source} summary"
     return None
@@ -125,7 +125,7 @@ class ConversationMemoryModule:
         self.logging = conversation_memory_configer.get('logging', False)
         self.collection_types = conversation_memory_configer.get('collection_types', ['agent', 'user'])
         self.conversation_format = conversation_memory_configer.get('conversation_format', 'cn')
-        self.max_content_length = conversation_memory_configer.get('max_content_length', 2048)
+        self.max_content_length = conversation_memory_configer.get('max_content_length', 8000)
         self.queue = queue.Queue(1000)
         Thread(target=self._consume_queue, daemon=True).start()
 
@@ -158,7 +158,7 @@ class ConversationMemoryModule:
         elif type == "output" and source_type == 'agent':
             agent_instance = AgentManager().get_instance_obj(source)
             output_field = agent_instance.agent_model.memory.get('output_field')
-            if output_field is None and output_field in params:
+            if output_field and output_field in params:
                 content = params.get(output_field)
 
         if content is None and type in params:
@@ -258,7 +258,28 @@ class ConversationMemoryModule:
             return
 
         target_info = {'source': target, 'type': 'tool'}
-        self.add_trace_info(target_info, start_info, 'output', params, pair_id)
+        self.add_trace_info(start_info, target_info, 'output', params, pair_id)
+
+    def add_knowledge_input_info(self, start_info: dict, target: str, params: dict, pair_id: str, auto: bool = True):
+
+        if not self.collection_current_agent_memory(start_info, 'knowledge', auto):
+            return
+
+        target_info = {'source': target, 'type': 'knowledge'}
+        self.add_trace_info(start_info, target_info, 'input', params, pair_id)
+
+    def add_knowledge_output_info(self, start_info: dict, target: str, params: List[Document], pair_id: str,
+                                  auto: bool = True):
+
+        if not self.collection_current_agent_memory(start_info, 'knowledge', auto):
+            return
+        target_info = {'source': target, 'type': 'knowledge'}
+        doc_data = []
+        for doc in params:
+            doc_data.append(doc.text)
+        self.add_trace_info(start_info, target_info, 'output', {
+            'output': "\n==============================\n".join(doc_data)
+        }, pair_id)
 
     def add_agent_input_info(self, start_info: dict, instance: 'Agent', params: dict, pair_id: str,
                              auto: bool = True):
@@ -279,27 +300,6 @@ class ConversationMemoryModule:
         if auto:
             params = {key: params[key] for key in input_keys}
         self.add_trace_info(start_info, target_info, 'input', params, pair_id)
-
-    def add_knowledge_input_info(self, start_info: dict, target: str, params: dict, pair_id: str, auto: bool = True):
-
-        if not self.collection_current_agent_memory(start_info, 'knowledge', auto):
-            return
-
-        target_info = {'source': target, 'type': 'knowledge'}
-        self.add_trace_info(start_info, target_info, 'input', params, pair_id)
-
-    def add_knowledge_output_info(self, start_info: dict, target: str, params: List[Document], pair_id: str,
-                                  auto: bool = True):
-
-        if not self.collection_current_agent_memory(start_info, 'knowledge', auto):
-            return
-        target_info = {'source': target, 'type': 'knowledge'}
-        doc_data = []
-        for doc in params:
-            doc_data.append(doc.text)
-        self.add_trace_info(target_info, start_info, 'output', {
-            'output': "\n==============================\n".join(doc_data)
-        }, pair_id)
 
     def add_agent_result_info(self, agent_instance: 'Agent', agent_result: Optional[OutputObject | dict],
                               target_info: dict,
@@ -322,7 +322,7 @@ class ConversationMemoryModule:
                 "source": agent_instance.agent_model.info.get('name'),
                 "type": "agent"
             }
-            self._add_trace(start_info, target_info, 'output', params, session_id, trace_id, pair_id)
+            self._add_trace(target_info, start_info, 'output', params, session_id, trace_id, pair_id)
 
         self.queue.put_nowait(add_trace)
 
@@ -337,7 +337,7 @@ class ConversationMemoryModule:
         if not self.collection_current_agent_memory(start_info, 'llm', auto):
             return
         target_info = {'source': target, 'type': 'llm'}
-        self.add_trace_info(target_info, start_info, 'output', {
+        self.add_trace_info(start_info, target_info, 'output', {
             'output': output
         }, pair_id)
 

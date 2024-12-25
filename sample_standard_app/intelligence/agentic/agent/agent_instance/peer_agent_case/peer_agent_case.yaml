@@ -14,7 +14,7 @@ profile:
       reviewing:
     selector:
 memory:
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   input_field: 'input'
   output_field: 'output'
 metadata:

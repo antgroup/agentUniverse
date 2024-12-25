@@ -151,53 +151,39 @@ class ChromaConversationMemoryStorage(MemoryStorage):
         if session_id:
             filters["$and"].append({'session_id': session_id})
 
-        if agent_id and 'memory_type' in kwargs:
-            filters["$and"].append({'type': kwargs['memory_type']})
-            filters["$and"].append({'agent_id': agent_id})
-        elif agent_id and 'types' not in kwargs:
-            filters["$and"].append({
-                "$or": [
-                    {"$and": [
-                        {'target': agent_id},
-                        {'target_type': ConversationMessageSourceType.AGENT.value},
-                        {'type': ConversationMessageEnum.INPUT.value}
-                    ]},
-                    {
-                        "$and": [
-                            {'source': agent_id},
-                            {'source_type': ConversationMessageSourceType.AGENT.value},
-                            {'type': ConversationMessageEnum.OUTPUT.value}
-                        ]
-                    }
-                ]
-            })
-        elif agent_id and 'types' in kwargs and kwargs['types']:
-            filters["$and"].append({
-                "$or": [
-                    {"$and": [
-                        {'target': agent_id},
-                        {'target_type': ConversationMessageSourceType.AGENT.value},
-                        {'source_type': {
-                            '$in': kwargs['types']
-                        }}
-                    ]},
-                    {
-                        "$and": [
-                            {'source': agent_id},
-                            {'source_type': ConversationMessageSourceType.AGENT.value},
-                            {'target_type': {
-                                '$in': kwargs['types']
-                            }}
-                        ]
-                    }
-                ]
-            })
+        types = [ConversationMessageEnum.INPUT.value, ConversationMessageEnum.OUTPUT.value]
+        if 'type' in kwargs:
+            if isinstance(kwargs['type'], list):
+                types = kwargs['type']
+            elif isinstance(kwargs['type'], str):
+                types = [kwargs['type']]
+        filters["$and"].append({'type': {
+            "$in": types
+        }})
 
-        if 'memory_type' in kwargs:
-            if isinstance(kwargs['memory_type'], list):
-                filters["$and"].append({'type': {'$in': kwargs['memory_type']}})
-            elif isinstance(kwargs['memory_type'], str):
-                filters["$and"].append({'type': kwargs['memory_type']})
+        if agent_id:
+            condition = {
+                "$and": [
+                    {'target': agent_id},
+                    {'target_type': ConversationMessageSourceType.AGENT.value}
+                ]
+            }
+            if kwargs['memory_types'] and len(kwargs["memory_types"]) > 0:
+                condition = {
+                    "$or": [
+                        condition,
+                        {
+                            "$and": [
+                                {'source': agent_id},
+                                {'source_type': ConversationMessageSourceType.AGENT.value},
+                                {'target_type': {
+                                    "$in": kwargs["memory_types"]
+                                }}
+                            ]
+                        }
+                    ]
+                }
+            filters["$and"].append(condition)
 
         if 'trace_id' in kwargs:
             filters["$and"].append({'trace_id': kwargs['trace_id']})

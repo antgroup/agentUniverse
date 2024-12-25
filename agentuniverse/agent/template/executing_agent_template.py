@@ -94,11 +94,6 @@ class ExecutingAgentTemplate(AgentTemplate):
                 pair_id=pair_id,
                 auto=False
             )
-            # pass the framework context into the thread.
-            # for var_name, var_value in self._context_values.items():
-            #     token = FrameworkContextManager().set_context(var_name, var_value)
-            #     context_tokens[var_name] = token
-
             input_object_copy = InputObject(input_object.to_dict())
             agent_input_copy = dict(agent_input)
 
@@ -110,15 +105,11 @@ class ExecutingAgentTemplate(AgentTemplate):
             agent_input_copy['input'] = subtask
 
             process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input_copy)
-            assemble_memory_input(memory, agent_input_copy, self.get_memory_params(agent_input_copy))
-
+            self.load_memory(memory, agent_input_copy)
             chain = prompt.as_langchain() | llm.as_langchain_runnable(
                 self.agent_model.llm_params()) | StrOutputParser()
             res = self.invoke_chain(chain, agent_input_copy, input_object_copy)
-            if self.memory_name:
-                assemble_memory_output(memory=memory,
-                                       agent_input=agent_input,
-                                       content=f"Human: {agent_input.get('input')}, AI: {res}")
+            self.add_memory(memory, f"Human: {agent_input.get('input')}, AI: {res}", agent_input={})
             ConversationMemoryModule().add_agent_result_info(
                 agent_instance=self,
                 agent_result={'output': res},

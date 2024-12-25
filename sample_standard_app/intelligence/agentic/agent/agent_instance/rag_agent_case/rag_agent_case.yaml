@@ -10,11 +10,11 @@ action:
       - 'google_search_tool'
   knowledge:
 memory:
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   input_field: 'input'
   output_field: 'output'
   top_k: 10
-  collection_types: ['user','llm']
+  collection_types: ['user','tool','llm']
 
 metadata:
   type: 'AGENT'

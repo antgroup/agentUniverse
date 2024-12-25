@@ -136,8 +136,6 @@ class DefaultMemoryConverter(BaseMemoryConverter):
             additional_args=json.dumps(message.additional_args)
         )
 
-
-
     def get_sql_model_class(self) -> Any:
         """Get the SQLAlchemy model class."""
         return self.model_class
@@ -164,7 +162,7 @@ class SqliteMemoryStorage(MemoryStorage):
     }
 
     def _new_client(self):
-        self.engine = create_engine(self.sqldb_path)
+        self.engine = create_engine(self.sqldb_path, echo=False)
         self.session = sessionmaker(bind=self.engine)
         self._init_db()
 
@@ -294,35 +292,32 @@ class SqliteMemoryStorage(MemoryStorage):
             agent_type_col = getattr(model_class, 'source_type')
             target_col = getattr(model_class, 'target')
             target_agent_type_col = getattr(model_class, 'target_type')
-            if agent_id and 'memory_type' in kwargs:
+            type_list = [
+                ConversationMessageEnum.INPUT.value,
+                ConversationMessageEnum.OUTPUT.value
+            ]
+            if 'type' in kwargs:
                 memory_type_col = getattr(model_class, 'type')
-                if isinstance(kwargs['memory_type'], list):
-                    conditions.append(memory_type_col.in_(kwargs['memory_type']))
-                elif isinstance(kwargs['memory_type'], str):
-                    conditions.append(type_col == kwargs['memory_type'])
-                conditions.append(source_col == agent_id)
-            # conditionally add agent_id to the query
-            elif agent_id and not kwargs.get("types"):
-                source_type_col = and_(source_col == agent_id,
-                                       type_col == ConversationMessageEnum.OUTPUT.value,
-                                       agent_type_col == ConversationMessageSourceType.AGENT.value
-                                       )
-                target_type_col = and_(target_col == agent_id,
-                                       type_col == ConversationMessageEnum.INPUT.value,
-                                       target_agent_type_col == ConversationMessageSourceType.AGENT.value)
-                agent_id_col = or_(source_type_col, target_type_col)
-
-                conditions.append(agent_id_col)
-            elif agent_id and "types" in kwargs:
-                conditions.append(or_(
-                    and_(source_col == agent_id,
-                         agent_type_col == ConversationMessageSourceType.AGENT.value,
-                         target_agent_type_col.in_(kwargs["types"])),
-                    and_(target_col == agent_id,
-                         target_agent_type_col == ConversationMessageSourceType.AGENT.value,
-                         agent_type_col.in_(kwargs["types"])
-                         )
-                ))
+                if isinstance(kwargs['type'], list):
+                    type_list = kwargs['type']
+                    conditions.append(memory_type_col.in_(kwargs['type']))
+                elif isinstance(kwargs['type'], str):
+                    conditions.append(type_col == kwargs['type'])
+                    type_list = [kwargs['type']]
+            conditions.append(type_col.in_(type_list))
+            if agent_id:
+                agent_qa_col = and_(target_col == agent_id,
+                                    target_agent_type_col == ConversationMessageSourceType.AGENT.value)
+                if kwargs.get("memory_types", None) and len(kwargs["memory_types"]) > 0:
+                    types_col = and_(source_col == agent_id,
+                                     agent_type_col == ConversationMessageSourceType.AGENT.value,
+                                     target_agent_type_col.in_(kwargs["memory_types"]))
+                    conditions.append(or_(
+                        types_col,
+                        agent_qa_col
+                    ))
+                else:
+                    conditions.append(agent_qa_col)
             if trace_id:
                 trace_id_col = getattr(model_class, 'trace_id')
                 conditions.append(trace_id_col == trace_id)

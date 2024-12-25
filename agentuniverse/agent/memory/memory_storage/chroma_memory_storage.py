@@ -122,7 +122,8 @@ class ChromaMemoryStorage(MemoryStorage):
                 embeddings=[embedding] if len(embedding) > 0 else None,
             )
 
-    def get(self, session_id: str = None, agent_id: str = None, top_k=10, input: str = '', source: str = None, **kwargs) -> \
+    def get(self, session_id: str = None, agent_id: str = None, top_k=10, input: str = '', source: str = None,
+            **kwargs) -> \
             List[Message]:
         """Get messages from the memory db.
 
@@ -137,6 +138,7 @@ class ChromaMemoryStorage(MemoryStorage):
         """
         if self._collection is None:
             self._init_collection()
+        types = ['human', 'ai', '', 'Q&A']
         filters = {"$and": []}
         if session_id:
             filters["$and"].append({'session_id': session_id})
@@ -144,6 +146,12 @@ class ChromaMemoryStorage(MemoryStorage):
             filters["$and"].append({'agent_id': agent_id})
         if source:
             filters["$and"].append({'source': source})
+        if kwargs.get('type'):
+            if isinstance(kwargs.get('type'), list):
+                types = kwargs.get('type')
+            elif isinstance(kwargs.get('type'), str):
+                types = [kwargs.get('type')]
+        filters["$and"].append({'type': {'$in': types}})
         if len(filters["$and"]) < 2:
             filters = filters["$and"][0] if len(filters["$and"]) == 1 else {}
         if input:
@@ -164,6 +172,7 @@ class ChromaMemoryStorage(MemoryStorage):
         else:
             results = self._collection.get(where=filters)
             messages = self.to_messages(result=results, sort_by_time=True)
+            messages.reverse()
             return messages[-top_k:]
 
     def to_messages(self, result: dict, sort_by_time: bool = False) -> List[Message]:

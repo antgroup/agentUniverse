@@ -182,41 +182,39 @@ class ElasticsearchMemoryStorage(MemoryStorage):
         }
         if session_id:
             query['query']['bool']['must'].append({"term": {"session_id": session_id}})
-        if agent_id and 'memory_type' not in kwargs:
-            query['query']['bool']['must'].append({"match": {"agent_id": agent_id}})
-            query['query']['bool']['must'].append({"match": {"type": kwargs.get('memory_type')}})
-        elif agent_id and (kwargs.get('types') is None or len(kwargs.get('types')) == 0):
-            query['query']['bool']['must'].append({
-                "bool": {
-                    "should": [
-                        {"bool": {"must": [{"match": {"source": agent_id}},
-                                           {"match": {"source_type": 'agent'}},
-                                           {"match": {"type": 'output'}}]}},
-                        {"bool": {"must": [{"match": {"target": agent_id}},
-                                           {"match": {"target_type": 'agent'}},
-                                           {"match": {"type": 'input'}}]}}
-                    ]
-                }
-            })
-        elif 'types' in kwargs:
-            query['query']['bool']['must'].append({
-                "bool": {
-                    "should": [
-                        {"bool": {"must": [{"match": {"source": agent_id}},
-                                           {"match": {"source_type": 'agent'}},
-                                           {"terms": {"target_type": kwargs['types']}}]}},
-                        {"bool": {"must": [{"match": {"target": agent_id}},
-                                           {"match": {"target_type": 'agent'}},
-                                           {"terms": {"source_type": kwargs['types']}}]}}
-                    ]
-                }
-            })
 
-        if 'message_type' in kwargs:
-            if isinstance(kwargs['message_type'], list):
-                query['query']['bool']['must'].append({"terms": {"type": kwargs['message_type']}})
-            elif isinstance(kwargs['message_type'], str):
-                query['query']['bool']['must'].append({"term": {"type": kwargs['message_type']}})
+        memory_types = [
+            "input", "output"
+        ]
+        if 'type' in kwargs:
+            if isinstance(kwargs['type'], list):
+                memory_types = kwargs['type']
+            elif isinstance(kwargs['type'], str):
+                memory_types = [kwargs['type']]
+        query['query']['bool']['must'].append({"terms": {"type": memory_types}})
+        if agent_id:
+            condition = {
+                "bool": {
+                    "must": [
+                        {"match": {"target": agent_id}},
+                        {"match": {"target_type": 'agent'}}
+                    ]
+                }
+            }
+            if kwargs.get('memory_types') and len(kwargs['memory_types']) > 0:
+                types_condition = {
+                    "bool": {
+                        "must": [
+                            {"match": {"source": agent_id}},
+                            {"match": {"source_type": 'agent'}},
+                            {"terms": {"target_type": kwargs['memory_types']}}
+                        ]
+                    }
+                }
+                query['query']['bool']['must'].append(
+                    {"bool": {"should": [condition, types_condition]}})
+            else:
+                query['query']['bool']['must'].append(condition)
 
         if trace_id:
             query['query']['bool']['must'].append({"term": {"trace_id": trace_id}})

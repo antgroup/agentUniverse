@@ -5,11 +5,9 @@ profile:
   prompt_version: question_parse_agent.cn
   llm_model:
     name: 'deep_seek_llm'
-action:
-
 memory:
-  conversation_memory: 'demo_conversation_memory'
-  auto_trace: false
+  conversation_memory: 'global_conversation_memory'
+  auto_trace: true
   agent_id: rag_agent_case
 
 metadata:

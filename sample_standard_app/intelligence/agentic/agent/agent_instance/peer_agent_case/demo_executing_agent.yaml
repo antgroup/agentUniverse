@@ -7,7 +7,7 @@ profile:
     name: 'deep_seek_llm'
     temperature: 0.4
 memory:
-  conversation_memory: 'demo_execute_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   auto_trace: False
   prune: True
   top_k: 50

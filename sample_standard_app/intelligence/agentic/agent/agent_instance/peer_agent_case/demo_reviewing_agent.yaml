@@ -8,7 +8,7 @@ profile:
 memory:
   name: ''
   auto_trace: False
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   output_field: 'suggestion'
 metadata:
   type: 'AGENT'

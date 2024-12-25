@@ -10,7 +10,7 @@ profile:
       type: stuff
 memory:
 #  name: 'demo_memory_a'
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   collection_types: [ 'agent']
 metadata:
   type: 'AGENT'

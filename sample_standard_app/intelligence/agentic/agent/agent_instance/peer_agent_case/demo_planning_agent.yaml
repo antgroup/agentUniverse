@@ -9,9 +9,10 @@ profile:
     temperature: 0.7
 memory:
 #  name: 'demo_memory_a'
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   agent_id: peer_agent_case
-  collection_types: ['agent']
+  collection_types: ['agent','llm']
+  memory_types: ['agent']
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.planning_agent_template'

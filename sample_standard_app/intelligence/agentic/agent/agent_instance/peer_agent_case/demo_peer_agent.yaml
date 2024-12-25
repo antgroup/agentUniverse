@@ -15,7 +15,7 @@ profile:
     selector:
 memory:
 #  name: 'demo_memory_a'
-  conversation_memory: 'demo_conversation_memory'
+  conversation_memory: 'global_conversation_memory'
   agent_id: peer_agent_case
   collection_types: [ 'agent' ]
 metadata:
