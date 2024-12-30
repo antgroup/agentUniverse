@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding:utf-8 -*-
-
+import datetime
 # @Time    : 2024/3/15 10:05
 # @Author  : wangchongshi
 # @Email   : wangchongshi.wcs@antgroup.com
@@ -9,17 +9,19 @@ from typing import Optional, List
 from langchain_core.memory import BaseMemory
 from pydantic import Extra
 
+from agentuniverse.agent.agent_manager import AgentManager
 from agentuniverse.agent.memory.enum import MemoryTypeEnum
 from agentuniverse.agent.memory.memory_compressor.memory_compressor import MemoryCompressor
 from agentuniverse.agent.memory.memory_compressor.memory_compressor_manager import MemoryCompressorManager
 from agentuniverse.agent.memory.memory_storage.memory_storage import MemoryStorage
 from agentuniverse.agent.memory.memory_storage.memory_storage_manager import MemoryStorageManager
 from agentuniverse.agent.memory.message import Message
+from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.base.component.component_base import ComponentBase
 from agentuniverse.base.component.component_enum import ComponentEnum
 from agentuniverse.base.config.application_configer.application_config_manager import ApplicationConfigManager
 from agentuniverse.base.config.component_configer.configers.memory_configer import MemoryConfiger
-from agentuniverse.base.util.memory_util import get_memory_tokens
+from agentuniverse.base.util.memory_util import get_memory_tokens, get_memory_string
 
 
 class Memory(ComponentBase):
@@ -44,6 +46,7 @@ class Memory(ComponentBase):
     memory_compressor: Optional[str] = None
     memory_storages: Optional[List[str]] = ['local_memory_storage']
     memory_retrieval_storage: Optional[str] = None
+    summarize_agent_id: Optional[str] = 'memory_summarize_agent'
 
     class Config:
         extra = Extra.allow
@@ -72,12 +75,22 @@ class Memory(ComponentBase):
             if memory_storage:
                 memory_storage.delete(session_id, **kwargs)
 
-    def get(self, session_id: str = None, agent_id: str = None, **kwargs) -> List[Message]:
+    def get(self, session_id: str = None, agent_id: str = None, prune: bool = False, **kwargs) -> List[Message]:
         """Get messages from the memory."""
         memory_storage: MemoryStorage = MemoryStorageManager().get_instance_obj(self.memory_retrieval_storage)
         if memory_storage:
             memories = memory_storage.get(session_id, agent_id, **kwargs)
-            return self.prune(memories)
+            if prune:
+                memories = self.prune(memories)
+            return memories
+        return []
+
+    def get_with_no_prune(self, session_id: str = None, agent_id: str = None, **kwargs) -> List[Message]:
+        """Get messages from the memory."""
+        memory_storage: MemoryStorage = MemoryStorageManager().get_instance_obj(self.memory_retrieval_storage)
+        if memory_storage:
+            memories = memory_storage.get(session_id, agent_id, **kwargs)
+            return memories
         return []
 
     def prune(self, memories: List[Message]) -> List[Message]:
@@ -117,6 +130,17 @@ class Memory(ComponentBase):
             copied_obj.agent_llm_name = kwargs['agent_llm_name']
         return copied_obj
 
+    def summarize_memory(self, **kwargs) -> str:
+        kwargs['prune'] = False
+        messages = self.get(**kwargs)
+        summarize_messages = self.get(session_id=kwargs.get('session_id'), agent_id=kwargs.get('agent_id'),
+                                      type='summarize')
+        summarize_content = summarize_messages[-1].content if summarize_messages and len(summarize_messages) > 0 else ''
+        messages_str = get_memory_string(messages)
+        agent: 'Agent' = AgentManager().get_instance_obj(self.summarize_agent_id)
+        output_object: OutputObject = agent.run(input=messages_str, summarize_content=summarize_content)
+        return output_object.get_data('output')
+
     def get_instance_code(self) -> str:
         """Return the full name of the memory."""
         appname = ApplicationConfigManager().app_configer.base_info_appname
@@ -147,4 +171,6 @@ class Memory(ComponentBase):
             self.memory_retrieval_storage = component_configer.memory_retrieval_storage
         if not self.memory_retrieval_storage:
             self.memory_retrieval_storage = self.memory_storages[0]
+        if component_configer.memory_summarize_agent:
+            self.summarize_agent_id = component_configer.memory_summarize_agent
         return self

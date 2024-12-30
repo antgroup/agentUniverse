@@ -7,18 +7,21 @@
 # @FileName: stream_callback.py
 
 import asyncio
-from typing import Optional, Dict, Any, Union
+from typing import Optional, Dict, Any, Union, List
 from uuid import UUID
 
 from langchain_core.agents import AgentAction, AgentFinish
 from langchain_core.callbacks import BaseCallbackHandler
-from langchain_core.outputs import GenerationChunk, ChatGenerationChunk
+from langchain_core.outputs import GenerationChunk, ChatGenerationChunk, LLMResult
+
+from agentuniverse.agent.memory.conversation_memory.conversation_memory_module import ConversationMemoryModule
 
 
 class StreamOutPutCallbackHandler(BaseCallbackHandler):
     """Callback Handler that prints to std out."""
 
-    def __init__(self, queue_stream: asyncio.Queue, color: Optional[str] = None, agent_info: dict = None) -> None:
+    def __init__(self, queue_stream: asyncio.Queue, color: Optional[str] = None, agent_info: dict = None,
+                 **kwargs) -> None:
         """Initialize callback handler."""
         self.queueStream = queue_stream
         self.color = color
@@ -44,6 +47,30 @@ class StreamOutPutCallbackHandler(BaseCallbackHandler):
                 "agent_info": self.agent_info
             }
         })
+
+    def on_tool_start(
+            self,
+            serialized: Dict[str, Any],
+            input_str: str,
+            *,
+            run_id: UUID,
+            parent_run_id: Optional[UUID] = None,
+            tags: Optional[List[str]] = None,
+            metadata: Optional[Dict[str, Any]] = None,
+            inputs: Optional[Dict[str, Any]] = None,
+            **kwargs: Any,
+    ) -> Any:
+        ConversationMemoryModule().add_tool_input_info(
+            start_info={
+                "source": self.agent_info.get('name'),
+                "type": 'agent',
+            },
+            target=serialized.get('name'),
+            params={
+                "input": input_str
+            },
+            pair_id=f"tool_{run_id.hex}"
+        )
 
     def on_llm_new_token(
             self,
@@ -88,6 +115,17 @@ class StreamOutPutCallbackHandler(BaseCallbackHandler):
                     "agent_info": self.agent_info
                 }
             })
+        ConversationMemoryModule().add_tool_output_info(
+            start_info={
+                "source": self.agent_info.get('name'),
+                "type": 'agent',
+            },
+            target=kwargs.get('name'),
+            params={
+                "output": output
+            },
+            pair_id=f"tool_{kwargs.get('run_id').hex}"
+        )
 
     def on_text(
             self,
@@ -109,3 +147,52 @@ class StreamOutPutCallbackHandler(BaseCallbackHandler):
                 "agent_info": self.agent_info
             }
         })
+
+
+class InvokeCallbackHandler(BaseCallbackHandler):
+    """Callback Handler that prints to std out."""
+    source: str
+    llm_name: str
+
+    def __init__(self, source: str, llm_name: str) -> None:
+        """Initialize callback handler."""
+        self.source = source
+        self.llm_name = llm_name
+
+    def on_llm_start(
+            self,
+            serialized: Dict[str, Any],
+            prompts: List[str],
+            *,
+            run_id: UUID,
+            parent_run_id: Optional[UUID] = None,
+            tags: Optional[List[str]] = None,
+            metadata: Optional[Dict[str, Any]] = None,
+            **kwargs: Any,
+    ) -> Any:
+        prompt = "\n".join(prompts)
+
+        start_info = {
+            "source": self.source,
+            "type": "agent",
+        }
+
+        ConversationMemoryModule().add_llm_input_info(start_info, self.llm_name, prompt, f"llm_{run_id.hex}")
+
+    def on_llm_end(
+            self,
+            response: LLMResult,
+            *,
+            run_id: UUID,
+            parent_run_id: Optional[UUID] = None,
+            **kwargs: Any,
+    ) -> Any:
+        start_info = {
+            "source": self.source,
+            "type": "agent",
+        }
+        ConversationMemoryModule().add_llm_output_info(
+            start_info, self.llm_name,
+            response.generations[0][0].text,
+            f"llm_{run_id.hex}"
+        )

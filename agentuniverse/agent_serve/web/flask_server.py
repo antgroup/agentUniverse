@@ -1,6 +1,8 @@
 import traceback
+import uuid
 
-from flask import Flask, Response
+from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
+from flask import Flask, Response, request
 from werkzeug.exceptions import HTTPException
 
 from ..service_instance import ServiceInstance, ServiceNotFoundError
@@ -8,10 +10,33 @@ from .request_task import RequestTask
 from .web_util import request_param, service_run_queue, make_standard_response
 from ...base.util.logging.logging_util import LOGGER
 
-
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 app.json.ensure_ascii = False
+
+
+@app.before_request
+def add_session_info():
+    trace_id = None
+    session_id = None
+    if "params" in request.json:
+        params = request.json['params']
+        if "trace_id" in params:
+            trace_id = params['trace_id']
+        if "session_id" in params:
+            session_id = params['session_id']
+    if trace_id is None and "trace_id" in request.headers:
+        trace_id = request.headers.get("trace_id")
+    if session_id is None and "session_id" in request.headers:
+        session_id = request.headers.get("session_id")
+    if trace_id is None:
+        trace_id = uuid.uuid4().hex
+    if session_id is None:
+        session_id = uuid.uuid4().hex
+    FrameworkContextManager().set_context('session_id', session_id)
+    FrameworkContextManager().set_context('trace_id', trace_id)
+    FrameworkContextManager().set_context('LOG_CONTEXT', f"{session_id} | {trace_id}")
+    LOGGER.info(f"request path: {request.path} params:{request.json}")
 
 
 @app.route("/echo")

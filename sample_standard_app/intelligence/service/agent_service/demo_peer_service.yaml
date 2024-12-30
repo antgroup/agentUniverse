@@ -1,5 +1,5 @@
-name: 'demo_service'
+name: 'demo_peer_service'
 description: 'demo service of demo agent'
-agent: 'rag_agent_case'
+agent: 'peer_agent_case'
 metadata:
   type: 'SERVICE'

@@ -11,6 +11,10 @@ log_rotation = "100 MB"
 # files to be retained. Files outside this policy are purged.
 log_retention = "7 days"
 
+# Whether to compress the log files.
+# (e.g., "zip"), "" not compress.
+log_compression = ""
+
 [LOG_CONFIG.EXTEND_MODULE]
 # Whether you use Aliyun Simple Log Service (SLS), if the value is "True", you should fill in the ALIYUN_SLS_CONFIG below.
 sls_log = "False"

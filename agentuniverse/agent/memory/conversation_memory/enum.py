@@ -5,20 +5,21 @@
 # @Author  : wangchongshi
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: enum.py
+
 import enum
 from enum import Enum
 
 
 @enum.unique
-class MemoryTypeEnum(Enum):
-    SHORT_TERM = 'short_term'
-    LONG_TERM = 'long_term'
+class ConversationMessageEnum(Enum):
+    INPUT = 'input'
+    OUTPUT = 'output'
 
 
 @enum.unique
-class ChatMessageEnum(Enum):
-    SYSTEM = 'system'
-    HUMAN = 'human'
-    AI = 'ai'
-    INPUT = 'input'
-    OUTPUT = 'output'
+class ConversationMessageSourceType(Enum):
+    AGENT = 'agent'
+    TOOL = 'tool'
+    KNOWLEDGE = 'knowledge'
+    LLM = 'llm'
+    USER = 'user'

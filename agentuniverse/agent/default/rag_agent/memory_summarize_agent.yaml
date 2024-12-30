@@ -1,0 +1,15 @@
+info:
+  name: 'memory_summarize_agent'
+  description: 'memory summarize agent'
+profile:
+  prompt_version: 'memory_summarize_cn_prompt'
+  llm_model:
+    name: 'deep_seek_llm'
+#    model_name: 'qwen2.5-72b-instruct'
+    temperature: 0.7
+memory:
+  auto_trace: false
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.default_summarize_agent_template'
+  class: 'SummarizeRagAgentTemplate'

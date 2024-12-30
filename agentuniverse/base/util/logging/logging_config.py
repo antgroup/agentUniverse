@@ -39,6 +39,7 @@ class LoggingConfig(object):
     log_path: Optional[str] = None
     log_rotation: str = "10 MB"
     log_retention: str = "3 days"
+    log_compression: str = "zip"
 
     # Aliyun sls configs.
     sls_endpoint: str = ""
@@ -98,6 +99,11 @@ class LoggingConfig(object):
                                                     "log_retention")
         if log_retention:
             LoggingConfig.log_retention = log_retention
+
+        log_compress = self._get_config_or_default("BASIC_CONFIG",
+                                                   "log_compression")
+        if log_compress is not None:
+            LoggingConfig.log_compression = log_compress
 
         # Read sls config when sls extend module come into effect.
         if LoggingConfig.log_extend_module_switch["sls_log"]:
