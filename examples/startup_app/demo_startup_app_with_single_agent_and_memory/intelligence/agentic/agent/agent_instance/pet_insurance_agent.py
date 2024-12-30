@@ -54,7 +54,7 @@ class PetInsuranceAgent(Agent):
         prompt: Prompt = self.process_prompt(agent_input, **kwargs)
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         # 5. assemble the memory input.
-        assemble_memory_input(memory, agent_input)
+        se
         # 6. invoke agent.
         chain = prompt.as_langchain() | llm.as_langchain_runnable(
             self.agent_model.llm_params()) | StrOutputParser()

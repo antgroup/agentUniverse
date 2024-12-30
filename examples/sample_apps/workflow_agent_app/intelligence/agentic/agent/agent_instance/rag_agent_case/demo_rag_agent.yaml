@@ -10,8 +10,7 @@ action:
     - 'google_search_tool'
   knowledge:
 memory:
-    name: 'demo_memory_a'
-
+  name: 'demo_memory_a'
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.rag_agent_template'

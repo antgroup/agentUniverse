@@ -4,16 +4,10 @@ info:
 profile:
   prompt_version: demo_executing_agent.cn
   llm_model:
-    name: 'deep_seek_llm'
+    name: 'qwen_llm'
     temperature: 0.4
 memory:
-  conversation_memory: 'global_conversation_memory'
-  auto_trace: True
-  prune: True
-  top_k: 50
-  collection_types: ['tool','llm']
-  agent_id: peer_agent_case
-  memory_types: ['agent']
+  name: ''
 action:
   knowledge:
     - ''
