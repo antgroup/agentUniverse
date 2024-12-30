@@ -182,16 +182,14 @@ class ElasticsearchMemoryStorage(MemoryStorage):
         }
         if session_id:
             query['query']['bool']['must'].append({"term": {"session_id": session_id}})
-
-        memory_types = [
-            "input", "output"
-        ]
         if 'type' in kwargs:
             if isinstance(kwargs['type'], list):
                 memory_types = kwargs['type']
             elif isinstance(kwargs['type'], str):
                 memory_types = [kwargs['type']]
-        query['query']['bool']['must'].append({"terms": {"type": memory_types}})
+            else:
+                raise ValueError("type must be a list or a string")
+            query['query']['bool']['must'].append({"terms": {"type": memory_types}})
         if agent_id:
             condition = {
                 "bool": {
@@ -269,7 +267,8 @@ class DefaultMemoryConverter:
                 'prefix': es_hit['_source'].get('prefix'),
                 'timestamp': datetime.datetime.fromisoformat(es_hit['_source']['timestamp']),
                 'params': es_hit['_source'].get('params'),
-                'pair_id': es_hit['_source'].get('pair_id')
+                'pair_id': es_hit['_source'].get('pair_id'),
+                'gmt_created': datetime.datetime.fromisoformat(es_hit['_source']['timestamp']).isoformat(),
             },
             'type': es_hit['_source']['type'],
             'trace_id': es_hit['_source']['trace_id'],

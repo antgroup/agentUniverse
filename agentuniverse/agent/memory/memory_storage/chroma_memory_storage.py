@@ -138,7 +138,6 @@ class ChromaMemoryStorage(MemoryStorage):
         """
         if self._collection is None:
             self._init_collection()
-        types = ['human', 'ai', '', 'Q&A']
         filters = {"$and": []}
         if session_id:
             filters["$and"].append({'session_id': session_id})
@@ -151,7 +150,7 @@ class ChromaMemoryStorage(MemoryStorage):
                 types = kwargs.get('type')
             elif isinstance(kwargs.get('type'), str):
                 types = [kwargs.get('type')]
-        filters["$and"].append({'type': {'$in': types}})
+            filters["$and"].append({'type': {'$in': types}})
         if len(filters["$and"]) < 2:
             filters = filters["$and"][0] if len(filters["$and"]) == 1 else {}
         if input:

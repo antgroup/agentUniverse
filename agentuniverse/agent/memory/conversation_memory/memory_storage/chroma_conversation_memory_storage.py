@@ -151,15 +151,16 @@ class ChromaConversationMemoryStorage(MemoryStorage):
         if session_id:
             filters["$and"].append({'session_id': session_id})
 
-        types = [ConversationMessageEnum.INPUT.value, ConversationMessageEnum.OUTPUT.value]
         if 'type' in kwargs:
             if isinstance(kwargs['type'], list):
                 types = kwargs['type']
             elif isinstance(kwargs['type'], str):
                 types = [kwargs['type']]
-        filters["$and"].append({'type': {
-            "$in": types
-        }})
+            else:
+                raise ValueError("type must be a list or str")
+            filters["$and"].append({'type': {
+                "$in": types
+            }})
 
         if agent_id:
             condition = {

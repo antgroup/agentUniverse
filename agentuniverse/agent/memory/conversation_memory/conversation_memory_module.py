@@ -186,7 +186,7 @@ class ConversationMemoryModule:
             params_json = params_json[:self.max_content_length]
         if self.logging:
             LOGGER.info(
-                f"{self.instance_name} | {kwargs.get('session_id')} | {kwargs.get('trace_id')}| {kwargs.get('pair_id')} |\n {prefix}:{content}")
+                f"{kwargs.get('session_id')} | {kwargs.get('trace_id')}| {kwargs.get('pair_id')} |\n {prefix}:{content}")
         message = ConversationMessage(
             id=uuid.uuid4().hex,
             conversation_id=kwargs.get('session_id'),
@@ -200,7 +200,8 @@ class ConversationMemoryModule:
                 "timestamp": datetime.datetime.now(),
                 "prefix": prefix,
                 "params": params_json,
-                "pair_id": kwargs.get('pair_id')
+                "pair_id": kwargs.get('pair_id'),
+                'gmt_created': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             },
             content=f"{content}"
         )

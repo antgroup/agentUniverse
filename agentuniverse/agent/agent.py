@@ -371,6 +371,8 @@ class Agent(ComponentBase, ABC):
         }
         if agent_input.get('input'):
             params['input'] = agent_input.get('input')
+        if not self.agent_model.memory.get('name') and self.agent_model.memory.get('conversation_memory'):
+            params["type"] = ['input', 'output']
         return params
 
     def get_run_config(self, **kwargs) -> dict:
@@ -392,6 +394,7 @@ class Agent(ComponentBase, ABC):
     def load_memory(self, memory, agent_input: dict):
         if memory:
             params = self.get_memory_params(agent_input)
+            LOGGER.info(f"Load memory with params: {params}")
             memory_messages = memory.get(**params)
             memory_str = get_memory_string(memory_messages, agent_input.get('agent_id'))
         else:

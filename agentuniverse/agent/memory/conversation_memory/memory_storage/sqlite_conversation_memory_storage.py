@@ -111,7 +111,8 @@ class DefaultMemoryConverter(BaseMemoryConverter):
                                                   'prefix': sql_message.prefix,
                                                   'timestamp': sql_message.timestamp,
                                                   'params': sql_message.params,
-                                                  'pair_id': sql_message.pair_id
+                                                  'pair_id': sql_message.pair_id,
+                                                  'gmt_created': sql_message.timestamp
                                               },
                                               'type': sql_message.type,
                                               'trace_id': sql_message.trace_id,
@@ -292,10 +293,6 @@ class SqliteMemoryStorage(MemoryStorage):
             agent_type_col = getattr(model_class, 'source_type')
             target_col = getattr(model_class, 'target')
             target_agent_type_col = getattr(model_class, 'target_type')
-            type_list = [
-                ConversationMessageEnum.INPUT.value,
-                ConversationMessageEnum.OUTPUT.value
-            ]
             if 'type' in kwargs:
                 memory_type_col = getattr(model_class, 'type')
                 if isinstance(kwargs['type'], list):
@@ -304,7 +301,9 @@ class SqliteMemoryStorage(MemoryStorage):
                 elif isinstance(kwargs['type'], str):
                     conditions.append(type_col == kwargs['type'])
                     type_list = [kwargs['type']]
-            conditions.append(type_col.in_(type_list))
+                else:
+                    raise ValueError("type must be a list or str")
+                conditions.append(type_col.in_(type_list))
             if agent_id:
                 agent_qa_col = and_(target_col == agent_id,
                                     target_agent_type_col == ConversationMessageSourceType.AGENT.value)

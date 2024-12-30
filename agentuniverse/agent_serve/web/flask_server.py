@@ -1,4 +1,5 @@
 import traceback
+import uuid
 
 from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 from flask import Flask, Response, request
@@ -16,11 +17,26 @@ app.json.ensure_ascii = False
 
 @app.before_request
 def add_session_info():
-    trace_id = request.headers.get("x-trace-id")
-    session_id = request.headers.get("x-session-id")
-    FrameworkContextManager().set_context('trace_id', trace_id)
+    trace_id = None
+    session_id = None
+    if "params" in request.json:
+        params = request.json['params']
+        if "trace_id" in params:
+            trace_id = params['trace_id']
+        if "session_id" in params:
+            session_id = params['session_id']
+    if trace_id is None and "trace_id" in request.headers:
+        trace_id = request.headers.get("trace_id")
+    if session_id is None and "session_id" in request.headers:
+        session_id = request.headers.get("session_id")
+    if trace_id is None:
+        trace_id = uuid.uuid4().hex
+    if session_id is None:
+        session_id = uuid.uuid4().hex
     FrameworkContextManager().set_context('session_id', session_id)
-    LOGGER.info(f"request path{request.path} trace_id: {trace_id}, session_id: {session_id} params:{request.json}")
+    FrameworkContextManager().set_context('trace_id', trace_id)
+    FrameworkContextManager().set_context('LOG_CONTEXT', f"{session_id} | {trace_id}")
+    LOGGER.info(f"request path: {request.path} params:{request.json}")
 
 
 @app.route("/echo")

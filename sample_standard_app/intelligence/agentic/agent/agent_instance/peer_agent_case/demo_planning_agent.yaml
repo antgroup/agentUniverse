@@ -13,6 +13,7 @@ memory:
   agent_id: peer_agent_case
   collection_types: ['agent','llm']
   memory_types: ['agent']
+  top_k: 60
 metadata:
   type: 'AGENT'
   module: 'agentuniverse.agent.template.planning_agent_template'
