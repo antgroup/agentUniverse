@@ -42,8 +42,8 @@ metadata:
 
 The aU sample project includes two examples of memory configurations:
 
-1. [demo_memory_with_chroma_storage](../../../../../../sample_standard_app/intelligence/agentic/memory/demo_memory_a.yaml): An example of memory with a chroma storage mounted
-2. [demo_memory_with_local_storage](../../../../../../sample_standard_app/intelligence/agentic/memory/demo_memory_b.yaml): An example of memory with a local memory storage mounted
+1. [demo_memory_with_chroma_storage](../../../../../../examples/sample_standard_app/intelligence/agentic/memory/demo_memory_a.yaml): An example of memory with a chroma storage mounted
+2. [demo_memory_with_local_storage](../../../../../../examples/sample_standard_app/intelligence/agentic/memory/demo_memory_b.yaml): An example of memory with a local memory storage mounted
 
 ## Creating Memory Domain Behavior Definition - xx_memory.py
 
@@ -80,7 +80,7 @@ memory:
 
 
 ### Case Study
-For example, in the PEER working mode, configure the `demo_memory` instance created above for the three agents in the aU sample project: [demo_planning_agent](../../../../../../sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_planning_agent.yaml), [demo_expressing_agent](../../../../../../sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_expressing_agent.yaml), and [demo_peer_agent](../../../../../../sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_peer_agent.yaml). When making a peer call, pass in the `session_id` as `peer_1`. After the call is completed, check the contents of the memory storage as follows:
+For example, in the PEER working mode, configure the `demo_memory` instance created above for the three agents in the aU sample project: [demo_planning_agent](../../../../../../examples/sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_planning_agent.yaml), [demo_expressing_agent](../../../../../../examples/sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_expressing_agent.yaml), and [demo_peer_agent](../../../../../../examples/sample_standard_app/intelligence/agentic/agent/agent_instance/peer_agent_case/demo_peer_agent.yaml). When making a peer call, pass in the `session_id` as `peer_1`. After the call is completed, check the contents of the memory storage as follows:
 
 #### mysql_memory_storage
 ![mysql_memory](../../../../_picture/mysql_memory.png)

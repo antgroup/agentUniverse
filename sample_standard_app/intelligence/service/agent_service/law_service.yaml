@@ -1,5 +1,0 @@
-name: 'law_service'
-description: 'law service of law agent'
-agent: 'law_rag_agent'
-metadata:
-  type: 'SERVICE'

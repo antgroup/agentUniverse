@@ -5,7 +5,7 @@ In the current agentUniverse's sample project, the following tools are integrate
 ## 1. Search Tools
 
 ### 1.1 Google Search
-[Tool Path](../../../../../../sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)  
+[Tool Path](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)  
 Detailed Configuration Information:
 
 ```yaml
@@ -38,7 +38,7 @@ SERPER_API_KEY="xxxx"
 
 ### 1.2 Bing Search 
 Currently, it integrates with the official Bing search.
-[Tool Path](../../../../../../sample_standard_app/intelligence/agentic/tool/bing_search_tool.yaml)  
+[Tool Path](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/bing_search_tool.yaml)  
 Tool configuration:
 ```yaml
 name: 'bing_search_tool'
@@ -68,8 +68,8 @@ BING_SUBSCRIPTION_KEY="xxxx"
 
 ### 1.3 Search API
 Supports multiple search tools, such as: 
-- [Baidu search](../../../../../../sample_standard_app/intelligence/agentic/tool/search_api_baidu_tool.yaml)
-- [Bing search](../../../../../../sample_standard_app/intelligence/agentic/tool/search_api_bing_tool.yaml)  
+- [Baidu search](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/search_api_baidu_tool.yaml)
+- [Bing search](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/search_api_bing_tool.yaml)  
 Other search engines also include: Google search, Amazon search, YouTube search, etc. For more information, please refer to: https://www.searchapi.io/
 Tool configuration:
 ```yaml
@@ -108,7 +108,7 @@ SEARCHAPI_API_KEY="xxxxxx"
 ## 2. Code Tool
 
 ### 2.1 PythonRepl
-[Tool Path](../../../../../../sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)  
+[Tool Path](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)  
 This tool can execute a piece of Python code, the configuration information of the tool:  
 ```yaml
 name: 'python_runner'
@@ -138,7 +138,7 @@ This tool can be used directly without any key, but for system security, please 
 ## 3.HTTP Tool
 
 ### 3.1 HTTP GET
-[Tool Path](../../../../../../sample_standard_app/intelligence/agentic/tool/request_get_tool.yaml)
+[Tool Path](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/request_get_tool.yaml)
 The tool can send a GET request, with its configuration information being:
 ```yaml
 name: 'requests_get'

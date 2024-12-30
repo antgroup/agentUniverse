@@ -39,13 +39,13 @@ metadata:
 ```
 
 Here we used two tools: google_search_tool and python_runner. The relevant tool code links are as follows:
-- [google_search_tool](../../../../sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)
-- [python_runner](../../../../sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)
+- [google_search_tool](../../../../examples/sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)
+- [python_runner](../../../../examples/sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)
 
 
 ### Case Run
 1. Test Case Run
-Directly run with test code[test_case](../../../../sample_standard_app/intelligence/test/test_react_agent.py)
+Directly run with test code[test_case](../../../../examples/sample_standard_app/intelligence/test/test_react_agent.py)
 2. Interface Run
 After configuring the related keys, start the web service and use the following curl for testing.
 ```shell

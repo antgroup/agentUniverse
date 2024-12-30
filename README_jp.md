@@ -26,7 +26,7 @@ agentUniverseは、大規模言語モデルに基づくマルチエージェン�
 ![](docs/guidebook/_picture/agent_universe_framework_resize.jpg)
 
 ## agentUniverseサンプルプロジェクト
-[agentUniverse サンプルプロジェクト](sample_standard_app/README.md)
+[agentUniverse サンプルプロジェクト](examples/sample_standard_app/README.md)
 
 ## クイックインストール
 pipを使用：

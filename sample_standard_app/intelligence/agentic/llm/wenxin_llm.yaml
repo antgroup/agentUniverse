@@ -1,9 +1,0 @@
-name: 'wenxin_llm'
-description: 'demo wenxin llm with spi'
-model_name: 'ERNIE-3.5-8K'
-max_tokens: 1000
-streaming: true
-metadata:
-  type: 'LLM'
-  module: 'agentuniverse.llm.default.wenxin_llm'
-  class: 'WenXinLLM'

@@ -1,5 +1,0 @@
-name: 'demo_react_service'
-description: 'demo react service of demo agent'
-agent: 'react_agent_case'
-metadata:
-  type: 'SERVICE'

@@ -1,0 +1,7 @@
+id: baichuan_llm
+nickname: 百川系列大模型
+type: LLM
+metadata:
+  type: 'PRODUCT'
+  module: 'agentuniverse_product.base.product'
+  class: 'Product'

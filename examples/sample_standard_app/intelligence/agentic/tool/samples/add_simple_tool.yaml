@@ -1,0 +1,8 @@
+name: 'add'
+description: 'Adding two float number, input_params with 2 num spilt with comma, return result. For example, input_params = 1, 2 , the result = 3'
+tool_type: 'api'
+input_keys: ['input']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.intelligence.agentic.tool.samples.simple_math_tool'
+  class: 'AddTool'

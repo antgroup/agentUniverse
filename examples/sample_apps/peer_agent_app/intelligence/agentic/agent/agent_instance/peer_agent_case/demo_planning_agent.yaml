@@ -1,0 +1,15 @@
+info:
+  name: 'demo_planning_agent'
+  description: 'demo planning agent'
+profile:
+  prompt_version: demo_planning_agent.cn
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen-max'
+    temperature: 0.7
+memory:
+  name: 'demo_memory'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.planning_agent_template'
+  class: 'PlanningAgentTemplate'

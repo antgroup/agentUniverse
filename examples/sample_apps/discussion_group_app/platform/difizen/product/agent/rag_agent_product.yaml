@@ -1,0 +1,13 @@
+id: demo_rag_agent
+nickname: rag智能体
+type: AGENT
+opening_speech: |
+  欢迎使用rag chatbot！根据您的提问，我将结合实时信息及我个人掌握的知识，给您提供合理的解答。
+  你可以这样问我：
+  问题1: 巴黎奥运会中国获得了几块奖牌
+  问题2: 巴菲特为什么减持苹果股票
+avatar: ../../../resources/rag_agent_logo.png
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

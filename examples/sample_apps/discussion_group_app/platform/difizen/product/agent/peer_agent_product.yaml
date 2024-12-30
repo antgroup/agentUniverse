@@ -1,0 +1,13 @@
+id: demo_peer_agent
+nickname: peer多智能体组
+opening_speech: |
+  您好，欢迎使用PEER多智能体协同范式，根据您提出的问题，我将通过Planning智能体拆解问题，Executing智能体逐个执行子问题，Expressing智能体总结任务执行结果，Reviewing智能体评估及反馈，最终给您提供满意的答案。
+  你可以这样问我：
+  问题1: 英伟达股票还能买吗?
+  问题2: 巴菲特为什么减持苹果股票?
+type: AGENT
+avatar: ../../../resources/peer_agent_logo.png
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

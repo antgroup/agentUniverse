@@ -9,7 +9,7 @@
 注意，如果你想直接使用LangChain中的description，在配置文件中description必须要配置为空
 
 一个工具初始化示例：
-[工具地址](../../../../../../sample_standard_app/intelligence/agentic/tool/langchain_tool/human_input_run.yaml)
+[工具地址](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/samples/human_input_run.yaml)
 ```yaml
 name: 'human_input_run'
 description: ''
@@ -20,7 +20,7 @@ langchain:
   class_name: HumanInputRun
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.intelligence.agentic.tool.langchain_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.samples.langchain_tool'
   class: 'LangChainTool'
 ```
 参数说明：
@@ -39,7 +39,7 @@ metadata:
 该工具可以直接使用，无需任何keys
 
 ## 1. 集成LangChain中的DuckDuckGo工具
-[工具地址](../../../../../../sample_standard_app/intelligence/agentic/tool/langchain_tool/duckduckgo_search.yaml)
+[工具地址](../../../../../../examples/sample_standard_app/intelligence/agentic/tool/samples/duckduckgo_search.yaml)
 ```yaml
 name: 'duckduckgo_search'
 description: 'DuckDuckGo Search tool'
@@ -52,18 +52,18 @@ langchain:
     backend: news
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.intelligence.agentic.tool.langchain_tool.langchain_tool'
+  module: 'sample_standard_app.intelligence.agentic.tool.samples.langchain_tool'
   class: 'LangChainTool'
 ```
 该工具可以直接使用，无需任何keys
 
 ## 2.集成维基百科搜索
 因为LangChain的定义当中，包含一个api_wrapper对象，因此定义对象文件，并重写初始化方法：
+
 ```python
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
-
-from sample_standard_app.intelligence.agentic.tool.langchain_tool.langchain_tool import LangChainTool
+from examples.sample_standard_app.intelligence.agentic.tool.samples.langchain_tool import LangChainTool
 
 
 class WikipediaTool(LangChainTool):
@@ -79,6 +79,6 @@ tool_type: 'api'
 input_keys: ['input']
 metadata:
   type: 'TOOL'
-  module: 'sample_standard_app.intelligence.agentic.tool.langchain_tool.wikipedia_query'
+  module: 'sample_standard_app.intelligence.agentic.tool.samples.wikipedia_query'
   class: 'WikipediaTool'
 ```

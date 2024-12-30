@@ -12,7 +12,7 @@ we will show you how to:
 - python 3.10+
 
 ### Application Preparation
-We provide a standard project template which you can access [here](../../../../sample_standard_app) . 
+We provide a standard project template which you can access [here](../../../../examples/sample_standard_app) . 
 
 The "sample_standard_app" folder contains a standard project template that you can modify according to your own needs. You can also copy the "sample_standard_app" folder to use as the root directory of your application project.
 

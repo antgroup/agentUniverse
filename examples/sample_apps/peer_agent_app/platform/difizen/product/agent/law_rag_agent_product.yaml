@@ -1,0 +1,13 @@
+id: law_rag_agent
+nickname: 法律顾问智能体
+opening_speech: |
+  您好，欢迎使用法律顾问智能体，我将根据您给出的法律事件，以及提供的背景知识做出客观的司法判断。
+  你可以这样问我：
+  问题1: 张三在景区拍摄景区风景，李四闯入了镜头并被拍下。李四能否起诉张三侵犯肖像权，能否要求删除照片
+  问题2: 入室抢劫和入室盗窃，哪个罪名更大
+type: AGENT
+avatar: ../../../resources/law_agent_logo.png
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

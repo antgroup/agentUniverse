@@ -1,0 +1,10 @@
+id: demo_workflow_agent
+nickname: workflow智能体
+avatar: ../../../resources/workflow_agent_logo.jpg
+opening_speech: |
+  欢迎使用workflow智能体！
+type: AGENT
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

@@ -1,5 +1,0 @@
-name: 'demo_service'
-description: 'demo service of demo agent'
-agent: 'rag_agent_case'
-metadata:
-  type: 'SERVICE'

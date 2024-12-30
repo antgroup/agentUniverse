@@ -77,7 +77,7 @@ Please refer to the document for detail steps: [Run the first example](docs/guid
 ## How to build an agent application
 
 ### Standard Project Scaffolding
-Setup the standard project: [agentUniverse Standard Project](sample_standard_app)
+Setup the standard project: [agentUniverse Standard Project](examples/sample_standard_app)
 
 ### Create and use agents
 You can learn about the important components of agents through the [Introduction to Agents](docs/guidebook/en/In-Depth_Guides/Tutorials/Agent/Agent.md). For detailed information on creating agents, refer to [Creating and Using Agents](docs/guidebook/en/In-Depth_Guides/Tutorials/Agent/Agent_Create_And_Use.md). You can also deepen your understanding of the creation and usage of agents by exploring official examples, such as the [Python Code Generation and Execution Agent](docs/guidebook/en/Examples/Python_Auto_Runner.md).
@@ -107,7 +107,7 @@ pip install magent-ui ruamel.yaml
 
 **One-click Run**
 
-Run [product_application.py](sample_standard_app/boostrap/platform/product_application.py) in sample_standard_app/boostrap/platform for quick startup.
+Run [product_application.py](examples/sample_standard_app/boostrap/platform/product_application.py) in sample_standard_app/boostrap/platform for quick startup.
 
 For more details, refer to [Quick Start for Product Platform](docs/guidebook/en/How-to/Product_Platform_Quick_Start.md) and the [Advanced Guide](docs/guidebook/en/How-to/Product_Platform_Advancement_Guide.md).
 

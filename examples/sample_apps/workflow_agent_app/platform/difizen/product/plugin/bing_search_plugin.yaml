@@ -1,0 +1,11 @@
+id: bing_search_plugin
+nickname: 必应web搜索插件
+avatar: ../../../resources/bing_search.jpg
+description: 必应web搜索插件
+type: PLUGIN
+toolset:
+- search_api_bing_tool
+metadata:
+  class: PluginProduct
+  module: agentuniverse_product.base.plugin_product
+  type: PRODUCT

@@ -1,5 +1,0 @@
-name: 'pet_insurance_react_service'
-description: 'demo react service of demo agent'
-agent: 'pet_insurance_react_agent'
-metadata:
-  type: 'SERVICE'

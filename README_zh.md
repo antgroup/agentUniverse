@@ -32,15 +32,15 @@
 &nbsp; [运行案例](#运行第一个教程案例) &nbsp; |
 * [如何搭建一个智能体应用](#如何搭建一个智能体应用)  
 | &nbsp; [工程化搭建](#工程化搭建) &nbsp; |
-&nbsp; [产品化搭建](#产品化搭建) &nbsp; |
+&nbsp; [产品化搭建](#平台化搭建) &nbsp; |
 * [为什么使用agentUniverse](#为什么使用agentUniverse)  
 | &nbsp; [设计思路](#设计思路) &nbsp; | 
 &nbsp; [协同机制](#多智能体协同机制) &nbsp; | 
 &nbsp; [研究文献](#文献) &nbsp; | 
 &nbsp; [核心特性](#核心特性) &nbsp; |
-* [案例与样例工程](#案例与样例工程)  
-| &nbsp; [官方案例](#官方案例) &nbsp; | 
-&nbsp; [样例工程](#示例工程) &nbsp; | 
+* [样例工程与应用实践](#样例工程与应用实践)  
+| &nbsp; [示例工程](#示例工程) &nbsp; | 
+&nbsp; [应用实践](#应用实践) &nbsp; | 
 &nbsp; [典型产品](#使用aU构建的典型产品) &nbsp; |
 * [用户指南手册](#用户指南手册)
 * [更多](#更多)  
@@ -62,7 +62,7 @@ pip install agentUniverse
 
 运行您的第一个案例，您可以通过教程快速体验agentUniverse构建出的智能体(组)运行效果。 
 
-详细步骤请阅读文档: [运行第一个教程案例](./docs/guidebook/zh/开始使用/快速开始.md) 。
+详细步骤请阅读文档: [运行第一个教程案例](./docs/guidebook/zh/开始使用/2.运行第一个教程案例.md) 。
 
 ****************************************
 
@@ -71,10 +71,10 @@ pip install agentUniverse
 ### 工程化搭建
 
 #### 智能体创建与使用
-您可以通过 [智能体介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体.md) 了解智能体的重要组成部分，通过 [智能体创建与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体创建与使用.md) 了解创建智能体的详细过程。您也可以结合官方案例，如 [Python代码生成与执行Agent](./docs/guidebook/zh/样例文档/Python自动执行案例.md) 进一步理解智能体创建与使用过程。 
+您可以通过 [智能体介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体.md) 了解智能体的重要组成部分，通过 [智能体创建与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体创建与使用.md) 了解创建智能体的详细过程。您也可以结合官方案例，如 [Python代码生成与执行Agent](docs/guidebook/zh/实践应用/Python自动执行案例.md) 进一步理解智能体创建与使用过程。 
 
 #### 知识库构建与使用  
-在智能体应用构建中，知识库构建与召回是不可缺少的，agentUniverse框架以[RAG技术](./docs/guidebook/zh/In-Depth_Guides/原理介绍/RAG.md)为基础提供了高效的知识库构建和RAG检索召回环节的标准作业流程。您可以通过[知识介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识.md)与[知识定义与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识定义与使用.md)了解其使用方式，进一步通过[如何构建RAG智能体](./docs/guidebook/zh/How-to/如何构建RAG智能体.md)掌握如何快速构建知识库与构建具有召回能力的智能体。
+在智能体应用构建中，知识库构建与召回是不可缺少的，agentUniverse框架以[RAG技术](./docs/guidebook/zh/In-Depth_Guides/原理介绍/RAG.md)为基础提供了高效的知识库构建和RAG检索召回环节的标准作业流程。您可以通过[知识介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识.md)与[知识定义与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识定义与使用.md)了解其使用方式，进一步通过[如何构建知识库](./docs/guidebook/zh/How-to/构建与使用知识库/如何构建知识库.md)与[使用知识库](./docs/guidebook/zh/How-to/构建与使用知识库/如何使用知识库.md)掌握如何快速构建知识库与构建具有召回能力的智能体。
 
 #### 工具自定义与使用  
 在智能体应用构建中，智能体需要连接各种各样的工具，您需要为其指定可使用的工具范围列表。您可以通过[工具创建与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/工具/工具创建与使用.md)将各类自有API与服务以工具插件形式接入。目前框架已经集成了LangChain与部分第三方工具包，详细使用法可阅读[集成LangChain工具](./docs/guidebook/zh/In-Depth_Guides/组件列表/工具列表/集成LangChain工具.md)、[现有集成的工具](./docs/guidebook/zh/In-Depth_Guides/组件列表/工具列表/集成LangChain工具.md)。
@@ -96,10 +96,10 @@ pip install magent-ui ruamel.yaml
 
 **一键运行**
 
-运行sample_standard_app/boostrap下的[product_application.py](sample_standard_app/boostrap/platform/product_application.py)文件，一键启动。
+运行sample_standard_app/boostrap下的[product_application.py](examples/sample_standard_app/boostrap/platform/product_application.py)文件，一键启动。
 
-更多详情参考 [产品化平台快速开始](./docs/guidebook/zh/How-to/画布式研发平台快速开始.md)
-与 [产品化平台进阶指南](./docs/guidebook/zh/How-to/画布式研发平台进阶指南.md) 。本功能由 🔗[difizen](https://github.com/difizen/magent) 项目组 X agentUniverse 项目组联合推出。
+更多详情参考 [产品化平台快速开始](./docs/guidebook/zh/How-to/画布式研发平台使用/画布式研发平台快速开始.md)
+与 [产品化平台进阶指南](./docs/guidebook/zh/How-to/画布式研发平台使用/画布式研发平台进阶指南.md) 。本功能由 🔗[difizen](https://github.com/difizen/magent) 项目组 X agentUniverse 项目组联合推出。
 
 ****************************************
 
@@ -148,20 +148,20 @@ BibTeX formatted
 
 ****************************************
 
-## 案例与样例工程
-### 官方案例
-🚩 [法律咨询Agent_v2](./docs/guidebook/zh/样例文档/法律咨询案例.md)
-
-🚩 [Python代码生成与执行Agent](./docs/guidebook/zh/样例文档/Python自动执行案例.md)
-
-🚩 [基于多轮多Agent的讨论小组](./docs/guidebook/zh/样例文档/讨论组.md)
-
-🚩 [基于PEER协同模式的金融事件分析](./docs/guidebook/zh/样例文档/金融事件分析案例.md)
-
-🚩 [吴恩达反思工作流翻译智能体复刻](./docs/guidebook/zh/样例文档/翻译案例.md)
-
+## 样例工程与应用实践
 ### 示例工程
-⌨️ [agentUniverse 示例项目](sample_standard_app)
+⌨️ [agentUniverse 示例项目](examples/sample_standard_app)
+
+### 应用实践
+🚩 [法律咨询Agent_v2](docs/guidebook/zh/实践应用/法律咨询案例.md)
+
+🚩 [Python代码生成与执行Agent](docs/guidebook/zh/实践应用/Python自动执行案例.md)
+
+🚩 [基于多轮多Agent的讨论小组](docs/guidebook/zh/实践应用/讨论组.md)
+
+🚩 [基于PEER协同模式的金融事件分析](docs/guidebook/zh/实践应用/金融事件分析案例.md)
+
+🚩 [吴恩达反思工作流翻译智能体复刻](docs/guidebook/zh/实践应用/翻译案例.md)
 
 ### 使用aU构建的典型产品
 🔗[支小助-金融从业专家AI助手](https://zhu.alipay.com/?from=au)

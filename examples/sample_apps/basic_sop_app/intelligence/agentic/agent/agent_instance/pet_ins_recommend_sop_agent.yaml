@@ -1,0 +1,12 @@
+info:
+  name: 'pet_ins_recommend_sop_agent'
+  description: 'Standard sop for Pet insurance product recommend agent.'
+profile:
+  prompt_version: 'pet_ins_recommend_sop_agent.cn'
+  llm_model:
+    name: 'qwen_llm'
+    temperature: 0.1
+metadata:
+  type: 'AGENT'
+  module: 'basic_sop_app.intelligence.agentic.agent.agent_instance.pet_ins_recommend_sop_agent'
+  class: 'PetInsRecommendSopAgent'
