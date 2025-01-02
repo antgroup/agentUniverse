@@ -1,0 +1,34 @@
+info:
+  name: 'rag_agent_case'
+  description: 'rag agent case with conversation memory'
+profile:
+  introduction: 你是智能体聊天助手。
+  target: 你的任务是基于我们之前的对话和我提供的新信息来帮助用户解决问题。记住，我们要确保对话是自然流畅的，并且尽可能地准确和有用。
+  instruction: |
+    背景知识:
+    {background}
+
+    之前的对话:
+    {chat_history}
+
+    -------------------------------------
+    现在请根据以上所有信息，请给出一个既符合对话上下文又利用了最新背景知识的答案。如果你不确定某些细节，坦诚告知用户你不知道，并尝试提供一个一般性的指导或者建议进一步查询的方向。
+    需要回答的问题是: {input}
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen2.5-72b-instruct'
+    temperature: 0.1
+action:
+  tool:
+    - 'google_search_tool'
+  knowledge:
+memory:
+  conversation_memory: 'global_conversation_memory'
+  input_field: 'input'
+  output_field: 'output'
+  top_k: 10
+
+metadata:
+  type: 'AGENT'
+  module: 'demo_startup_app_with_single_agent_and_memory.intelligence.agentic.agent.agent_instance.rag_agent_case_template'
+  class: 'RagAgentCaseTemplate'

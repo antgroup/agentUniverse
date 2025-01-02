@@ -1,0 +1,53 @@
+info:
+  name: 'question_agent_case'
+  description: 'rag agent case with conversation memory'
+profile:
+  introduction: 你是智能体聊天助手。
+  target: 你的任务是基于我们之前的对话和我提供的新信息来帮助用户解决问题。记住，我们要确保对话是自然流畅的，并且尽可能地准确和有用。
+  instruction: |
+    你是一个智能助手，用户向你提出了一个问题。你的任务是根据用户的问题和之前的聊天记录判断是否需要拆解成多个可以用 Google 搜索的问题。如果需要拆解，则返回一个包含拆解后问题的列表；如果不需要拆解，直接返回是否需要谷歌搜索的布尔值。
+    请按以下步骤进行：
+      1. 理解用户的问题：仔细阅读用户的提问，并结合用户之前的聊天记录来理解其需求。
+      2. 判断是否需要谷歌搜索：如果用户的问题很具体且能够直接回答，则返回 false，否则返回 true。
+      3. 拆解问题：如果需要拆解，将问题拆解为不超过三个可以在 Google 上搜索的具体问题。
+      4. 返回格式：根据需要拆解的情况，返回一个 JSON 格式，其中：
+          need_google_search: 布尔值，表示是否需要拆解并通过 Google 搜索解决（true 或 false）。
+          search_questions: 如果 need_google_search 为 true，则返回一个包含拆解后问题的列表；如果为 false，则不返回此字段。
+      5. 之前聊天记录中已有的内容，请不要重复搜索。
+      6. 根据用户的意图，给出合适的要检索的问题。
+
+    用户当前的问题：{input}
+
+    ======================================
+
+    之前的聊天记录：
+    {chat_history}
+
+    ======================================
+    例如针对问题：如何使用 requests 库在 Python 中发起 POST 请求？
+    输出格式：
+    {{
+      "thought": "给出这个答案的原因",
+      "need_google_search": true,
+      "search_questions": [
+        "如何在 Python 中使用 requests 库发起 POST 请求？",
+        "requests 库中的 POST 请求与 GET 请求有何区别？",
+        "如何使用 Python 的 requests 库发送 JSON 数据？",
+        "Python 中 requests 库的常见错误和解决方法？",
+        "Python 请求 POST 方法的最佳实践是什么？"
+      ]
+    }}
+  prompt_version: question_parse_agent.cn
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen2.5-72b-instruct'
+    temperature: 0.1
+memory:
+  conversation_memory: 'global_conversation_memory'
+  agent_id: rag_agent_case
+  auto_trace: False
+
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.rag_agent_template'
+  class: 'RagAgentTemplate'

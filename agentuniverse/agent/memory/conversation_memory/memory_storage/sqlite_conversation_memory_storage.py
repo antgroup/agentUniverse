@@ -296,14 +296,11 @@ class SqliteMemoryStorage(MemoryStorage):
             if 'type' in kwargs:
                 memory_type_col = getattr(model_class, 'type')
                 if isinstance(kwargs['type'], list):
-                    type_list = kwargs['type']
                     conditions.append(memory_type_col.in_(kwargs['type']))
                 elif isinstance(kwargs['type'], str):
                     conditions.append(type_col == kwargs['type'])
-                    type_list = [kwargs['type']]
                 else:
                     raise ValueError("type must be a list or str")
-                conditions.append(type_col.in_(type_list))
             if agent_id:
                 agent_qa_col = and_(target_col == agent_id,
                                     target_agent_type_col == ConversationMessageSourceType.AGENT.value)

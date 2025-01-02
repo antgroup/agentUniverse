@@ -7,10 +7,9 @@
 # @FileName: pet_insurance_agent.py
 from langchain_core.output_parsers import StrOutputParser
 
-from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.memory.memory import Memory
-from agentuniverse.base.util.agent_util import assemble_memory_input, assemble_memory_output
+from agentuniverse.agent.template.agent_template import AgentTemplate
 from agentuniverse.base.util.prompt_util import process_llm_token
 from agentuniverse.llm.llm import LLM
 from agentuniverse.prompt.prompt import Prompt
@@ -18,7 +17,7 @@ from examples.startup_app.demo_startup_app_with_single_agent.intelligence.utils.
     PROD_DESCRIPTION_A
 
 
-class PetInsuranceAgent(Agent):
+class PetInsuranceAgent(AgentTemplate):
 
     def input_keys(self) -> list[str]:
         return ['input', 'session_id']
@@ -54,14 +53,12 @@ class PetInsuranceAgent(Agent):
         prompt: Prompt = self.process_prompt(agent_input, **kwargs)
         process_llm_token(llm, prompt.as_langchain(), self.agent_model.profile, agent_input)
         # 5. assemble the memory input.
-        se
+        self.load_memory(memory, agent_input)
         # 6. invoke agent.
         chain = prompt.as_langchain() | llm.as_langchain_runnable(
             self.agent_model.llm_params()) | StrOutputParser()
         res = self.invoke_chain(chain, agent_input, input_object, **kwargs)
-        # 7. assemble the memory output.
-        assemble_memory_output(memory=memory,
-                               agent_input=agent_input,
-                               content=f"Human: {agent_input.get('input')}, AI: {res}")
+        # 7. add the memory output.
+        self.add_memory(memory, f"Human: {agent_input.get('input')}, AI: {res}", type='', agent_input=agent_input)
         # 8. return result.
         return {**agent_input, 'output': res}

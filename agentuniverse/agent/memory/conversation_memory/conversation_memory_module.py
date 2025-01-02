@@ -11,6 +11,7 @@ import json
 import queue
 import traceback
 import uuid
+from concurrent.futures.thread import ThreadPoolExecutor
 from threading import Thread
 from typing import List, Optional
 
@@ -46,8 +47,8 @@ def generate_relation_str(source: str, target: str, source_type: str, target_typ
         return f"大模型 {target} 返回给智能体 {source} 的答案"
     if source_type == 'unknown' and target_type == 'agent' and type == 'input':
         return f"未知类型 {source} 向智能体 {target} 提出了一个问题"
-    if source_type == 'agent' and target_type == 'unknown' and type == 'output':
-        return f"智能体 {source} 回答了未知 {target} 的问题"
+    if source_type == 'unknown' and target_type == 'agent' and type == 'output':
+        return f"智能体 {target} 回答了未知 {source} 的问题"
     if source_type == "user" and target_type == 'agent' and type == 'input':
         return f"用户向智能体 {target} 提出了一个问题"
     if source_type == 'user' and target_type == 'agent' and type == 'output':
@@ -127,13 +128,14 @@ class ConversationMemoryModule:
         self.conversation_format = conversation_memory_configer.get('conversation_format', 'cn')
         self.max_content_length = conversation_memory_configer.get('max_content_length', 8000)
         self.queue = queue.Queue(1000)
+        self.thread_pool = ThreadPoolExecutor(max_workers=conversation_memory_configer.get('thread_pool', 4))
         Thread(target=self._consume_queue, daemon=True).start()
 
     def _consume_queue(self):
         while True:
             func = self.queue.get()
             try:
-                func()
+                self.thread_pool.submit(func)
             except Exception as e:
                 LOGGER.error(f"Failed to process trace info: {e}")
                 # 打印详细堆栈信息
@@ -287,10 +289,10 @@ class ConversationMemoryModule:
         if auto:
             if not instance.collect_current_memory(start_info.get('type')):
                 return
-        if not self.activate:
-            return
-        if 'agent' not in self.collection_types:
-            return
+            if not self.activate:
+                return
+            if 'agent' not in self.collection_types:
+                return
 
         target_info = {'source': instance.agent_model.info.get('name'), 'type': 'agent'}
         input_keys = instance.input_keys()

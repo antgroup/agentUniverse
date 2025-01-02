@@ -26,7 +26,7 @@ profile:
 action:
   tool:
 memory:
-  name: 'demo_memory'
+  conversation_memory: 'global_conversation_memory'
 metadata:
   type: 'AGENT'
   module: 'demo_startup_app_with_single_agent_and_memory.intelligence.agentic.agent.agent_instance.pet_insurance_agent'

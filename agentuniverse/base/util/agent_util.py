@@ -21,8 +21,6 @@ def assemble_memory_input(memory: Memory, agent_input: dict, query_params: dict 
     Returns:
         list[Message]: The retrieved memory messages.
     """
-    if 'session_id' not in agent_input or not agent_input['session_id']:
-        agent_input['session_id'] = FrameworkContextManager().get_context('session_id')
     memory_messages = []
     if memory:
         # get the memory messages from the memory instance.

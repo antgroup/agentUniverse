@@ -6,6 +6,7 @@ max_tokens: 3000
 memory_compressor: demo_memory_compressor
 memory_storages:
   - sqlite_conversation_memory_storage
+memory_summarize_agent: summarize_agent
 metadata:
   type: 'MEMORY'
   module: 'agentuniverse.agent.memory.memory'
