@@ -1,5 +1,0 @@
-name: 'demo_question_service'
-description: 'demo service of demo agent'
-agent: 'question_agent_case'
-metadata:
-  type: 'SERVICE'
