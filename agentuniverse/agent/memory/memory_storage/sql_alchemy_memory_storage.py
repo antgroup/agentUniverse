@@ -229,6 +229,13 @@ class SqlAlchemyMemoryStorage(MemoryStorage):
             if source:
                 source_col = getattr(model_class, 'source')
                 conditions.append(source_col == source)
+            if kwargs.get('type'):
+                if isinstance(kwargs['type'], list):
+                    types = kwargs['type']
+                if not isinstance(kwargs['type'], str):
+                    types = [kwargs['type']]
+                type_col = getattr(model_class, 'type')
+                conditions.append(conditions.append(type_col.in_(types)))
 
             # build the query with dynamic conditions
             query = session.query(self.memory_converter.model_class)

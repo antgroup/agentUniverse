@@ -60,7 +60,7 @@ def _add_standard_logger():
         format=LoggingConfig.log_format,
         rotation=LoggingConfig.log_rotation,
         retention=LoggingConfig.log_retention,
-        compression='zip',
+        compression=LoggingConfig.log_compression if LoggingConfig.log_compression else None,
         encoding="utf-8",
         enqueue=True
     )

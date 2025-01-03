@@ -11,6 +11,8 @@ from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.agent_manager import AgentManager
 import uuid
 
+from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
+
 AgentUniverse().start(config_path='../../config/config.toml', core_mode=True)
 
 
@@ -22,5 +24,8 @@ def chat(question: str, session_id: str):
 
 if __name__ == '__main__':
     s_id = str(uuid.uuid4())
+    FrameworkContextManager().set_context('session_id', s_id)
+    FrameworkContextManager().set_context('trace_id', str(uuid.uuid4()))
     chat("宠物医保怎么升级", s_id)
+    FrameworkContextManager().set_context('trace_id', uuid.uuid4().hex)
     chat("我刚才问了什么问题", s_id)

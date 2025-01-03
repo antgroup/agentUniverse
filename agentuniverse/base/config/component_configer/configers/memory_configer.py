@@ -25,6 +25,7 @@ class MemoryConfiger(ComponentConfiger):
         self.__memory_compressor: Optional[str] = None
         self.__memory_storages: Optional[List[str]] = None
         self.__memory_retrieval_storage: Optional[str] = None
+        self.__memory_summarize_agent: Optional[str] = None
 
     @property
     def name(self) -> Optional[str]:
@@ -66,6 +67,11 @@ class MemoryConfiger(ComponentConfiger):
         """Return the retrieval storage of the Memory."""
         return self.__memory_retrieval_storage
 
+    @property
+    def memory_summarize_agent(self) -> Optional[str]:
+        """Return the summarize agent of the Memory."""
+        return self.__memory_summarize_agent
+
     def load(self) -> 'MemoryConfiger':
         """Load the configuration by the Configer object.
         Returns:
@@ -91,6 +97,7 @@ class MemoryConfiger(ComponentConfiger):
             self.__memory_compressor = configer.value.get('memory_compressor')
             self.__memory_storages = configer.value.get('memory_storages')
             self.__memory_retrieval_storage = configer.value.get('memory_retrieval_storage')
+            self.__memory_summarize_agent = configer.value.get('memory_summarize_agent')
         except Exception as e:
             raise Exception(f"Failed to parse the Memory configuration: {e}")
         return self

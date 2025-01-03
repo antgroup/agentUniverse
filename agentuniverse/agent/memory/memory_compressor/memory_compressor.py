@@ -53,8 +53,9 @@ class MemoryCompressor(ComponentBase):
         if prompt and llm:
             new_memory_str = get_memory_string(new_memories)
             chain = prompt.as_langchain() | llm.as_langchain() | StrOutputParser()
-            return chain.invoke(
+            result = chain.invoke(
                 input={'new_lines': new_memory_str, 'summary': existing_memory, 'max_tokens': max_tokens})
+            return result
         else:
             return ''
 

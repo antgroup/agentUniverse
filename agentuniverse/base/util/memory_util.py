@@ -11,6 +11,7 @@ from langchain_core.chat_history import BaseChatMessageHistory
 
 from agentuniverse.agent.memory.enum import ChatMessageEnum
 from agentuniverse.agent.memory.message import Message
+from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 from agentuniverse.llm.llm import LLM
 from agentuniverse.llm.llm_manager import LLMManager
 
@@ -43,16 +44,17 @@ def generate_memories(chat_messages: BaseChatMessageHistory) -> list:
     ] if chat_messages.messages else []
 
 
-def get_memory_string(messages: List[Message]) -> str:
+def get_memory_string(messages: List[Message], agent_id=None) -> str:
     """Convert the given messages to a string.
 
     Args:
         messages(List[Message]): The list of messages.
 
+
     Returns:
         str: The string representation of the messages.
     """
-
+    current_trace_id = FrameworkContextManager().get_context("trace_id")
     string_messages = []
     for m in messages:
         if m.type == ChatMessageEnum.SYSTEM.value:
@@ -61,14 +63,26 @@ def get_memory_string(messages: List[Message]) -> str:
             role = 'Human'
         elif m.type == ChatMessageEnum.AI.value:
             role = "AI"
+        elif m.type == ChatMessageEnum.INPUT.value or m.type == ChatMessageEnum.OUTPUT.value:
+            if current_trace_id == m.trace_id:
+                continue
+            role: str = m.metadata.get('prefix', "")
+            if agent_id:
+                role = role.replace(f"智能体 {agent_id}", " 你")
+                role = role.replace(f"Agent {agent_id}", " You")
+            m_str = f"{m.metadata.get('timestamp')} {role}:{m.content}"
+            string_messages.append(m_str)
+            continue
         else:
             role = ""
         m_str = ""
+        if m.metadata and m.metadata.get('gmt_created'):
+            m_str += f"{m.metadata.get('gmt_created')} "
+        if m.source:
+            m_str += f" Message source: {m.source} "
         if role:
             m_str += f"Message role: {role} "
-        if m.source:
-            m_str += f"Message source: {m.source} "
-        m_str += f"Message content: \n {m.content} "
+        m_str += f" :{m.content} "
         string_messages.append(m_str)
     return "\n\n".join(string_messages)
 

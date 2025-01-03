@@ -1,0 +1,13 @@
+name: 'global_conversation_memory'
+description: 'global memory with local storage'
+type: 'short_term'
+memory_key: 'chat_history'
+max_tokens: 3000
+memory_compressor: demo_memory_compressor
+memory_storages:
+  - sqlite_conversation_memory_storage
+memory_summarize_agent: summarize_agent
+metadata:
+  type: 'MEMORY'
+  module: 'agentuniverse.agent.memory.memory'
+  class: 'Memory'
