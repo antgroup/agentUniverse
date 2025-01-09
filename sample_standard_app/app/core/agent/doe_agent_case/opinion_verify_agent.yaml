@@ -1,0 +1,16 @@
+info:
+  name: 'opinion_verify_agent'
+  description: 'opinion verify agent'
+profile:
+  prompt_version: opinion_generate_agent.cn
+  llm_model:
+    name: 'deep_seek_llm'
+    temperature: 0.6
+action:
+plan:
+  planner:
+    name: 'rag_planner'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.opinion_verify_agent'
+  class: 'OpinionVerifyAgent'

@@ -1,0 +1,6 @@
+name: 'doe_planner'
+description: 'doe planner'
+metadata:
+  type: 'PLANNER'
+  module: 'agentuniverse.agent.plan.planner.doe_planner.doe_planner'
+  class: 'DOEPlanner'
