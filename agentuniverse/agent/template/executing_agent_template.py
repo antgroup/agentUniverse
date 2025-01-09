@@ -109,7 +109,7 @@ class ExecutingAgentTemplate(AgentTemplate):
             chain = prompt.as_langchain() | llm.as_langchain_runnable(
                 self.agent_model.llm_params()) | StrOutputParser()
             res = self.invoke_chain(chain, agent_input_copy, input_object_copy)
-            self.add_memory(memory, f"Human: {agent_input.get('input')}, AI: {res}", agent_input={})
+            self.add_memory(memory, f"Human: {agent_input.get('input')}, AI: {res}", agent_input=agent_input)
             ConversationMemoryModule().add_agent_result_info(
                 agent_instance=self,
                 agent_result={'output': res},

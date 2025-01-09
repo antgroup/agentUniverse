@@ -7,7 +7,6 @@
 # @FileName: agent_util.py
 from agentuniverse.agent.memory.memory import Memory
 from agentuniverse.agent.memory.message import Message
-from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 from agentuniverse.base.util.memory_util import get_memory_string
 
 
