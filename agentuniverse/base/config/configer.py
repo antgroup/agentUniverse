@@ -19,8 +19,7 @@ class PlaceholderResolver:
     def __init__(self):
         self._resolvers = []
         self.register_resolver(r'\${(.+?)}',
-                                   lambda match: os.getenv(match.group(1),
-                                                           match.group(0)))
+                                   lambda match: os.getenv(match.group(1), ''))
     def register_resolver(self, pattern, func):
         """Register a new resolver with a regex pattern and its corresponding function."""
         self._resolvers.append((re.compile(pattern), func))

@@ -1,7 +1,0 @@
-id: wenxin_llm
-nickname: 文心系列大模型
-type: LLM
-metadata:
-  type: 'PRODUCT'
-  module: 'agentuniverse_product.base.product'
-  class: 'Product'

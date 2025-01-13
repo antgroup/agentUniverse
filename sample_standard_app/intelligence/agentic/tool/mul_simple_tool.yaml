@@ -1,8 +1,0 @@
-name: 'mul'
-description: 'Multiplying two float number, input_params with 2 num spilt with comma, return result. For example, a = 2, 1 , the result = 2'
-tool_type: 'api'
-input_keys: ['input']
-metadata:
-  type: 'TOOL'
-  module: 'sample_standard_app.intelligence.agentic.tool.simple_math_tool'
-  class: 'MultiplyTool'

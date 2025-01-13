@@ -5,16 +5,24 @@
 # @Author  : heji
 # @Email   : lc299034@antgroup.com
 # @FileName: agent.py
-"""The definition of agent paradigm."""
 import json
 from abc import abstractmethod, ABC
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any, List
 
+from langchain_core.runnables import RunnableSerializable
 from langchain_core.utils.json import parse_json_markdown
 
+from agentuniverse.agent.action.knowledge.knowledge import Knowledge
+from agentuniverse.agent.action.knowledge.knowledge_manager import KnowledgeManager
+from agentuniverse.agent.action.knowledge.store.document import Document
+from agentuniverse.agent.action.tool.tool import Tool
+from agentuniverse.agent.action.tool.tool_manager import ToolManager
 from agentuniverse.agent.agent_model import AgentModel
 from agentuniverse.agent.input_object import InputObject
+from agentuniverse.agent.memory.memory import Memory
+from agentuniverse.agent.memory.memory_manager import MemoryManager
+from agentuniverse.agent.memory.message import Message
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.agent.plan.planner.planner import Planner
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
@@ -26,7 +34,15 @@ from agentuniverse.base.config.application_configer.application_config_manager \
     import ApplicationConfigManager
 from agentuniverse.base.config.component_configer.configers.agent_configer \
     import AgentConfiger
+from agentuniverse.base.util.common_util import stream_output
 from agentuniverse.base.util.logging.logging_util import LOGGER
+from agentuniverse.base.util.memory_util import generate_messages
+from agentuniverse.llm.llm import LLM
+from agentuniverse.llm.llm_manager import LLMManager
+from agentuniverse.prompt.chat_prompt import ChatPrompt
+from agentuniverse.prompt.prompt import Prompt
+from agentuniverse.prompt.prompt_manager import PromptManager
+from agentuniverse.prompt.prompt_model import AgentPromptModel
 
 
 class Agent(ComponentBase, ABC):
@@ -217,3 +233,122 @@ class Agent(ComponentBase, ABC):
             func=self.langchain_run,
             description=self.agent_model.info.get("description") + args_description
         )
+
+    def process_llm(self, **kwargs) -> LLM:
+        llm_name = kwargs.get('llm_name') or self.agent_model.profile.get('llm_model', {}).get('name')
+        return LLMManager().get_instance_obj(llm_name)
+
+    def process_memory(self, agent_input: dict, **kwargs) -> Memory | None:
+        memory_name = kwargs.get('memory_name') or self.agent_model.memory.get('name')
+        memory: Memory = MemoryManager().get_instance_obj(memory_name)
+        if memory is None:
+            return None
+
+        chat_history: list = agent_input.get('chat_history')
+        # generate a list of temporary messages from the given chat history and add them to the memory instance.
+        temporary_messages: list[Message] = generate_messages(chat_history)
+        if temporary_messages:
+            memory.add(temporary_messages, **agent_input)
+
+        params: dict = dict()
+        params['agent_llm_name'] = kwargs.get('llm_name') or self.agent_model.profile.get('llm_model', {}).get('name')
+        return memory.set_by_agent_model(**params)
+
+    def invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict, input_object: InputObject,
+                     **kwargs):
+        if not input_object.get_data('output_stream'):
+            res = chain.invoke(input=agent_input)
+            return res
+        result = []
+        for token in chain.stream(input=agent_input):
+            stream_output(input_object.get_data('output_stream', None), {
+                'type': 'token',
+                'data': {
+                    'chunk': token,
+                    'agent_info': self.agent_model.info
+                }
+            })
+            result.append(token)
+        return "".join(result)
+
+    async def async_invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict,
+                                 input_object: InputObject, **kwargs):
+        if not input_object.get_data('output_stream'):
+            res = await chain.ainvoke(input=agent_input)
+            return res
+        result = []
+        async for token in chain.astream(input=agent_input):
+            stream_output(input_object.get_data('output_stream', None), {
+                'type': 'token',
+                'data': {
+                    'chunk': token,
+                    'agent_info': self.agent_model.info
+                }
+            })
+            result.append(token)
+        return "".join(result)
+
+    def invoke_tools(self, input_object: InputObject, **kwargs) -> str:
+        tool_names = kwargs.get('tool_names') or self.agent_model.action.get('tool', [])
+        if not tool_names:
+            return ''
+
+        tool_results: list = list()
+
+        for tool_name in tool_names:
+            tool: Tool = ToolManager().get_instance_obj(tool_name)
+            if tool is None:
+                continue
+            tool_input = {key: input_object.get_data(key) for key in tool.input_keys}
+            tool_results.append(str(tool.run(**tool_input)))
+        return "\n\n".join(tool_results)
+
+    def invoke_knowledge(self, query_str: str, input_object: InputObject, **kwargs) -> str:
+        knowledge_names = kwargs.get('knowledge_names') or self.agent_model.action.get('knowledge', [])
+        if not knowledge_names or not query_str:
+            return ''
+
+        knowledge_results: list = list()
+
+        for knowledge_name in knowledge_names:
+            knowledge: Knowledge = KnowledgeManager().get_instance_obj(knowledge_name)
+            if knowledge is None:
+                continue
+            knowledge_res: List[Document] = knowledge.query_knowledge(
+                query_str=query_str,
+                **input_object.to_dict()
+            )
+            knowledge_results.append(knowledge.to_llm(knowledge_res))
+        return "\n\n".join(knowledge_results)
+
+    def process_prompt(self, agent_input: dict, **kwargs) -> ChatPrompt:
+        expert_framework = agent_input.pop('expert_framework', '') or ''
+
+        profile: dict = self.agent_model.profile
+
+        profile_instruction = profile.get('instruction')
+        profile_instruction = expert_framework + profile_instruction if profile_instruction else profile_instruction
+
+        profile_prompt_model: AgentPromptModel = AgentPromptModel(introduction=profile.get('introduction'),
+                                                                  target=profile.get('target'),
+                                                                  instruction=profile_instruction)
+
+        # get the prompt by the prompt version
+        prompt_version = kwargs.get('prompt_version') or self.agent_model.profile.get('prompt_version')
+        version_prompt: Prompt = PromptManager().get_instance_obj(prompt_version)
+
+        if version_prompt is None and not profile_prompt_model:
+            raise Exception("Either the `prompt_version` or `introduction & target & instruction`"
+                            " in agent profile configuration should be provided.")
+        if version_prompt:
+            version_prompt_model: AgentPromptModel = AgentPromptModel(
+                introduction=getattr(version_prompt, 'introduction', ''),
+                target=getattr(version_prompt, 'target', ''),
+                instruction=expert_framework + getattr(version_prompt, 'instruction', ''))
+            profile_prompt_model = profile_prompt_model + version_prompt_model
+
+        chat_prompt = ChatPrompt().build_prompt(profile_prompt_model, ['introduction', 'target', 'instruction'])
+        image_urls: list = agent_input.pop('image_urls', []) or []
+        if image_urls:
+            chat_prompt.generate_image_prompt(image_urls)
+        return chat_prompt

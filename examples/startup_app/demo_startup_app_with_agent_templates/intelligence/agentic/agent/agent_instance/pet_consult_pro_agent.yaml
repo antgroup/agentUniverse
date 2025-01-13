@@ -1,0 +1,11 @@
+info:
+  name: 'pet_insurance_consult_pro_agent'
+  description: '宠物险智能顾问，提供“宠物医保”产品的智能问答'
+profile:
+  planning: 'pet_insurance_planning_agent'
+  executing: 'pet_insurance_executing_agent'
+  expressing: 'pet_insurance_expressing_agent'
+metadata:
+  type: 'AGENT'
+  module: 'examples.startup_app.demo_startup_app_with_agent_templates.intelligence.agentic.agent.agent_template.pet_agent_template'
+  class: 'PetAgentTemplate'

@@ -9,7 +9,7 @@
 from typing import Optional, List, Dict
 
 import tomli
-
+from agentuniverse.base.config.configer import Configer
 
 def _load_toml_file(path: str) -> dict:
     """Load the toml file.
@@ -59,7 +59,7 @@ class LoggingConfig(object):
         """
         self.__config = None
         try:
-            self.__config = _load_toml_file(config_path)["LOG_CONFIG"]
+            self.__config = Configer().load_by_path(config_path).value['LOG_CONFIG']
         except (FileNotFoundError, TypeError):
             print("can't find log config file, use default config")
             for log_module in LoggingConfig.log_extend_module_list:

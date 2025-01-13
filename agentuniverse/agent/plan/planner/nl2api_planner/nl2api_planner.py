@@ -43,16 +43,15 @@ class Nl2ApiPlanner(Planner):
 
         process_llm_token(llm, prompt.as_langchain(), agent_model.profile, planner_input)
 
-        memory_messages = assemble_memory_input(memory, planner_input)
+        assemble_memory_input(memory, planner_input)
 
         chain = prompt.as_langchain() | llm.as_langchain_runnable(agent_model.llm_params()) | StrOutputParser()
         res = self.invoke_chain(agent_model, chain, planner_input, None, input_object)
 
-        memory_messages = assemble_memory_output(memory=memory,
-                                                 agent_input=planner_input,
-                                                 content=f"Human: {planner_input.get(self.input_key)}, AI: {res}",
-                                                 memory_messages=memory_messages)
-        return {**planner_input, self.output_key: res, 'chat_history': memory_messages}
+        assemble_memory_output(memory=memory,
+                               agent_input=planner_input,
+                               content=f"Human: {planner_input.get(self.input_key)}, AI: {res}")
+        return {**planner_input, self.output_key: res}
 
     @staticmethod
     def acquire_tools(action) -> list[LangchainTool]:

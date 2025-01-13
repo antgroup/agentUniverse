@@ -28,6 +28,7 @@ from agentuniverse.agent_serve.web.request_task import RequestLibrary
 from agentuniverse.agent_serve.web.rpc.grpc.grpc_server_booster import set_grpc_config
 from agentuniverse.agent_serve.web.web_booster import ACTIVATE_OPTIONS
 from agentuniverse.agent_serve.web.post_fork_queue import POST_FORK_QUEUE
+from agentuniverse.agent_serve.web.web_util import FlaskServerManager
 
 
 @singleton
@@ -51,6 +52,7 @@ class AgentUniverse(object):
         self.__system_default_memory_compressor_package = ['agentuniverse.agent.memory.memory_compressor']
         self.__system_default_memory_storage_package = ['agentuniverse.agent.memory.memory_storage']
         self.__system_default_work_pattern_package = ['agentuniverse.agent.work_pattern']
+        self.__system_default_log_sink_package = ['agentuniverse.base.util.logging.log_sink.log_sink']
 
     def start(self, config_path: str = None, core_mode: bool = False):
         """Start the agentUniverse framework.
@@ -92,6 +94,9 @@ class AgentUniverse(object):
             set_grpc_config(configer)
 
         # Init gunicorn web server with config file.
+        sync_service_timeout = configer.value.get('HTTP_SERVER', {}).get('sync_service_timeout')
+        if sync_service_timeout:
+            FlaskServerManager().sync_service_timeout = sync_service_timeout
         gunicorn_activate = configer.value.get('GUNICORN', {}).get('activate')
         if gunicorn_activate and gunicorn_activate.lower() == 'true':
             ACTIVATE_OPTIONS["gunicorn"] = True
@@ -157,6 +162,8 @@ class AgentUniverse(object):
                                             + self.__system_default_memory_storage_package)
         core_work_pattern_package_list = ((app_configer.core_work_pattern_package_list or app_configer.core_default_package_list)
                                             + self.__system_default_work_pattern_package)
+        core_log_sink_package_list = ((app_configer.core_log_sink_package_list or app_configer.core_default_package_list)
+                                          + self.__system_default_log_sink_package)
 
         component_package_map = {
             ComponentEnum.AGENT: core_agent_package_list,
@@ -177,7 +184,8 @@ class AgentUniverse(object):
             ComponentEnum.QUERY_PARAPHRASER: core_query_paraphraser_package_list,
             ComponentEnum.MEMORY_COMPRESSOR: core_memory_compressor_package_list,
             ComponentEnum.MEMORY_STORAGE: core_memory_storage_package_list,
-            ComponentEnum.WORK_PATTERN: core_work_pattern_package_list
+            ComponentEnum.WORK_PATTERN: core_work_pattern_package_list,
+            ComponentEnum.LOG_SINK: core_log_sink_package_list
         }
 
         component_configer_list_map = {}

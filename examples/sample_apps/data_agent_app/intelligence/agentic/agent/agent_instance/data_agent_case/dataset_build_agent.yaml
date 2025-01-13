@@ -1,0 +1,10 @@
+info:
+  name: 'dataset_build_agent'
+  description: 'dataset build agent'
+profile:
+  concurrency_level: 1
+  candidate: 'demo_rag_agent'
+metadata:
+  type: 'AGENT'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_build_agent'
+  class: 'DatasetBuildAgent'

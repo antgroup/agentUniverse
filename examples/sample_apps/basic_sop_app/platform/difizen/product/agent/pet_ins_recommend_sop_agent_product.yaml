@@ -1,0 +1,12 @@
+id: pet_ins_recommend_sop_agent
+nickname: 宠物保险推荐智能体
+opening_speech: |
+  您好，欢迎使用宠物保险推荐智能体！
+  你可以这样问我：
+  问题1: 为我重病的柴田犬买保险，买什么比较好呢？
+type: AGENT
+avatar: ../../../resources/rag_agent_logo.png
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

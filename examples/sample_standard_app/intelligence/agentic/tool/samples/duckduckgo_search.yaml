@@ -1,0 +1,13 @@
+name: 'duckduckgo_search'
+description: ''
+tool_type: 'api'
+input_keys: ['input']
+langchain:
+  module: langchain.tools
+  class_name: DuckDuckGoSearchResults
+  init_params:
+    backend: news
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.intelligence.agentic.tool.samples.langchain_tool'
+  class: 'LangChainTool'

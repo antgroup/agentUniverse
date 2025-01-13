@@ -1,0 +1,31 @@
+name: 'pet_insurance_search_context_tool'
+description: |
+  针对宠物险相关问题，给出相关问题答案的检索结果，非宠物险问题无法检索。
+  
+  工具输入：待检索的问题
+  
+  工具输出：格式如下
+  提出的问题是:xxx
+  
+  这个问题检索到的答案相关内容是:
+  
+  knowledgeTitle: xxx
+  knowledgeContent: xxx
+  
+  工具输入输出示例：
+    #工具输入: 
+    你想要搜索上海的天气时，工具的输入应该是：上海今天的天气
+    #工具输出: 
+    提出的问题是:宠物医保投保对宠物年龄的要求是多少？
+  
+    这个问题检索到的答案相关内容是:
+  
+    knowledgeTitle: 多大年龄可以投保
+    knowledgeContent: <p>宠物医保这款产品的投、被保险人为具备完全民事行为的个人，且须为同一人，本产品仅限宠物主本人购买，其承保的宠物须为被保险人以玩赏、陪伴为目的而合法饲养的、可明确鉴别身份的年龄为60天-10周岁的犬类或猫类宠物。</p>
+
+tool_type: 'api'
+input_keys: ['input']
+metadata:
+  type: 'TOOL'
+  module: 'demo_startup_app_with_single_agent_and_actions.intelligence.agentic.tool.pet_insurance_search_context_tool'
+  class: 'SearchContextTool'

@@ -1,0 +1,7 @@
+id: mock_search_tool
+nickname: mock搜索数据工具
+type: TOOL
+metadata:
+  type: 'PRODUCT'
+  module: 'agentuniverse_product.base.product'
+  class: 'Product'

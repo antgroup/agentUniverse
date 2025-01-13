@@ -12,136 +12,24 @@ Language version: [English](./README.md) | [中文](./README_zh.md) | [日本語
 
 ## What is agentUniverse?
 
-**agentUniverse is a multi-agent framework based on large language models.** agentUniverse provides you with the flexible and easily extensible capability to build single agents. At its core, agentUniverse features a rich set of multi-agent collaboration mode components (which can be viewed as a Collaboration Mode Factory, or Pattern Factory). These components allow agents to maximize their effectiveness by specializing in different domains to solve problems. agentUniverse also focuses on the integration of domain expertise, helping you seamlessly incorporate domain knowledge into the work of your agents.🎉🎉🎉
+**agentUniverse is a multi-agent framework based on large language models. It provides flexible and easily extensible capabilities for building individual agents. The core of agentUniverse is a rich set of multi-agent collaborative pattern components (serving as a collaborative pattern factory), which allows agents to perform their respective duties and maximize their capabilities when solving problems in different fields; at the same time, agentUniverse focuses on the integration of domain experience, helping you smoothly integrate domain experience into the work of intelligent agents.🎉🎉🎉
 
-**🌈🌈🌈agentUniverse helps developers and enterprises to easily build powerful collaborative agents that perform at an expert level in their respective domains.**
+**🌈🌈🌈agentUniverse helps developers and enterprises easily build powerful agents at the domain expert level to work collaboratively for you.**
 
 ![](docs/guidebook/_picture/agent_universe_framework_resize.jpg)
 
-We encourage you to practice and share different domain Patterns within the community. The framework comes pre-loaded with several multi-agent collaboration mode components that have been validated in real-world industries and will continue to expand in the future. The components that will be available soon include:
+We look forward to your practice and communication and sharing of Patterns in different fields through the community. This framework has already placed many useful components that have been tested in real business scenarios in terms of multi-agent cooperation, and will continue to be enriched in the future.
+The pattern components that are currently open for use include:
 
-* PEER Mode Component: This pattern uses agents with different responsibilities—Plan, Execute, Express, and Review—to break down complex problems into manageable steps, execute the steps in sequence, and iteratively improve based on feedback, enhancing the performance of reasoning and analysis tasks. Typical use cases: Event interpretation, industry analysis.
-* DOE Mode Component: This pattern employs three agents—Data-fining, Opinion-inject, and Express—to improve the effectiveness of tasks that are data-intensive, require high computational precision, and incorporate expert opinions. Typical use cases: Financial report generation.
+* PEER pattern component: This pattern uses agents with different responsibilities—Plan, Execute, Express, and Review—to break down complex problems into manageable steps, execute the steps in sequence, and iteratively improve based on feedback, enhancing the performance of reasoning and analysis tasks. Typical use cases: Event interpretation, industry analysis.
+* DOE pattern component: This pattern employs three agents—Data-fining, Opinion-inject, and Express—to improve the effectiveness of tasks that are data-intensive, require high computational precision, and incorporate expert opinions. Typical use cases: Financial report generation.
 
 More patterns are coming soon...
 
 ****************************************
-## Table of Contents
-* [Quick Start](#Quick-Start)
-* [Cases and Example Projects](#Cases-and-Example-Projects)
-* [More](#More)
-  * [Why Use agentUniverse](#Why-Use-agentUniverse)
-  * [Core Features](#Core-Features)
-  * [User Guide](#User-Guide)
-  * [API Reference](#API-Reference)
-  * [Support](#Support)
-  * [Citation](#Citation)
-  * [Acknowledgements](#Acknowledgements)
-****************************************
-## Quick Start
-Using pip:
-```shell
-pip install agentUniverse
-```
 
-We will show you how to:
+## Citation
 
-* Prepare the environment and application projects
-* Build a simple agent
-* Use mode components for multi-agent collaboration
-* Test and tune the execution effectiveness of an agent
-* Quickly deploy an agent as a service
-
-For more details, please read the [Quick Start](./docs/guidebook/en/1_3_Quick_Start.md).
-
-****************************************
-## Using the Product Platform
-agentUniverse provides a local product platform capability. Please follow the steps below for a quick start:
-
-**Install via pip**
-```shell
-pip install magent-ui ruamel.yaml
-```
-
-**One-click Run**
-
-Run the [product_application.py](sample_standard_app/boostrap/platform/product_application.py) file located in sample_standard_app/bootstrap for a one-click start.
-
-For more details, refer to [Quick Start for Product Platform](./docs/guidebook/en/10_1_1_Product%20Platform%20Quick%20Start.md) and the [Advanced Guide](./docs/guidebook/en/10_1_2_Product_Platform_Advancement_Guide.md).
-
-This feature is jointly launched by [difizen](https://github.com/difizen/magent) and agentUniverse.
-
-****************************************
-
-## Cases and Example Projects
-### 🌟 Use Cases
-[Legal Consultation Agent v2](./docs/guidebook/en/7_1_1_Legal_Consultation_Case.md)
-
-[Python Code Generation and Execution Agent](./docs/guidebook/en/7_1_1_Python_Auto_Runner.md)
-
-[Discussion Group Based on Multi-Turn Multi-Agent Mode](./docs/guidebook/en/6_2_1_Discussion_Group.md)
-
-[Financial Event Analysis Based on PEER Multi-Agent Mode](./docs/guidebook/en/6_4_1_Financial_Event_Analysis_Case.md)
-
-[Andrew Ng's Reflexive Workflow Translation Agent Replication](./docs/guidebook/en/7_1_1_Translation_Case.md)
-
-#### 🚩 How to Quickly Build an RAG Agent
-The RAG components have been fully upgraded. This tutorial provides a guide on how to quickly build an RAG agent in agentUniverse. You can refer to the documentation on [How to Build a RAG Agent](./docs/guidebook/en/2_2_4_How_To_Build_A_RAG_Agent.md). For more theoretical content, please check the documentation on [Introduction to RAG](./docs/guidebook/en/2_2_4_RAG.md).
-
-#### 🚩 DataAgent - Data Autonomous Agent
-agentUniverse has launched DataAgent (Minimum Viable Product Version). DataAgent aims to empower your agent with the capability of self-assessment and evolution through the use of intelligent agent abilities. For more details, please refer to the documentation. [DataAgent - Data Autonomous Agent](./docs/guidebook/en/8_1_1_data_autonomous_agent.md)
-
-### 🌟 Example Projects
-[agentUniverse Example Projects](sample_standard_app)
-
-### 🌟 Product Cases Built with agentUniverse
-['Zhi Xiao Zhu' AI Assistant for Financial Professionals](https://zhu.alipay.com/?from=au)
-
-****************************************
-
-**'Zhi Xiao Zhu' AI Assistant: Facilitate the implementation of large models in rigorous industries to enhance the efficiency of investment research experts**
-
-'Zhi Xiao Zhu' AI Assistant is an efficient solution for the practical application of large models in rigorous industries. It is based on the Finix model, which focuses on precise applications, and the agentUniverse intelligent agent framework, which excels in professional customization. This solution targets a range of professional AI business assistants related to investment research, ESG (Environmental, Social, and Governance), finance, earnings reports, and other specialized areas. It has been extensively validated in large-scale scenarios at Ant Group, enhancing expert efficiency.
-
-
-https://private-user-images.githubusercontent.com/39180831/355437700-192f712d-1b03-46a6-8422-1ca10aa94331.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjI5NDk4NTAsIm5iZiI6MTcyMjk0OTU1MCwicGF0aCI6Ii8zOTE4MDgzMS8zNTU0Mzc3MDAtMTkyZjcxMmQtMWIwMy00NmE2LTg0MjItMWNhMTBhYTk0MzMxLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MDYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODA2VDEzMDU1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTU4NWMzNzVjOGZjZDNjMDMzMTE4YjQzOTk0ZWQwZGZkNWNmNWQxNWMzYWIzMTk4MzY1MjA5NWRhMjU2NGNiNzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.q1vdSg_Ghxr-DHLXfmQ_fVVRVSFn7H8VMHMi-_2QrjA
-
-****************************************
-## More
-### Why Use agentUniverse
-💡 [Why Use agentUniverse?](./docs/guidebook/en/1_Why_Use_agentUniverse.md)
-
-### Core Features
-
-* **Rich Multi-Agent Collaboration Modes:** Provides industry-validated collaboration modes such as PEER (Plan/Execute/Express/Review) and DOE (Data-fining/Opinion-inject/Express). It also supports user-defined patterns for new modes, enabling organic collaboration among multiple agents.
-* **Customizable Components:** All framework components, including LLM, knowledge, tools, and memory, are customizable, allowing users to enhance their dedicated agents.
-* **Seamless Integration of Domain Expertise:** Offers capabilities for domain-specific prompts, knowledge construction, and management, and supports domain-level SOP orchestration and embedding, aligning agents to the expert level in their fields.
-
-💡 For more features details, see the [Core Features of agentUniverse](./docs/guidebook/en/1_Core_Features.md).
-
-### User Guide
-💡 For more detailed information, please read the [User Guide](./docs/guidebook/en/0_index.md).
-
-### API Reference
-💡 Please read the [API Reference](https://agentuniverse.readthedocs.io/en/latest/).
-
-### Support
-#### Submit Questions via GitHub Issues
-😊 We recommend submitting your queries using [GitHub Issues](https://github.com/alipay/agentUniverse/issues), we typically respond within 2 days.
-
-#### Contact Us via Discord
-😊 Join our [Discord Channel](https://discord.gg/DHFcdkWAhn) to interact with us.
-
-#### Contact Us via Administrator Email
-😊 Email: 
-[jihan.hanji@antgroup.com](mailto:jihan.hanji@antgroup.com)
-[jerry.zzw@antgroup.com](mailto:jerry.zzw@antgroup.com)
-[jinshi.zjs@antgroup.com](mailto:jinshi.zjs@antgroup.com)
-
-#### twitter
-ID: [@agentuniverse_](https://x.com/agentuniverse_)
-
-### Citation
 The agentUniverse project is supported by the following research achievements.
 
 BibTeX formatted
@@ -156,8 +44,155 @@ BibTeX formatted
       url={https://arxiv.org/abs/2407.06985}, 
 }
 ```
-Overview: This document provides a detailed introduction to the mechanisms and principles of the PEER multi-agent framework. In the experimental section, scores were assigned across seven dimensions: completeness, relevance, conciseness, factualness, logicality, structure, and comprehensiveness (each dimension has a maximum score of 5 points). The PEER model scored higher on average in each evaluation dimension compared to BabyAGI and demonstrated significant advantages in the dimensions of completeness, relevance, logicality, structure, and comprehensiveness. Additionally, the PEER model achieved a superior rate of 83% over BabyAGI using the GPT-3.5 Turbo (16k) model, and 81% using the GPT-4 model. For more details, please refer to the document.
-https://arxiv.org/pdf/2407.06985
+Overview: This document introduces in detailed the mechanisms and principles underlying the PEER multi-agent framework. The experimental section assigned scores across seven dimensions: completeness, relevance, conciseness, factualness, logicality, structure, and comprehensiveness, with a maximum score of 5 points for each dimension. On average, the PEER model scored higher in each evaluation dimension compared to BabyAGI, and show notable advantages particularly in completeness, relevance, logicality, structure, and comprehensiveness. Furthermore, when tested with the GPT-3.5 Turbo (16k) model, the PEER model achieved a superior accuracy rate of 83% compared to BabyAGI, and with the GPT-4 model, it achieved an accuracy rate of 81%. For more details, please refer to the document. 
+🔗https://arxiv.org/pdf/2407.06985
 
-## Acknowledgements
-This project is partially built on excellent open-source projects such as langchain, pydantic, gunicorn, flask, SQLAlchemy, chromadb, etc. (The detailed dependency list can be found in pyproject.toml). We would like to extend special thanks to the related projects and contributors. 🙏🙏🙏
+****************************************
+
+## Table of Contents
+
+* [Quick Start](#Quick-Start)  
+* [How to build an agent application](#How-to-build-an-agent-application)
+* [Setup the visual agentic workflow platform](#Setup-the-visual-agentic-workflow-platform)
+* [Why use agentUniverse](#Why-use-agentUniverse)  
+* [Sample Apps](#Sample-Apps)  
+* [Documents](#Documents)  
+* [Support](#Support)
+
+****************************************
+## Quick Start
+
+### Installation
+Using pip:
+```shell
+pip install agentUniverse
+```
+### Run the first example
+Run your first example, and you can quickly experience the performance of the agents (or agent groups) built by agentUniverse through the tutorial.
+
+Please refer to the document for detail steps: [Run the first example](docs/guidebook/en/Get_Start/2.Run_Your_First_Tutorial_Example.md) 。
+
+****************************************
+
+## How to build an agent application
+
+### Standard Project Scaffolding
+Setup the standard project: [agentUniverse Standard Project](examples/sample_standard_app)
+
+#### Quick Start for Building a Single Agent
+You can learn how to quickly build a single agent by reading the [Quick Guide to Build Single Agent](docs/guidebook/en/Get_Start/3.Quick_Guide_to_Build_Single_Agent.md). This will help you understand how to enhance your agent's capabilities using tools, knowledge bases, RAG technologies, and more. Additionally, you will grasp the basic application development processes for agents, including configuration, testing, optimizing, deployment, and performance evaluation. 
+
+#### Building Typical Multi-Agent Applications
+You can further understand how to break down intelligent capabilities into multiple agents in complex task scenarios and enhance your task performance through collaboration by referring to the [Building Typical Multi-Agent App](docs/guidebook/en/Get_Start/4.Building_Typical_Multi-Agent_App.md) chapter.
+
+#### Creating and Using Agent Templates
+You can learn how to create effective agent patterns into templates through the chapter [Creating and Using Agent Templates](docs/guidebook/en/Get_Start/5.Creating_and_Using_Agent_Templates.md). This will greatly enhance the efficiency of constructing subsequent agents and facilitate dissemination.
+
+#### Other Tips and Techniques
+You can learn more tips and techniques during the process of building intelligent agent applications in the chapter [Other_Tips_and_Techniques](docs/guidebook/en/Get_Start/6.Other_Tips_and_Techniques.md), such as how to add a memory module into the intelligent agent process and how to effectively manage prompts within the project.
+
+****************************************
+
+## Setup the visual agentic workflow platform
+
+agentUniverse provides a visual canvas platform for creating agentic workflow. Follow these steps for a quick start:
+
+**Using pip**
+```shell
+pip install magent-ui ruamel.yaml
+```
+
+**One-click Run**
+
+Run [product_application.py](examples/sample_standard_app/boostrap/platform/product_application.py) in sample_standard_app/boostrap/platform for quick startup.
+
+For more details, refer to [Quick Start for Product Platform](docs/guidebook/en/How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Quick_Start.md) and the [Advanced Guide](docs/guidebook/en/How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Advancement_Guide.md).
+
+This feature is jointly developed by [difizen](https://github.com/difizen/magent) and agentUniverse.
+
+****************************************
+
+## Why use agentUniverse
+
+### Concept
+![](docs/guidebook/_picture/agentuniverse_structure.png)
+
+The core of agentUniverse provides all the essential components needed to build a single intelligent agent, the collaboration mechanisms between multiple agents, and allows for the injection of expert knowledge. The enables developers to effortlessly create intelligent applications equipped with professional know-how.
+
+### Multi Agent Collaboration
+AgentUniverse offers several multi-agent collaboration model components that have been validated in real-world industries. Among these, the "PEER" model stands out as one of the most distinctive.
+
+The PEER model utilizes agents with four distinct responsibilities: Planning, Executing, Expressing, and Reviewing. This structure allows for the decomposition and step-by-step execution of complex problems and enables autonomous iteration based on evaluation feedback, ultimately enhancing performance in reasoning and analytical tasks. This model is particularly effective in scenarios that require multi-step decomposition and in-depth analysis, such as event interpretation, macroeconomic analysis, and the feasibility analysis of business proposals.
+
+The PEER model has achieved impressive results, and the latest research findings and experimental data can be found in the following literature.
+
+### Key Features
+Based on the above introduction, we summarize the main features of agentUniverse as follow:
+
+Flexible and Extensible Agent Construction Capability: It provides all the essential components necessary for building agents, all of which support customization to tailor user-specific agents.
+
+Rich and Effective Multi-Agent Collaboration Models: It offers collaborative models such as PEER (Plan/Execute/Express/Review) and DOE (Data-finding/Opinion-inject/Express), which have been validated in the industry. Users can also customize and orchestrate new models to facilitate organic collaboration among multiple agents.
+
+Easy Integration of Domain Expertise: It offers capabilities for domain prompts, knowledge construction, and management, enabling the orchestration and injection of domain-level SOPs, aligning agents with expert-level domain knowledge.
+
+💡 For additional features:
+see the section on [key features of agentUniverse](docs/guidebook/en/Concepts/Core_Features.md) for more details.
+
+****************************************
+
+## Sample Apps
+
+🚩 [Legal Advice Agent v2](docs/guidebook/en/Examples/Legal_Advice.md)
+
+🚩 [Python Code Generation and Execution Agent](docs/guidebook/en/Examples/Python_Auto_Runner.md)
+
+🚩 [Discussion Group Based on Multi-Turn Multi-Agent Mode](docs/guidebook/en/Examples/Discussion_Group.md)
+
+🚩 [Financial Event Analysis Based on PEER Multi-Agent Mode](docs/guidebook/en/Examples/Financial_Event_Analysis.md)
+
+🚩 [Andrew Ng's Reflexive Workflow Translation Agent Replication](docs/guidebook/en/Examples/Translation_Assistant.md)
+
+****************************************
+
+## Commercial Product base on agentUniverse
+
+🔗 [_Zhi Xiao Zhu_-AI Assistant for Financial Professionals](https://zhu.alipay.com/?from=au)
+
+**_Zhi Xiao Zhu_ AI Assistant: Designed to facilitate the development of large models in rigorous industries to enhance the productively of investment research experts**
+
+_Zhi Xiao Zhu_ AI Assistant an efficient solution for the practical application of large models in rigorous industries. It is built upon the Finix model, which emphasizes precise applications, and leverages the agentUniverse intelligent agent framework, known for its professional customization capabilities. This solution targets a range of professional AI business assistants related to investment research, ESG (environmental, social, and governance), finance, earnings reports, and other specialized domains. It has been extensively validated in large-scale scenarios at Ant Group, significantly improving expert efficiency.
+
+https://private-user-images.githubusercontent.com/39180831/355437700-192f712d-1b03-46a6-8422-1ca10aa94331.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjI5NDk4NTAsIm5iZiI6MTcyMjk0OTU1MCwicGF0aCI6Ii8zOTE4MDgzMS8zNTU0Mzc3MDAtMTkyZjcxMmQtMWIwMy00NmE2LTg0MjItMWNhMTBhYTk0MzMxLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MDYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODA2VDEzMDU1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTU4NWMzNzVjOGZjZDNjMDMzMTE4YjQzOTk0ZWQwZGZkNWNmNWQxNWMzYWIzMTk4MzY1MjA5NWRhMjU2NGNiNzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.q1vdSg_Ghxr-DHLXfmQ_fVVRVSFn7H8VMHMi-_2QrjA
+
+****************************************
+
+## Documents
+
+### User Guide
+💡 For more detailed information, please refer to the [User Guide](./docs/guidebook/en/Contents.md).
+
+### API Reference
+💡 Please consult the [API Reference](https://agentuniverse.readthedocs.io/en/latest/) for technical details.
+
+****************************************
+
+## Support
+
+### Submit Questions via GitHub Issues
+😊 We recommend submitting your queries using [GitHub Issues](https://github.com/antgroup/agentUniverse/issues), we typically respond within 2 business days.
+
+### Contact Us via Discord
+😊 Join our [Discord Channel](https://discord.gg/DHFcdkWAhn) to interact with us.
+
+### Contact Us via Administrator Email
+😊 Email: 
+* [jihan.hanji@antgroup.com](mailto:jihan.hanji@antgroup.com)
+* [jerry.zzw@antgroup.com](mailto:jerry.zzw@antgroup.com)
+* [jinshi.zjs@antgroup.com](mailto:jinshi.zjs@antgroup.com)
+
+### twitter
+ID: [@agentuniverse_](https://x.com/agentuniverse_)
+
+### Acknowledgements
+
+This project is partially built upon excellent open-source projects such as Langchain, Pydantic, Gunicorn, Flask, SQLAlchemy, chromadb, etc. (The detailed dependency list can be found in pyproject.toml). We would like to express our heartfelt gratitude to the related projects and their contributors. 🙏🙏🙏

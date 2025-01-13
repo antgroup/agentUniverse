@@ -10,12 +10,14 @@ import os
 import sys
 from typing import Optional
 from pathlib import Path
+from typing_extensions import deprecated
 
 import loguru
 
 from .general_logger import GeneralLogger, LOG_LEVEL
 from .logging_config import LoggingConfig, init_log_config
 from ..system_util import get_project_root_path
+from agentuniverse.base.util.logging.log_type_enum import LogTypeEnum
 
 _module_logger_dict = {}
 STANDARD_LOG_SUFFIX = 'all'
@@ -23,6 +25,10 @@ ERROR_LOG_SUFFIX = 'error'
 LOG_FILE_PREFIX = "au"
 LOG_SUB_DIR = 'logs'
 LOGGER = GeneralLogger(STANDARD_LOG_SUFFIX, "", "", "", "", add_handler=False)
+
+
+def _standard_filter(record):
+    return record["extra"].get('log_type') == LogTypeEnum.default
 
 
 def _get_log_file_path(log_suffix: str) -> str:
@@ -49,6 +55,7 @@ def _get_log_file_path(log_suffix: str) -> str:
 
 def _add_standard_logger():
     """Add a standard loguru handler."""
+
     LOGGER.update_properties(
         log_path=_get_log_file_path(STANDARD_LOG_SUFFIX),
         log_format=LoggingConfig.log_format,
@@ -58,6 +65,7 @@ def _add_standard_logger():
         sink=_get_log_file_path(STANDARD_LOG_SUFFIX),
         level=LoggingConfig.log_level,
         format=LoggingConfig.log_format,
+        filter=_standard_filter,
         rotation=LoggingConfig.log_rotation,
         retention=LoggingConfig.log_retention,
         compression='zip',
@@ -72,6 +80,7 @@ def _add_std_out_handler():
         sink=sys.stdout,
         level=LoggingConfig.log_level,
         format=LoggingConfig.log_format,
+        filter=_standard_filter,
         enqueue=True
     )
 
@@ -137,6 +146,7 @@ def get_module_logger(module_name: str,
     return new_logger
 
 
+@deprecated('Deleted in future, use LogSink to register a new sink instead.')
 def add_sink(sink, log_level: Optional[LOG_LEVEL] = None) -> bool:
     """Validate the given sink and add it to the loguru logger if valid.
 

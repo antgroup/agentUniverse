@@ -1,0 +1,14 @@
+info:
+  name: 'dataset_eval_agent'
+  description: 'dataset eval agent'
+profile:
+  prompt_version: dataset_eval_agent.cn
+  max_eval_lines: 10
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen2-72b-instruct'
+    temperature: 0.1
+metadata:
+  type: 'AGENT'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_eval_agent'
+  class: 'DatasetEvalAgent'

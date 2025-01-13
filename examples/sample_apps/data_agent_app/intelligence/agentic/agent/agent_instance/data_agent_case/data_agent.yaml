@@ -1,0 +1,10 @@
+info:
+  name: 'data_agent'
+  description: 'data agent'
+profile:
+  dataset_builder: 'dataset_build_agent'
+  dataset_evaluator: 'dataset_eval_agent'
+metadata:
+  type: 'AGENT'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.data_agent'
+  class: 'DataAgent'

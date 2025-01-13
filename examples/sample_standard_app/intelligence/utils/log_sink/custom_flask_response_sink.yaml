@@ -1,0 +1,7 @@
+name: "custom_flask_response_sink"
+description: "custom_flask_response_sink"
+file_prefix: 'flask_response'
+metadata:
+  type: 'LOG_SINK'
+  module: 'sample_standard_app.intelligence.utils.log_sink.custom_flask_response_sink'
+  class: 'CustomFlaskResponseSink'

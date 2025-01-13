@@ -37,6 +37,7 @@ class AppConfiger(object):
         self.__core_memory_compressor_package_list: Optional[list[str]] = None
         self.__core_memory_storage_package_list: Optional[list[str]] = None
         self.__core_work_pattern_package_list: Optional[list[str]] = None
+        self.__core_log_sink_package_list: Optional[list[str]] = None
 
     @property
     def base_info_appname(self) -> Optional[str]:
@@ -145,6 +146,11 @@ class AppConfiger(object):
         """Return the work pattern package list of the core."""
         return self.__core_work_pattern_package_list
 
+    @property
+    def core_log_sink_package_list(self) -> Optional[list[str]]:
+        """Return the work pattern package list of the core."""
+        return self.__core_log_sink_package_list
+
     def load_by_configer(self, configer: Configer) -> 'AppConfiger':
         """Load the AppConfiger by the given Configer.
 
@@ -176,4 +182,5 @@ class AppConfiger(object):
         self.__core_memory_compressor_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_compressor')
         self.__core_memory_storage_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_storage')
         self.__core_work_pattern_package_list = configer.value.get('CORE_PACKAGE', {}).get('work_pattern')
+        self.__core_log_sink_package_list = configer.value.get('CORE_PACKAGE', {}).get('log_sink')
         return self

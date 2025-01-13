@@ -3,7 +3,7 @@
 ## PEER Financial Training Dataset
 We open source 100 common financial questions and a training dataset for use within the PEER framework, containing 100 sets of inputs and outputs of the Planning Agent and the Expressing Agent. The dataset is applicable to agent training, pre-training, and supervised fine-tuning in various financial analysis scenarios. 
 
-For more training data, please provide your email via [GitHub Issues](https://github.com/alipay/agentUniverse/issues), we typically respond within 2 days.
+For more training data, please provide your email via [GitHub Issues](https://github.com/antgroup/agentUniverse/issues), we typically respond within 2 days.
 
 Due to compliance issues, the relevant data of the Executing agent is still in the approval process, please wait patiently.
 

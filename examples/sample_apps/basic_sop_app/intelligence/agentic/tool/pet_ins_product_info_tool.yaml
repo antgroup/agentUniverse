@@ -1,0 +1,23 @@
+name: 'pet_ins_product_info_tool'
+description: |
+  根据保险产品条款类目获取产品具体信息
+  
+  工具输入：条款类目列表item_list
+  
+  工具输出：产品编号和该产品详情的键值对，产品只有两种，分别是 B-宠物责任险，C-宠物医保·大病医疗，格式如下
+  {"B": "B产品详情条目", "C": "C产品详情条目"}
+  
+  工具输入输出示例：
+    #工具输入: 
+    ["B", "E"]
+  
+    #工具输出: 
+    {"B": "【宠物责任险】保险产品名称：宠物责任险 产品分为三个版本：基础版、升级版、尊享版"
+     "C": "【宠物医保·大病医疗】保险产品名称：宠物医保大病医疗产品分为两个版本：升级版、尊享版"}
+
+tool_type: 'api'
+input_keys: [ 'input' ]
+metadata:
+  type: 'TOOL'
+  module: 'basic_sop_app.intelligence.agentic.tool.pet_ins_product_info_tool'
+  class: 'SearchProductInfoTool'

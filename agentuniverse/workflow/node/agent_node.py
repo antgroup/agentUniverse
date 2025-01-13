@@ -35,7 +35,6 @@ class AgentNode(Node):
         inputs: AgentNodeInputParams = self._data.inputs
 
         param_map = {
-            'prompt': None,
             'id': None
         }
 
@@ -47,28 +46,14 @@ class AgentNode(Node):
                     param_map[agent_param.name] = agent_param.value.get('content', None)
 
         agent_id = param_map['id']
-        prompt = param_map['prompt']
 
         agent: Agent = AgentManager().get_instance_obj(agent_id)
         if agent is None:
             raise ValueError("No agent with id {} was found.".format(agent_id))
 
-        # Extract variables from the prompt template
-        template_variables = re.findall(r'\{\{(.*?)\}\}', prompt)
-
         agent_input_params = self._resolve_input_params(inputs.input_param, workflow_output)
 
-        # Replace variables in the prompt
-        try:
-            for var in template_variables:
-                if var not in agent_input_params:
-                    raise KeyError(f"The variable '{var}' is not found in the input params.")
-                prompt = prompt.replace(f'{{{{{var}}}}}',
-                                        str(agent_input_params[var]) if agent_input_params[var] else '')
-        except KeyError as e:
-            raise ValueError(f"Error processing template variables: {e}")
-
-        agent_output: OutputObject = agent.run(input=prompt)
+        agent_output: OutputObject = agent.run(**agent_input_params)
         agent_output_dict = agent_output.to_dict()
         output_params: List[NodeOutputParams] = self._data.outputs
 

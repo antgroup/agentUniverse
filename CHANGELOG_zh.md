@@ -38,9 +38,9 @@ Note - 对于版本的额外说明。
 
 ### Note 
 - system_db_uri默认路径优化  
-默认路径已兼容windows平台，详情见[issue142](https://github.com/alipay/agentUniverse/issues/142)
+默认路径已兼容windows平台，详情见[issue142](https://github.com/antgroup/agentUniverse/issues/142)
 - ReactAgent支持链停止词配置化  
-ReactAgent yaml配置目前已经支持stop_sequence关键词，用户可以自行配置链停止词,详情见[issue127](https://github.com/alipay/agentUniverse/issues/127)
+ReactAgent yaml配置目前已经支持stop_sequence关键词，用户可以自行配置链停止词,详情见[issue127](https://github.com/antgroup/agentUniverse/issues/127)
 - 新增RAG原理介绍与RAG快速构建指导文档，请关注README与用户指南相应部分。
 - 新增智能体产品化平台高阶指导文档，请关注README与用户指南相应部分。
 - 部分代码优化与文档更新

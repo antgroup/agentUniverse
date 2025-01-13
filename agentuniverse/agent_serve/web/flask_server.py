@@ -1,17 +1,85 @@
 import traceback
-
-from flask import Flask, Response
+import time
+from flask import Flask, Response, g, request
 from werkzeug.exceptions import HTTPException
+from loguru import logger
+from concurrent.futures import TimeoutError
 
 from ..service_instance import ServiceInstance, ServiceNotFoundError
 from .request_task import RequestTask
-from .web_util import request_param, service_run_queue, make_standard_response
+from .web_util import request_param, service_run_queue, make_standard_response, FlaskServerManager
+from .thread_with_result import ThreadPoolExecutorWithReturnValue
 from ...base.util.logging.logging_util import LOGGER
+from agentuniverse.base.util.logging.log_type_enum import LogTypeEnum
+from agentuniverse.base.util.logging.general_logger import _get_context_prefix
+
+from werkzeug.local import LocalProxy
+
+
+# Patch original flask request so it can be dumped by loguru.
+class SerializableRequest:
+    def __init__(self, method, path, args, form, headers):
+        self.method = method
+        self.path = path
+        self.args = args
+        self.form = form
+        self.headers = headers
+
+    def __repr__(self):
+        return f"<SerializableRequest method={self.method} path={self.path}>"
+
+
+def localproxy_reduce_ex(self, protocol):
+    real_obj = self._get_current_object()
+    return (
+        SerializableRequest,
+        (real_obj.method, real_obj.path, dict(real_obj.args), dict(real_obj.form), dict(real_obj.headers)),
+    )
+
+
+LocalProxy.__reduce_ex__ = localproxy_reduce_ex
+
+
+# log stream response
+def timed_generator(generator, start_time):
+    try:
+        for data in generator:
+            yield data
+    finally:
+        elapsed_time = time.time() - start_time
+        logger.bind(
+            log_type=LogTypeEnum.flask_response,
+            flask_response="Stream finished",
+            elapsed_time=elapsed_time,
+            context_prefix=_get_context_prefix()
+        ).info("Stream finished.")
 
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 app.json.ensure_ascii = False
+
+
+@app.before_request
+def before():
+    logger.bind(
+        log_type=LogTypeEnum.flask_request,
+        flask_request=request,
+        context_prefix=_get_context_prefix()
+    ).info("Before request.")
+    g.start_time = time.time()
+
+
+@app.after_request
+def after_request(response):
+    if not response.mimetype == "text/event-stream":
+        logger.bind(
+            log_type=LogTypeEnum.flask_response,
+            flask_response=response,
+            elapsed_time=time.time() - g.start_time,
+            context_prefix=_get_context_prefix()
+        ).info("After request.")
+    return response
 
 
 @app.route("/echo")
@@ -42,9 +110,18 @@ def service_run(service_id: str, params: dict, saved: bool = False):
         result: This key points to a nested dictionary that includes the
             result of the task.
     """
-    params = {} if params is None else params
-    request_task = RequestTask(ServiceInstance(service_id).run, saved, **params)
-    result = request_task.run()
+    try:
+        params = {} if params is None else params
+        request_task = RequestTask(ServiceInstance(service_id).run, saved,
+                                   **params)
+        with ThreadPoolExecutorWithReturnValue() as executor:
+            future = executor.submit(request_task.run)
+            result = future.result(timeout=FlaskServerManager().sync_service_timeout)
+    except TimeoutError:
+        return make_standard_response(success=False,
+                                      message="AU sync service timeout",
+                                      status_code=504)
+
     return make_standard_response(success=True, result=result,
                                   request_id=request_task.request_id)
 
@@ -65,7 +142,7 @@ def service_run_stream(service_id: str, params: dict, saved: bool = False):
     params = {} if params is None else params
     params['service_id'] = service_id
     task = RequestTask(service_run_queue, saved, **params)
-    response = Response(task.stream_run(), mimetype="text/event-stream")
+    response = Response(timed_generator(task.stream_run(),g.start_time), mimetype="text/event-stream")
     response.headers['X-Request-ID'] = task.request_id
     return response
 

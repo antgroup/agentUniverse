@@ -15,6 +15,21 @@ from flask import request, make_response, jsonify
 from ..service_instance import ServiceInstance
 from ...agent.agent import Agent
 from ...agent.agent_manager import AgentManager
+from ...base.util.logging.logging_util import LOGGER
+from ...base.annotation.singleton import singleton
+
+
+@singleton
+class FlaskServerManager:
+    _sync_service_timeout = 30
+
+    @property
+    def sync_service_timeout(self):
+        return self._sync_service_timeout
+
+    @sync_service_timeout.setter
+    def sync_service_timeout(self, timeout):
+        self._sync_service_timeout = timeout
 
 
 def request_param(func):
@@ -108,4 +123,5 @@ def make_standard_response(success: bool,
         "message": message,
         "request_id": request_id
     }
+    LOGGER.info(f"AU_FLASK_RESPONSE: {response_data}")
     return make_response(jsonify(response_data), status_code)

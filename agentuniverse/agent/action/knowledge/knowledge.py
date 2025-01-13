@@ -7,8 +7,9 @@
 # @FileName: knowledge.py
 import os
 import re
+import traceback
 from typing import Optional, Dict, List, Any
-from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
+from concurrent.futures import wait, ALL_COMPLETED
 
 from langchain_core.utils.json import parse_json_markdown
 from langchain.tools import Tool as LangchainTool
@@ -28,6 +29,7 @@ from agentuniverse.base.annotation.trace import trace_knowledge
 from agentuniverse.base.component.component_base import ComponentBase
 from agentuniverse.base.component.component_enum import ComponentEnum
 from agentuniverse.base.util.logging.logging_util import LOGGER
+from agentuniverse.agent_serve.web.thread_with_result import ThreadPoolExecutorWithReturnValue
 
 
 class Knowledge(ComponentBase):
@@ -74,17 +76,17 @@ class Knowledge(ComponentBase):
     rag_router: str = "base_router"
     post_processors: List[str] = []
     readers: Dict[str, str] = dict()
-    insert_executor: Optional[ThreadPoolExecutor] = None
-    query_executor: Optional[ThreadPoolExecutor] = None
+    insert_executor: Optional[ThreadPoolExecutorWithReturnValue] = None
+    query_executor: Optional[ThreadPoolExecutorWithReturnValue] = None
     ext_info: Optional[Dict] = None
 
     def __init__(self, **kwargs):
         super().__init__(component_type=ComponentEnum.KNOWLEDGE, **kwargs)
-        self.insert_executor = ThreadPoolExecutor(
+        self.insert_executor = ThreadPoolExecutorWithReturnValue(
             max_workers=5,
             thread_name_prefix="Knowledge store"
         )
-        self.query_executor = ThreadPoolExecutor(
+        self.query_executor = ThreadPoolExecutorWithReturnValue(
             max_workers=10,
             thread_name_prefix="Knowledge query"
         )
@@ -163,6 +165,7 @@ class Knowledge(ComponentBase):
             try:
                 future.result()
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge insert: {e}")
         LOGGER.info("Knowledge insert complete.")
 
@@ -188,6 +191,7 @@ class Knowledge(ComponentBase):
             try:
                 future.result()
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge update: {e}")
         LOGGER.info("Knowledge update complete.")
 
@@ -219,6 +223,7 @@ class Knowledge(ComponentBase):
                     if _doc.id not in retrieved_docs:
                         retrieved_docs[_doc.id] = _doc
             except Exception as e:
+                traceback.print_exc()
                 LOGGER.error(f"Exception occurred in knowledge query: {e}")
         retrieved_docs = list(retrieved_docs.values())
         retrieved_docs = self._rag_post_process(retrieved_docs, query)

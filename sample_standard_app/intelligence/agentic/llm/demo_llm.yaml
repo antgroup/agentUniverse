@@ -1,9 +1,0 @@
-name: 'demo_llm'
-description: 'demo openai'
-model_name: 'gpt-4o'
-max_tokens: 1000
-max_retries: 2
-metadata:
-  type: 'LLM'
-  module: 'agentuniverse.llm.default.default_openai_llm'
-  class: 'DefaultOpenAILLM'

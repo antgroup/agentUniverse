@@ -1,0 +1,22 @@
+info:
+  name: 'demo_react_agent'
+  description: 'react agent'
+profile:
+  prompt_version: qwen_react_agent.cn
+  llm_model:
+    name: 'qwen_llm'
+    model_name: 'qwen-max'
+    stop: 'Observation'
+    temperature: 0.1
+action:
+  tool:
+    - 'google_search_tool'
+    - 'python_runner'
+  knowledge:
+    - 'law_knowledge'
+memory:
+  name: 'demo_memory'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.template.react_agent_template'
+  class: 'ReActAgentTemplate'
