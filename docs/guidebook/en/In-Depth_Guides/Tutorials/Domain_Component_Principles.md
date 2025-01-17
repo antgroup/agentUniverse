@@ -5,7 +5,6 @@ agentUniverse includes several domain components, which combine to form the fund
 * Tool
 * Knowledge
 * Memory
-* Planner
 
 All domain components within agentUniverse adhere to a unified design philosophy, exhibiting the following key characteristics:
 

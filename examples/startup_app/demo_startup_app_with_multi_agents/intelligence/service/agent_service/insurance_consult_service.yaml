@@ -1,0 +1,5 @@
+name: 'insurance_consult_service'
+description: 'demo service of consult agent'
+agent: 'insurance_consult_agent'
+metadata:
+  type: 'SERVICE'

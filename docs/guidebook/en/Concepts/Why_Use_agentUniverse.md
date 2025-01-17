@@ -16,7 +16,7 @@ Based on the above introduction, we can summarize the core features of agentUniv
 **· Rich multi-agent collaboration mode:** 
 Provides effective collaboration modes such as PEER (Plan/Execute/Express/Review) and DOE (Data-fining/Opinion-inject/Express) in the industry, and supports users to customize new orchestration modes to allow multiple agents to cooperate organically.
 
-**· Fully Customizable Cumponents:** 
+**· Fully Customizable Components:** 
 All framework components, including LLMs (Large Language Models), knowledge bases, tools, and memory, provide customization options for users to enhance their agents according to their specific needs.
 **· Easily integrate domain experience:** 
 Provide domain prompt, knowledge construction and management capabilities, and support domain-level SOP orchestration and injection to align agents to the level of domain experts.

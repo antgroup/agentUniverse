@@ -1,5 +1,5 @@
 # How to create agents.
-You may have already learned how to quickly create an agent from the [Quick Start](../../../Get_Start/Quick_Start.md) chapter, or you may have grasped the essential components of an agent from the [Principles of Agents](../../../In-Depth_Guides/Tutorials/Agent/Agent.md) section.
+You may have already learned how to quickly create an agent from the [Quick Guide to Building Single Agent](../../../Get_Start/3.Quick_Guide_to_Build_Single_Agent.md) chapter, or you may have grasped the essential components of an agent from the [Principles of Agents](../../../In-Depth_Guides/Tutorials/Agent/Agent.md) section.
 
 Based on the design features of the agentUniverse framework's domain components, the creation process of an agent involves two main parts.
 * agent_xx.yaml
@@ -25,13 +25,6 @@ We will provide detailed descriptions of each component within the configuration
   * `model_name`: the specific model name of the LLM
 
   Note: You can choose any existing LLM or connect to any LLM of your choice. We will not elaborate on this part here; for more details, please refer to the [LLM section](../../../In-Depth_Guides/Tutorials/LLM/LLM.md) .
-  
-### Setting the agent's plan
-**`plan` - plan of agent**
-* `planner` : the planner utilized by the agent
-* `name`: name of planner
-  
-  Note: You can choose any existing planner or connect to any planner of your choice. We will not elaborate on this part here; for more details, please refer to the planner section .
 
 ### Setting the agent's action
 **`action` - action of agent**
@@ -54,8 +47,6 @@ We will provide detailed descriptions of each component within the configuration
 ### Setting up the agent's memory.
 **`memory` - memory of agent**
 
-The agent already has a default memory mode built-in, so there is no need to set it up separately. Additionally,  the memory supports customization and type selection, a feature that will be available in a future release.
-
 ### Setting up component metadata.
 **`metadata` - metadata of component**
 * `type` : the type of component，use 'AGENT'
@@ -67,8 +58,8 @@ All provided Agent components will have their corresponding `module` and `class`
 ### An actual example of an agent configuration.
 ```yaml
 info:
-  name: 'demo_rag_agent'
-  description: 'demo rag agent'
+  name: 'demo_agent'
+  description: 'demo agent'
 profile:
   introduction: You are an AI assistant proficient in information analysis.
   target: Your goal is to determine whether the answer to a question provides valuable information and to make suggestions and evaluations about the answer.
@@ -91,9 +82,6 @@ profile:
   llm_model:
     name: 'demo_llm'
     model_name: 'gpt-4o'
-plan:
-  planner:
-    name: 'rag_planner'
 action:
   tool:
     - 'google_search_tool'
@@ -101,12 +89,10 @@ action:
 #    - 'knowledge_a'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.rag_agent_case.demo_rag_agent'
-  class: 'DemoRagAgent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.demo_agent'
+  class: 'DemoAgent'
 ```
 The above is an actual example of an agent configuration. Besides the standard configuration items introduced above, those of you who are observant may have noticed variables in the prompt, such as `{background}` and `{input}`. This is a very practical prompt replacement feature, which we will explain further in the section titled "[How to dynamically adjust settings based on user input](#How to dynamically adjust settings based on user input)".
-
-You can find more examples of agent configuration YAML files in our sample project, located under the path `sample_standard_app.intelligence.agentic.agent`.
 
 In addition, agentUniverse does not restrict users from extending the YAML configuration content for agents. You can create any custom configuration keys according to your own requirements, but please ensure that you do not duplicate the default configuration keywords mentioned above.
 
@@ -159,17 +145,10 @@ This method has one input parameter:
   The output object for the `parse_result` method is typically used `agent_result`.
 
 #### execute method
-This method is the core entry point for the agent's execution flow. The agent's base class provides a default implementation of the execution method, and users can also override this method to customize the execution method for any agent.
-
-##### Default execute implementation.
-* The default logic for the execute method in the agent base class is as follows:
-
-  *   Retrieve the planner name corresponding to the agent's YAML configuration.
-  *   Obtain a planner instance through the planner manager
-  *   Execute the invoke method of the obtained planner instance
+This method is the core entry point for the agent's execution flow. Users can override this method to customize the execution method for any agent.
 
 ##### Custom execute implementation.
-You can also customize the execution flow of the agent by overriding the execute method. Overriding the execute method will replace the default implementation provided by the agent's base class, meaning the agent will no longer automatically select a planner. If needed, you can refer to the default implementation in the agent's base class to load and use the corresponding planner.
+You can customize the execution flow of the agent by overriding the execute method. 
 
 Below is an example of a custom execute method implementation:
 ```text
@@ -192,35 +171,27 @@ Through `self.agent_model`, the agent object can access its properties. In the d
 
 A specific example is as follows:
 ```text
-def execute(self, input_object: InputObject, agent_input: dict) -> dict:
-    """Execute agent instance.
-
-    Args:
-        input_object (InputObject): input parameters passed by the user.
-        agent_input (dict): agent input parsed from `input_object` by the user.
-
-    Returns:
-        dict: planner result generated by the planner execution.
-    """
-
-    planner_base: Planner = PlannerManager().get_instance_obj(self.agent_model.plan.get('planner').get('name'))
-    planner_result = planner_base.invoke(self.agent_model, agent_input, input_object)
-    return planner_result
+def process_llm(self, **kwargs) -> LLM:
+    llm_name = kwargs.get('llm_name') or self.agent_model.profile.get('llm_model', {}).get('name')
+    return LLMManager().get_instance_obj(llm_name)
 ```
 
-In this example, within the execution method, the `plan` section from the agent's configuration attributes is accessed using `self.agent_model.plan`, and further, the actual name of the `planner` is obtained through the get method.
+In this example, within the execution method, the `profile` section from the agent's configuration attributes is accessed using `self.agent_model.profile`, and further, the actual name of the `llm_model` is obtained through the get method.
 
 
 The properties and domain behaviors of the agent are both dependent on the Agent base class in the agentUniverse framework, which is located at `agentuniverse.agent.agent.Agent`. We will also delve into the underlying objects in the sections discussing agents and related domain objects. If you are interested in the underlying technical implementation, you can further refer to the corresponding code and documentation.
 
 #### An actual example of an agent domain behavior definition.
 ```python
+from langchain_core.output_parsers import StrOutputParser
+
 from agentuniverse.agent.agent import Agent
 from agentuniverse.agent.input_object import InputObject
-from agentuniverse.agent.plan.planner.planner import Planner
-from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
+from agentuniverse.llm.llm import LLM
+from agentuniverse.prompt.prompt import Prompt
 
-class DemoRagAgent(Agent):
+
+class DemoAgent(Agent):
     def input_keys(self) -> list[str]:
         return ['input']
 
@@ -231,13 +202,16 @@ class DemoRagAgent(Agent):
         agent_input['input'] = input_object.get_data('input')
         return agent_input
 
-    def parse_result(self, planner_result: dict) -> dict:
-        return planner_result
+    def parse_result(self, agent_result: dict) -> dict:
+        return {**agent_result, 'output': agent_result['output']}
 
-    # def execute(self, input_object: InputObject, agent_input: dict) -> dict:    
-    #     planner_base: Planner = PlannerManager().get_instance_obj(self.agent_model.plan.get('planner').get('name'))
-    #     planner_result = planner_base.invoke(self.agent_model, agent_input, input_object)
-    #     return planner_result
+    def execute(self, input_object: InputObject, agent_input: dict) -> dict:
+        llm: LLM = self.process_llm()
+        prompt: Prompt = self.process_prompt(agent_input)
+        chain = prompt.as_langchain() | llm.as_langchain_runnable(
+            self.agent_model.llm_params()) | StrOutputParser()
+        res = self.invoke_chain(chain, agent_input, input_object)
+        return {**agent_input, 'output': res}
 ```
 The above provides an actual example of an agent domain behavior definition.
 
@@ -265,7 +239,7 @@ In the [Creating Agent Domain Behavior Definitions](#Creating Agent Domain Behav
 
 In the [An actual example of an agent configuration](#An actual example of an agent configuration.) section of this document, the prompt includes variables like `{background}`,`{input}`, etc. This feature is the prompt variable template replacement function, aimed at dynamically influencing the prompt based on the user's input. One only needs to define the text using  `{variable}` format in the agent configuration settings section and then define the corresponding variables in the `agent_input` method's agent_input to dynamically replace the prompt based on the input portion.
 
-For example, in the sample agent `sample_standard_app.intelligence.agentic.agent.agent_instance.rag_agent_case.demo_rag_agent.py`, there is the following `parse_input` method.
+For example, in the sample agent `sample_standard_app.intelligence.agentic.agent.agent_instance.demo_agent.py`, there is the following `parse_input` method.
 
 ```text
 def parse_input(self, input_object: InputObject, agent_input: dict) -> dict:
@@ -273,7 +247,7 @@ def parse_input(self, input_object: InputObject, agent_input: dict) -> dict:
     return agent_input
 ```
 
-In its agent settings file `sample_standard_app.intelligence.agentic.agent.agent_instance.rag_agent_case.demo_rag_agent.yaml`, in the `instruction` section, we can see the following configuration.
+In its agent settings file `sample_standard_app.intelligence.agentic.agent.agent_instance.demo_agent.yaml`, in the `instruction` section, we can see the following configuration.
 
 ```text
 instruction: |
@@ -327,9 +301,6 @@ profile:
   llm_model:
     name: 'demo_llm'
     model_name: 'gpt-4o'
-plan:
-  planner:
-    name: 'rag_planner'
 action:
   tool:
     - 'financial_data_tool'
@@ -352,9 +323,6 @@ profile:
   llm_model:
     name: 'demo_llm'
     model_name: 'gpt-4o'
-plan:
-  planner:
-    name: 'rag_planner'
 action:
   tool:
     - 'tech_data_tool'
@@ -372,7 +340,7 @@ In the agentUniverse, all agent entities are managed by a global agent manager. 
 ## Solution 1: Use the agent manager
 
 Through the `get_instance_obj('agent_name_xxx')` method in the agent manager, you can obtain the agent instance with the corresponding name. 
-Furthermore, the agent can be utilized through its own `run(input='xxx')` method. The `test_rag_agent(self)` method in the test class below demonstrates how to debug the agent using this approach.
+Furthermore, the agent can be utilized through its own `run(input='xxx')` method. The `test_demo_agent(self)` method in the test class below demonstrates how to debug the agent using this approach.
 
 ```python
 import unittest
@@ -383,17 +351,17 @@ from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.base.agentuniverse import AgentUniverse
 
 
-class RagAgentTest(unittest.TestCase):
+class DemoAgentTest(unittest.TestCase):
     """
-    Test cases for the rag agent
+    Test cases for the demo agent
     """
 
     def setUp(self) -> None:
         AgentUniverse().start(config_path='../../config/config.toml')
 
-    def test_rag_agent(self):
-        """Test demo rag agent."""
-        instance: Agent = AgentManager().get_instance_obj('demo_rag_agent')
+    def test_demo_agent(self):
+        """Test demo agent."""
+        instance: Agent = AgentManager().get_instance_obj('demo_agent')
         output_object: OutputObject = instance.run(input="What is the reason for the sharp rise in Nvidia's stock?")
         print(output_object.get_data('output'))
 

@@ -29,7 +29,7 @@ Including multi-agent memory transfer, adding memory, retrieving memory, and pru
 
 In the multi-agent memory transfer process, the `chat_history` parameter serves as the entry point. It carries specific
 memory information from Agent A, tagged with the source (Agent A), and transfers it to Agent B. Agent B refers to
-the `handle_memory` method in the aU planner to read the memory information carried by `chat_history` and adds it to
+the `process_memory` method in the aU agent to read the memory information carried by `chat_history` and adds it to
 Agent B's corresponding memory.
 
 #### Multi-Agent Memory Transfer Code Example

@@ -16,10 +16,12 @@ instruction: |
   {chat_history}
   
   输出必须是按照以下格式化的Json代码片段，thought字段代表拆解问题的思考过程，framework字段代表拆解后的子问题列表。
+  ```json
   {{
       "thought": string,
       "framework": list[string]
   }}
+  ```
 
   开始!
   必须使用中文回答用户提出的问题。

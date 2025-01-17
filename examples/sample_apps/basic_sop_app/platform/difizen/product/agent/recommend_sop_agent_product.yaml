@@ -1,0 +1,12 @@
+id: recommend_sop_agent
+nickname: 保险推荐智能体
+opening_speech: |
+  您好，欢迎使用保险推荐智能体！
+  你可以这样问我：
+  问题1: 我想要买医疗类保险
+type: AGENT
+avatar: ../../../resources/rag_agent_logo.png
+metadata:
+  class: AgentProduct
+  module: agentuniverse_product.base.agent_product
+  type: PRODUCT

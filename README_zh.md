@@ -38,9 +38,8 @@
 &nbsp; [协同机制](#多智能体协同机制) &nbsp; | 
 &nbsp; [研究文献](#文献) &nbsp; | 
 &nbsp; [核心特性](#核心特性) &nbsp; |
-* [样例工程与应用实践](#样例工程与应用实践)  
-| &nbsp; [示例工程](#示例工程) &nbsp; | 
-&nbsp; [应用实践](#应用实践) &nbsp; | 
+* [应用实践](#应用实践)  
+| &nbsp; [应用实践案例](#应用实践案例) &nbsp; |
 &nbsp; [典型产品](#使用aU构建的典型产品) &nbsp; |
 * [用户指南手册](#用户指南手册)
 * [更多](#更多)  
@@ -68,26 +67,24 @@ pip install agentUniverse
 
 ## 如何搭建一个智能体应用
 
-### 工程化搭建
+### 标准工程脚手架
+⌨️ 标准工程脚手架：[agentUniverse Standard Project](examples/sample_standard_app)
 
-#### 智能体创建与使用
-您可以通过 [智能体介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体.md) 了解智能体的重要组成部分，通过 [智能体创建与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/智能体/智能体创建与使用.md) 了解创建智能体的详细过程。您也可以结合官方案例，如 [Python代码生成与执行Agent](docs/guidebook/zh/实践应用/Python自动执行案例.md) 进一步理解智能体创建与使用过程。 
+#### 快速构建单体智能体
+您可以通过 [快速构建单体智能体](./docs/guidebook/zh/开始使用/3.快速构建单体智能体.md) 章节的阅读与体验了解如何快速构建单个智能体，并掌握如何通过工具、知识库、RAG技术等能力增强您的智能体能力，同时掌握智能体配置、测试、调优、服务化、效果评估等一系列基本的智能体应用研发流程。 
 
-#### 知识库构建与使用  
-在智能体应用构建中，知识库构建与召回是不可缺少的，agentUniverse框架以[RAG技术](./docs/guidebook/zh/In-Depth_Guides/原理介绍/RAG.md)为基础提供了高效的知识库构建和RAG检索召回环节的标准作业流程。您可以通过[知识介绍](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识.md)与[知识定义与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/知识/知识定义与使用.md)了解其使用方式，进一步通过[如何构建知识库](./docs/guidebook/zh/How-to/构建与使用知识库/如何构建知识库.md)与[使用知识库](./docs/guidebook/zh/How-to/构建与使用知识库/如何使用知识库.md)掌握如何快速构建知识库与构建具有召回能力的智能体。
+#### 构建典型的多智能体应用
+您可以通过 [构建典型的多智能体应用](./docs/guidebook/zh/开始使用/4.构建典型的多智能体应用.md) 章节进一步了解在复杂的任务场景，如何将智能体能力拆分成多个智能体，并让其通过协同进一步提升您的任务表现。
 
-#### 工具自定义与使用  
-在智能体应用构建中，智能体需要连接各种各样的工具，您需要为其指定可使用的工具范围列表。您可以通过[工具创建与使用](./docs/guidebook/zh/In-Depth_Guides/原理介绍/工具/工具创建与使用.md)将各类自有API与服务以工具插件形式接入。目前框架已经集成了LangChain与部分第三方工具包，详细使用法可阅读[集成LangChain工具](./docs/guidebook/zh/In-Depth_Guides/组件列表/工具列表/集成LangChain工具.md)、[现有集成的工具](./docs/guidebook/zh/In-Depth_Guides/组件列表/工具列表/集成LangChain工具.md)。
+#### 沉淀与使用智能体模版
+您可以通过 [沉淀与使用智能体模版](./docs/guidebook/zh/开始使用/5.沉淀与使用智能体模版.md) 章节了解如何将有效的智能体模式沉淀成模版，这将大大提升后续智能体的构建效率并便于传播。
 
-#### 效果评估  
-智能体的效果评估一方面可以通过人工专家评定，另一个方面也可以依托智能体的评估能力。agentUniverse推出了DataAgent（Minimum Viable Product版本）, DataAgent旨在使用智能体能力让您的Agent拥有自我评价与演进的能力，您也可以在其中自定义评估标准。详情见文档: [DataAgent - 数据自治智能体](./docs/guidebook/zh/In-Depth_Guides/原理介绍/数据自治智能体.md)。
+#### 常用使用技巧
+您可以通过 [常用使用技巧](./docs/guidebook/zh/开始使用/6.常用使用技巧.md) 章节了解智能体应用构建过程中的常用使用技巧，例如如何在智能体过程中加入记忆模块、如何有效的管理项目中的prompt等。
 
-#### 服务化
-agentUniverse提供多套标准的web serve能力, 同时提供标准的http与rpc协议。您可以进一步关注文档[服务注册与使用](./docs/guidebook/zh/In-Depth_Guides/技术组件/服务化/服务注册与使用.md)与[Web_Server](./docs/guidebook/zh/In-Depth_Guides/技术组件/服务化/Web_Server.md)部分。
+### 画布式研发平台搭建
 
-### 平台化搭建
-
-agentUniverse提供基于本地的可视化平台搭建能力，请按照如下步骤快速启动。
+agentUniverse提供基于本地的画布式研发平台能力，请按照如下步骤快速启动。
 
 **通过pip安装**
 ```shell
@@ -96,7 +93,7 @@ pip install magent-ui ruamel.yaml
 
 **一键运行**
 
-运行sample_standard_app/boostrap下的[product_application.py](examples/sample_standard_app/boostrap/platform/product_application.py)文件，一键启动。
+运行sample_standard_app/bootstrap下的[product_application.py](examples/sample_standard_app/bootstrap/platform/product_application.py)文件，一键启动。
 
 更多详情参考 [产品化平台快速开始](./docs/guidebook/zh/How-to/画布式研发平台使用/画布式研发平台快速开始.md)
 与 [产品化平台进阶指南](./docs/guidebook/zh/How-to/画布式研发平台使用/画布式研发平台进阶指南.md) 。本功能由 🔗[difizen](https://github.com/difizen/magent) 项目组 X agentUniverse 项目组联合推出。
@@ -148,11 +145,8 @@ BibTeX formatted
 
 ****************************************
 
-## 样例工程与应用实践
-### 示例工程
-⌨️ [agentUniverse 示例项目](examples/sample_standard_app)
-
-### 应用实践
+## 应用实践
+### 应用实践案例
 🚩 [法律咨询Agent_v2](docs/guidebook/zh/实践应用/法律咨询案例.md)
 
 🚩 [Python代码生成与执行Agent](docs/guidebook/zh/实践应用/Python自动执行案例.md)

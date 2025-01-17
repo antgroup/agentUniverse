@@ -1,5 +1,0 @@
-name: 'pet_insurance_consult_pro_service'
-description: 'demo service of consult agent'
-agent: 'pet_insurance_consult_pro_agent'
-metadata:
-  type: 'SERVICE'

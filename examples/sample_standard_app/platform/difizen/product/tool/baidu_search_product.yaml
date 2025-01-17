@@ -1,8 +1,0 @@
-id: search_api_baidu_tool
-nickname: 百度web搜索工具
-type: TOOL
-avatar: ../../../resources/baidu_search.png
-metadata:
-  type: 'PRODUCT'
-  module: 'agentuniverse_product.base.product'
-  class: 'Product'

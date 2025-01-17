@@ -1,0 +1,12 @@
+info:
+  name: 'choose_product_info_agent'
+  description: 'choose product info agent'
+profile:
+  prompt_version: 'product_info_agent.cn'
+  llm_model:
+    name: 'qwen_llm'
+    temperature: 0.1
+metadata:
+  type: 'AGENT'
+  module: 'basic_sop_app.intelligence.agentic.agent.agent_instance.choose_product_info_agent'
+  class: 'ChooseProductInfoAgent'

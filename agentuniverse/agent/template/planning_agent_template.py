@@ -59,9 +59,13 @@ class PlanningAgentTemplate(AgentTemplate):
     def add_output_stream(self, output_stream: Queue, agent_output: str) -> None:
         if not output_stream:
             return
+        try:
+            output = parse_json_markdown(agent_output).get('framework')
+        except:
+            output = agent_output
         # add planning agent final result into the stream output.
         stream_output(output_stream,
                       {"data": {
-                          'output': parse_json_markdown(agent_output).get('framework'),
+                          'output': output,
                           "agent_info": self.agent_model.info
                       }, "type": "planning"})

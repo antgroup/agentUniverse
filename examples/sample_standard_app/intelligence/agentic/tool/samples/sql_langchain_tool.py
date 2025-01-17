@@ -12,7 +12,7 @@ from langchain_core.tools import BaseTool, Tool as LangchainTool
 
 from agentuniverse.agent.action.tool.tool import ToolInput
 from agentuniverse.database.sqldb_wrapper_manager import SQLDBWrapperManager
-from examples.sample_standard_app.intelligence.agentic.tool.samples.langchain_tool import LangChainTool
+from sample_standard_app.intelligence.agentic.tool.samples.langchain_tool import LangChainTool
 
 
 class SqlLangchainTool(LangChainTool):

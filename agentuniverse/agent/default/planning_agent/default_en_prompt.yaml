@@ -17,10 +17,12 @@ instruction: |
   {chat_history}
   
   The output must be a Json code snippet formatted according to the following, with the thought field representing the thought process of the disassembled problem and the framework field representing the list of disassembled sub-problems.
+  ```json
   {{
     "thought": string,
     "framework": list[string]
   }}
+  ```
   
   Start!
   You must answer user questions in English.

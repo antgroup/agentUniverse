@@ -27,7 +27,7 @@ profile:
     需要回答的问题是: {input}
   # Please select the llm.
   llm_model:
-    name: 'demo_llm'
+    name: 'qwen_llm'
 action:
   # Please select the tools and knowledge base.
   tool:

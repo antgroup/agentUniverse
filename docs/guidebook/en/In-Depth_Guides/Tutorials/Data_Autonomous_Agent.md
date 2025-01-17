@@ -36,18 +36,17 @@ CWhen configuring the DataAgent within the AgentUniverse framework, the configur
 info:
   name: 'data_agent'
   description: 'data agent'
-plan:
-  planner:
-    dataset_builder: 'dataset_build_agent'
-    dataset_evaluator: 'dataset_eval_agent'
+profile:
+  dataset_builder: 'dataset_build_agent'
+  dataset_evaluator: 'dataset_eval_agent'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.data_agent'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.data_agent'
   class: 'DataAgent'
 ```
-[data_agent sample configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/data_agent.yaml)
+[data_agent sample configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.yaml)
 
-[data_agent sample python file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/data_agent.py)
+[data_agent sample python file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.py)
 
 ### Step3 Configure the agent for producing the evaluation dataset.
 Utilize the **dataset_build_agent** configured in the `dataset_builder`step of step 2 within the agentuniverse framework. Below is the configuration file for the dataset_build_agent. In addition to the basic agent configuration,  the configuration file primarily comprises two key items: 
@@ -59,17 +58,15 @@ info:
   description: 'dataset build agent'
 profile:
   concurrency_level: 1
-plan:
-  planner:
-    candidate: 'demo_rag_agent'
+  candidate: 'demo_rag_agent'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_build_agent'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_build_agent'
   class: 'DatasetBuildAgent'
 ```
-[dataset_build_agent sample configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.yaml)
+[dataset_build_agent sample configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.yaml)
 
-[dataset_build_agent sample python file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.py)
+[dataset_build_agent sample python file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.py)
 
 ### Step4 Configure the agent for dataset evaluation and annotation
 Utilize the **dataset_eval_agent** configured in the `dataset_evaluator`step of step 2 within the AgentUniverse framework. Below is the configuration file for the dataset_eval_agent. In addition to the basic agent configuration, the configuration file primarily contains two key items:
@@ -80,25 +77,25 @@ info:
   name: 'dataset_eval_agent'
   description: 'dataset eval agent'
 profile:
-  prompt_version: dataset_eval_agent.en
+  prompt_version: dataset_eval_agent.cn
   max_eval_lines: 10
   llm_model:
-    name: 'demo_llm'
-    model_name: 'gpt-4o'
+    name: 'qwen_llm'
+    model_name: 'qwen2-72b-instruct'
     temperature: 0.1
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_eval_agent'
+  module: 'data_agent_app.intelligence.agentic.agent.agent_instance.data_agent_case.dataset_eval_agent'
   class: 'DatasetEvalAgent'
 ```
-[dataset_eval_agent sample configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.yaml)
+[dataset_eval_agent sample configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.yaml)
 
-[dataset_eval_agent sample python file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.py)
+[dataset_eval_agent sample python file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.py)
 
 ### step5 Run DataAgent
-Using the [dataAgent code entry](../../../../../examples/sample_standard_app/app/examples/data_agent.py), configure two parameters:
-1. `queryset_path` , which representing the path to the queryset.
-2. `turn` r, which specifies the total number of rounds for the queryset execution. With these configurations, you can start the dataAgent with a single click.
+Using the [dataAgent code entry](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.py), configure two parameters:
+1. `queryset_path`, which representing the path to the queryset.
+2. `turn`, which specifies the total number of rounds for the queryset execution. With these configurations, you can start the dataAgent with a single click.
 
 Tips: please configure the queryset and specific the evaluation rows reasonably to avoid excessive computational and token consumption.
 
@@ -112,7 +109,7 @@ First, you need to generate the evaluation dataset. This dataset should store th
 
 ![data_agent_dataset](../../../_picture/data_agent_dataset_en.png)
 
-[dataAgent sample evaluation dataset](../../../../../examples/sample_standard_app/app/examples/data/dataset_turn_1_2024-07-10-15-06-24.jsonl)
+[dataAgent sample evaluation dataset](../../../../../examples/sample_apps/data_agent_app/intelligence/test/data/dataset_turn_1_2024-07-10-15-06-24.jsonl)
 
 
 ### Complete Evaluation Results
@@ -128,7 +125,7 @@ As illustrated in the figure below:
 - Additional Dimension Scores/Suggestions: Similar to the Relevance dimension, but for other assessment dimensions.
 ![data_agent_eval_result](../../../_picture/data_agent_eval_result_en.png)
 
-[dataAgent sample eval result](../../../../../examples/sample_standard_app/app/examples/data/eval_result_turn_1_2024-07-10-15-06-24.xlsx)
+[dataAgent sample eval result](../../../../../examples/sample_apps/data_agent_app/intelligence/test/data/eval_result_turn_1_2024-07-10-15-06-24.xlsx)
 
 
 
@@ -143,7 +140,7 @@ As illustrated in the figure below:
 
 ![data_agent_eval_report](../../../_picture/data_agent_eval_report_en.png)
 
-[dataAgent sample evaluation report](../../../../../examples/sample_standard_app/app/examples/data/eval_report_2024-07-10-15-06-24.xlsx)
+[dataAgent sample evaluation report](../../../../../examples/sample_apps/data_agent_app/intelligence/test/data/eval_report_2024-07-10-15-06-24.xlsx)
 
 ### Comparative Experiment
 Adjust the LLM model in the demo_rag_agent within agentUniverse from the previous `qwen1.5-72b-chat` to `qwen1.5-7b-chat`, and after evaluation by dataAgent, the comprehensive evaluation reports are as follows:
@@ -158,17 +155,17 @@ Upon comparing the two comprehensive evaluation reports, it is evident that afte
 
 ## DataAgent Detailed Description
 ### data_agent
-- [configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/data_agent.yaml)
-- [agent file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/data_agent.py)
+- [configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.yaml)
+- [agent file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/data_agent.py)
 
 ### dataset_build_agent
-- [configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.yaml)
-- [agent file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_build_agent.py)
+- [configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.yaml)
+- [agent file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_build_agent.py)
 - The evaluation data produced by dataset_build_agent is stored locally in jsonl format (the jsonl file name is dataset_turn_{i}_{date}, i represents the round, and `date` represents the generation time)
 
 ### dataset_eval_agent
-- [configuration file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.yaml)
-- [agent file](../../../../../examples/sample_standard_app/app/core/agent/data_agent_case/dataset_eval_agent.py)
-- [prompt file](../../../../../examples/sample_standard_app/app/core/prompt/dataset_eval_agent_en.yaml)：agentUniverse currently offers six agent evaluation dimensions that are industry-validated (note that the MVP version does not include the **comprehensive dimension**. The current comprehensive evaluation standard is tailored towards the financial field, and therefore, it is not discussed in the open source community).
+- [configuration file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.yaml)
+- [agent file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/agent/agent_instance/data_agent_case/dataset_eval_agent.py)
+- [prompt file](../../../../../examples/sample_apps/data_agent_app/intelligence/agentic/prompt/dataset_eval_agent_en.yaml)：agentUniverse currently offers six agent evaluation dimensions that are industry-validated (note that the MVP version does not include the **comprehensive dimension**. The current comprehensive evaluation standard is tailored towards the financial field, and therefore, it is not discussed in the open source community).
 - The complete **evaluation results** generated by **dataset_eval_agent** are stored locally in Excel format. The file naming convention is **eval_result_turn_{i}_{date}**, where  `i` represents the evaluation round and `date` represents the generation timestamp.
 - The comprehensive **evaluation report** produced by **dataset_eval_a_agent** (assuming it's a typo and should be dataset_eval_agent or a specific variant) is also stored locally in Excel format. The file naming convention for the report is **eval_report_{date}**, where **{date}** represents the generation timestamp.

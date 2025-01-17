@@ -30,7 +30,8 @@ result: 《舒伯特小夜曲》是奥地利作曲家舒伯特（1797-1828）创
 
 ```yaml
 name: 'parallel_search_detail_api'
-description: '使用该工具可以在bing中并发搜索多条信息
+description: |
+  使用该工具可以在bing中并发搜索多条信息
     <输入描述>
     入参inputs是一个json字符串，内容是一个待检索list，每个元素表示一条需要搜索的信息。
     

@@ -1,6 +1,6 @@
 # Python Auto Runner
 ## Case Illustration
-This case is built using ReactPlanner, creating a simple application that can automatically generate and execute Python code.
+This case is built using ReactAgentTemplate, creating a simple application that can automatically generate and execute Python code.
 This case is leverages the QianWen large language model and the google_search function, necessitating the configuration of environment variables DASHSCOPE_API_KEY and SERPER_API_KEY prior to use.
 
 ## Quick Start
@@ -22,30 +22,32 @@ info:
 profile:
   prompt_version: qwen_react_agent.cn
   llm_model:
-    name: 'default_qwen_llm'
-    model_name : 'qwen-max'
-    temperature: 0
+    name: 'qwen_llm'
+    model_name: 'qwen-max'
+    stop: 'Observation'
+    temperature: 0.1
 action:
   tool:
     - 'google_search_tool'
     - 'python_runner'
-plan:
-  planner:
-    name: 'react_planner'
+  knowledge:
+    - 'law_knowledge'
+memory:
+  name: 'demo_memory'
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.react_agent.react_agent'
-  class: 'ReActAgent'
+  module: 'agentuniverse.agent.template.react_agent_template'
+  class: 'ReActAgentTemplate'
 ```
 
 Here we used two tools: google_search_tool and python_runner. The relevant tool code links are as follows:
-- [google_search_tool](../../../../examples/sample_standard_app/intelligence/agentic/tool/google_search_tool.yaml)
-- [python_runner](../../../../examples/sample_standard_app/intelligence/agentic/tool/python_repl_tool.yaml)
+- [google_search_tool](../../../../examples/sample_apps/react_agent_app/intelligence/agentic/tool/google_search_tool.yaml)
+- [python_runner](../../../../examples/sample_apps/react_agent_app/intelligence/agentic/tool/python_runner.yaml)
 
 
 ### Case Run
 1. Test Case Run
-Directly run with test code[test_case](../../../../examples/sample_standard_app/intelligence/test/test_react_agent.py)
+Directly run with test code[test_case](../../../../examples/sample_apps/react_agent_app/intelligence/test/test_react_agent.py)
 2. Interface Run
 After configuring the related keys, start the web service and use the following curl for testing.
 ```shell

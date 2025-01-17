@@ -9,7 +9,7 @@
 
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
-from examples.sample_standard_app.intelligence.agentic.tool.samples.langchain_tool import LangChainTool
+from sample_standard_app.intelligence.agentic.tool.samples.langchain_tool import LangChainTool
 
 
 class WikipediaTool(LangChainTool):

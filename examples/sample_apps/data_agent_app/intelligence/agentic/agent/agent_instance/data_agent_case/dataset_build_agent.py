@@ -13,7 +13,7 @@ from agentuniverse.agent.agent_manager import AgentManager
 from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.base.util.logging.logging_util import LOGGER
-from examples.sample_apps.data_agent_app.intelligence.utils.common.jsonl_file_util import JsonFileWriter, JsonFileReader
+from data_agent_app.intelligence.utils.common.jsonl_file_util import JsonFileWriter, JsonFileReader
 
 
 class DatasetBuildAgent(Agent):

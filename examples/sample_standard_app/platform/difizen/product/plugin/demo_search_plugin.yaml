@@ -1,0 +1,12 @@
+id: demo_search_plugin
+nickname: 谷歌web搜索插件
+avatar: ../../../resources/google_search.png
+description: 谷歌web搜索插件
+type: PLUGIN
+toolset:
+- demo_search_tool
+- mock_search_tool
+metadata:
+  class: PluginProduct
+  module: agentuniverse_product.base.plugin_product
+  type: PRODUCT

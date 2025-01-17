@@ -52,9 +52,6 @@ profile:
   prompt_version: demo_agent_prompt.cn
   llm_model:
     name: 'qwen_llm'
-plan:
-  planner:
-    name: 'rag_planner'
 action:
   tool:
     - 'google_search_tool'
@@ -62,8 +59,8 @@ memory:
   name: ''
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.rag_agent_case.demo_rag_agent'
-  class: 'DemoRagAgent'
+  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.demo_agent'
+  class: 'DemoAgent'
 ```
 
 **Special note:** In the main configuration file of agentUniverse, the master switch for the monitor module holds the highest priority. If the activate configuration option is set to false, any agent-granularity configurations will not take effect.

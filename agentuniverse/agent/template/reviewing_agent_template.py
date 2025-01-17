@@ -62,7 +62,7 @@ class ReviewingAgentTemplate(AgentTemplate):
         # add reviewing agent final result into the stream output.
         stream_output(output_stream,
                       {"data": {
-                          'output': parse_json_markdown(agent_output).get('suggestion'),
+                          'output': agent_output,
                           "agent_info": self.agent_model.info
                       }, "type": "reviewing"})
 

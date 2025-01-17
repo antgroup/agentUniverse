@@ -1,6 +1,6 @@
 # Python自动执行案例
 ## 案例说明
-本案例基于ReactPlanner，搭建了一个简单可以自动生成python代码并执行的案例。
+本案例基于ReactAgentTemplate，搭建了一个简单可以自动生成python代码并执行的案例。
 
 该案例基于千问大模型和`goolge_search`功能，使用前需要您在环境变量中配置`DASHSCOPE_API_KEY`、`SERPER_API_KEY`。
 
@@ -23,20 +23,22 @@ info:
 profile:
   prompt_version: qwen_react_agent.cn
   llm_model:
-    name: 'default_qwen_llm'
-    model_name : 'qwen-max'
-    temperature: 0
+    name: 'qwen_llm'
+    model_name: 'qwen-max'
+    stop: 'Observation'
+    temperature: 0.1
 action:
   tool:
     - 'google_search_tool'
     - 'python_runner'
-plan:
-  planner:
-    name: 'react_planner'
+  knowledge:
+    - 'law_knowledge'
+memory:
+  name: 'demo_memory'
 metadata:
   type: 'AGENT'
-  module: 'agentuniverse.agent.default.react_agent.react_agent'
-  class: 'ReActAgent'
+  module: 'agentuniverse.agent.template.react_agent_template'
+  class: 'ReActAgentTemplate'
 ```
 
 这里使用了google_search_tool与python_runner两个工具，相关工具代码链接如下：

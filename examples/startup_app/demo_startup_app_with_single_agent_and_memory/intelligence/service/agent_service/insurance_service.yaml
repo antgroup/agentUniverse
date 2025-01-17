@@ -1,0 +1,5 @@
+name: 'insurance_service'
+description: 'demo service of demo agent'
+agent: 'insurance_agent'
+metadata:
+  type: 'SERVICE'

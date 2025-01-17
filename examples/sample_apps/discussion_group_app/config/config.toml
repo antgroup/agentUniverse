@@ -21,10 +21,6 @@ memory = ['discussion_group_app.intelligence.agentic.memory']
 service = ['discussion_group_app.intelligence.service.agent_service']
 # Scan and register prompt components for all paths under this list, with priority over the default.
 prompt = ['discussion_group_app.intelligence.agentic.prompt']
-# Scan and register product components for all paths under this list, with priority over the default.
-product = ['discussion_group_app.platform.difizen.product']
-# Scan and register workflow components for all paths under this list, with priority over the default.
-workflow = ['discussion_group_app.platform.difizen.workflow']
 # Scan and register store components for all paths under this list, with priority over the default.
 store = ['discussion_group_app.intelligence.agentic.knowledge.store']
 # Scan and register rag_router components for all paths under this list, with priority over the default.

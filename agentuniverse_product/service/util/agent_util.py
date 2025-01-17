@@ -458,9 +458,11 @@ def validate_and_assemble_agent_input(agent_id: str, session_id: str, input: str
         raise ValueError("The agent instance corresponding to the agent id cannot be found.")
     tool_input_dict = assemble_tool_input(agent, input)
 
+    memory_name = agent.agent_model.memory.get('name', '')
+
     agent_input_dict = {
         'input': input,
-        'chat_history': chat_history,
+        'chat_history': None if memory_name else get_chat_history_str(chat_history),
         'agent_id': agent_id,
         'session_id': session_id
     }
@@ -468,3 +470,22 @@ def validate_and_assemble_agent_input(agent_id: str, session_id: str, input: str
     agent_input_dict.update(tool_input_dict)
 
     return agent_input_dict
+
+
+def get_chat_history_str(messages: List[dict]) -> str:
+    string_messages = []
+    for m in messages:
+        if m.get('type') == 'system':
+            role = 'System'
+        elif m.get('type') == 'human':
+            role = 'Human'
+        elif m.get('type') == 'ai':
+            role = "AI"
+        else:
+            role = ""
+        m_str = ""
+        if role:
+            m_str += f"Message role: {role} "
+        m_str += f"Message content: \n {m.get('content', '')} "
+        string_messages.append(m_str)
+    return "\n\n".join(string_messages)

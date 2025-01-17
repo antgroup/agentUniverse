@@ -3,10 +3,14 @@
 ## Table of Contents
 
 **1. Getting Started**
-* 1.1 [Introduction](Get_Start/Introduction.md)
-* 1.2 [Installation](Get_Start/Installation.md)
-* 1.3 [Quick Start](Get_Start/Quick_Start.md)
-* 1.5 [ApplicationStructure](Get_Start/Application_Project_Structure_and_Explanation.md)
+* 1.1 [Introduction](Concepts/Introduction.md)
+* 1.2 [Installation and Initialization](Get_Start/0.Installation_and_Initialization.md)
+* 1.3 [Application Project Structure and Explanation](Get_Start/1.Application_Project_Structure_and_Explanation.md)
+* 1.4 [Run Your First Tutorial Example](Get_Start/2.Run_Your_First_Tutorial_Example.md)
+* 1.5 [Quick Guide to Build Single Agent](Get_Start/3.Quick_Guide_to_Build_Single_Agent.md)
+* 1.6 [Building Typical Multi-Agent App](Get_Start/4.Building_Typical_Multi-Agent_App.md)
+* 1.7 [Creating and Using Agent Templates](Get_Start/5.Creating_and_Using_Agent_Templates.md)
+* 1.8 [Other Tips and Techniques](Get_Start/6.Other_Tips_and_Techniques.md)
 
 **2. Principle Introduction**
 
@@ -32,7 +36,8 @@
     * 2.2.5.2 [Related Domain Objects](In-Depth_Guides/Tutorials/Plan/Planner_Related_Domain_Objects.md)
 * 2.3 Technical Components
   * 2.3.1 [RAG](In-Depth_Guides/Tutorials/RAG.md)
-    * 2.3.1.1 [How To Build A RAG Agent](How-to/How_To_Build_A_RAG_Agent.md)
+    * 2.3.1.1 [How to Build Knowledge Base](How-to/Build and Use a Knowledge Base/How_to_Build_Knowledge_Base.md)
+    * 2.3.1.1 [How to Use Knowledge Base](How-to/Build and Use a Knowledge Base/How_to_Use_Knowledge_Base.md)
 * 2.4 Others
   * 2.4.1 Service
     * 2.4.1.1 [Registration and Usage](In-Depth_Guides/Tech_Capabilities/Service/Service_Registration_and_Usage.md)
@@ -98,8 +103,8 @@
 * 6.5 [Andrew Ng's Reflexive Workflow Translation Agent Replication](Examples/Translation_Assistant.md)
 
 **7.Product Platform**
-* 7.1 [Quick Use](How-to/Product_Platform_Quick_Start.md)
-* 7.2 [Advancement Guide](How-to/Product_Platform_Advancement_Guide.md)
+* 7.1 [Quick Use](How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Quick_Start.md)
+* 7.2 [Advancement Guide](How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Advancement_Guide.md)
 
 **8. Series of Articles**
 

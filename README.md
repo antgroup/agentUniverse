@@ -55,7 +55,7 @@ Overview: This document introduces in detailed the mechanisms and principles und
 * [How to build an agent application](#How-to-build-an-agent-application)
 * [Setup the visual agentic workflow platform](#Setup-the-visual-agentic-workflow-platform)
 * [Why use agentUniverse](#Why-use-agentUniverse)  
-* [Sample Projects](#Sample-Projects)  
+* [Sample Apps](#Sample-Apps)  
 * [Documents](#Documents)  
 * [Support](#Support)
 
@@ -70,7 +70,7 @@ pip install agentUniverse
 ### Run the first example
 Run your first example, and you can quickly experience the performance of the agents (or agent groups) built by agentUniverse through the tutorial.
 
-Please refer to the document for detail steps: [Run the first example](docs/guidebook/en/Get_Start/Quick_Start.md) 。
+Please refer to the document for detail steps: [Run the first example](docs/guidebook/en/Get_Start/2.Run_Your_First_Tutorial_Example.md) 。
 
 ****************************************
 
@@ -79,20 +79,17 @@ Please refer to the document for detail steps: [Run the first example](docs/guid
 ### Standard Project Scaffolding
 Setup the standard project: [agentUniverse Standard Project](examples/sample_standard_app)
 
-### Create and use agents
-You can learn about the important components of agents through the [Introduction to Agents](docs/guidebook/en/In-Depth_Guides/Tutorials/Agent/Agent.md). For detailed information on creating agents, refer to [Creating and Using Agents](docs/guidebook/en/In-Depth_Guides/Tutorials/Agent/Agent_Create_And_Use.md). You can also deepen your understanding of the creation and usage of agents by exploring official examples, such as the [Python Code Generation and Execution Agent](docs/guidebook/en/Examples/Python_Auto_Runner.md).
+#### Quick Start for Building a Single Agent
+You can learn how to quickly build a single agent by reading the [Quick Guide to Build Single Agent](docs/guidebook/en/Get_Start/3.Quick_Guide_to_Build_Single_Agent.md). This will help you understand how to enhance your agent's capabilities using tools, knowledge bases, RAG technologies, and more. Additionally, you will grasp the basic application development processes for agents, including configuration, testing, optimizing, deployment, and performance evaluation. 
 
-### Setting and use knowledgeBase
-In the development of intelligent agent applications, knowledge base construction and recall are indispensable. The agentUniverse framework, based on RAG technology, offers an efficient standard operating procedure for knowledge base construction and managing the retrieval and recall process of RAG. You can learn about its usage through the [Knowledge Introduction](docs/guidebook/en/In-Depth_Guides/Tutorials/Knowledge/Knowledge.md) and [Knowledge Definition and Usage](docs/guidebook/en/In-Depth_Guides/Tutorials/Knowledge/Knowledge_Define_And_Use.md), and further hone your skills in quickly building a knowledge base and creating an agent capable of retrieval and recall through [How to Build RAG Agents](docs/guidebook/en/How-to/How_To_Build_A_RAG_Agent.md).
+#### Building Typical Multi-Agent Applications
+You can further understand how to break down intelligent capabilities into multiple agents in complex task scenarios and enhance your task performance through collaboration by referring to the [Building Typical Multi-Agent App](docs/guidebook/en/Get_Start/4.Building_Typical_Multi-Agent_App.md) chapter.
 
-### Create and use Tools
-In the development of agent applications, agents need to connect to a variety of tools. You should specify a range of tools that they can utilize. You can integrate various proprietary APIs and services as tool plugins through [Tool Creation and Usage](docs/guidebook/en/In-Depth_Guides/Tutorials/Tool/Tool_Create_And_Use.md). The framework has already integrated LangChain as well as several third-party toolkits. For detailed instructions on how to use thses tools, you can refer to [Integrating LangChain Tools](docs/guidebook/en/In-Depth_Guides/Components/Tools/Integrated_LangChain_Tools.md) and [Existing Integrated Tools](docs/guidebook/en/In-Depth_Guides/Components/Tools/Integrated_Tools.md).
+#### Creating and Using Agent Templates
+You can learn how to create effective agent patterns into templates through the chapter [Creating and Using Agent Templates](docs/guidebook/en/Get_Start/5.Creating_and_Using_Agent_Templates.md). This will greatly enhance the efficiency of constructing subsequent agents and facilitate dissemination.
 
-### Effectiveness evaluation
-The effectiveness evaluation of agents can be conducted through expert assessments, on the one hand, and by leveraging the evaluation capabilities of the agents themselves, on the other hand. The agentUniverse framework has launched DataAgent (Minimum Viable Product version), which aims to empower your agents with self-evaluation and evolution capabilities utilizing agent intelligence. You can also customize the evaluation criteria within it. For more details, please refer to the documentation:  [DataAgent - Autonomous Data Agents](docs/guidebook/en/In-Depth_Guides/Tutorials/Data_Autonomous_Agent.md).
-
-### agentServe
-agentUniverse provides multiple standard web server capabilities, as well as standard HTTP and RPC protocols. You can further explore the documentation on [Service Registration and Usage](docs/guidebook/en/In-Depth_Guides/Tech_Capabilities/Service/Service_Registration_and_Usage.md) and the [Web Server](docs/guidebook/en/In-Depth_Guides/Tech_Capabilities/Service/Web_Server.md) sections.
+#### Other Tips and Techniques
+You can learn more tips and techniques during the process of building intelligent agent applications in the chapter [Other_Tips_and_Techniques](docs/guidebook/en/Get_Start/6.Other_Tips_and_Techniques.md), such as how to add a memory module into the intelligent agent process and how to effectively manage prompts within the project.
 
 ****************************************
 
@@ -107,9 +104,9 @@ pip install magent-ui ruamel.yaml
 
 **One-click Run**
 
-Run [product_application.py](examples/sample_standard_app/boostrap/platform/product_application.py) in sample_standard_app/boostrap/platform for quick startup.
+Run [product_application.py](examples/sample_standard_app/bootstrap/platform/product_application.py) in sample_standard_app/bootstrap/platform for quick startup.
 
-For more details, refer to [Quick Start for Product Platform](docs/guidebook/en/How-to/Product_Platform_Quick_Start.md) and the [Advanced Guide](docs/guidebook/en/How-to/Product_Platform_Advancement_Guide.md).
+For more details, refer to [Quick Start for Product Platform](docs/guidebook/en/How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Quick_Start.md) and the [Advanced Guide](docs/guidebook/en/How-to/Guide to Visual Agentic Workflow Platform/Product_Platform_Advancement_Guide.md).
 
 This feature is jointly developed by [difizen](https://github.com/difizen/magent) and agentUniverse.
 
@@ -118,7 +115,7 @@ This feature is jointly developed by [difizen](https://github.com/difizen/magent
 ## Why use agentUniverse
 
 ### Concept
-![](docs/guidebook/_picture/agentuniverse_structure.png)
+![](docs/guidebook/_picture/agentuniverse_structure_en.png)
 
 The core of agentUniverse provides all the essential components needed to build a single intelligent agent, the collaboration mechanisms between multiple agents, and allows for the injection of expert knowledge. The enables developers to effortlessly create intelligent applications equipped with professional know-how.
 
@@ -143,7 +140,7 @@ see the section on [key features of agentUniverse](docs/guidebook/en/Concepts/Co
 
 ****************************************
 
-## Sample Projects
+## Sample Apps
 
 🚩 [Legal Advice Agent v2](docs/guidebook/en/Examples/Legal_Advice.md)
 

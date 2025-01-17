@@ -56,10 +56,6 @@ The LLM utilized by the Agent. agentUniverse offers a wide array of existing LLM
 ## Planning
 This section will impact the collaboration and execution strategies during the actual work of the Agent. It embodies the collaborative and execution ideas of patterns. Planning will include various types, such as making the Agent follow a completely manually orchestrated workflow, adhere to a specific standard operating procedure (SOP), or use certain specific working methods like the Retrieval-Augmented Generation (RAG), or allowing the agent to work entirely autonomously (Auto). Of course, Planning can not only affect the execution strategy of a single agent but can also involve or coordinate any other agents in the plan. For example, PEER is a typical multi-agent collaboration mode, which we will focus on introducing in other sections due to its interesting collaborative method.
 
-### Planner
-The Planner can be seen as the instance part of the Planning section, containing all the actual logic in the plan, such as the actual node orchestration steps in the workflow, the specific working steps in the Standard Operating Procedure (SOP), and the specific retrieval and generation proccess in the Retrieval-Augmented Generation (RAG). Any Planning strategy can be encapsulated into a Planner; users only need to configure the Planner before loading it into the Agent. Then, the Agent will start working with the specific Planning strategy.
-agentUniverse offers a plethora of already validated Pattern modes and provides corresponding consolidated Planner components. At the same time, the method for defining Planners is completely open, and we look forward to the exchange and sharing of Planner configurations from various fields. We will explain specifically how they work in the Planner section.
-
 ## Action
 This section primarily consists of tools and knowledge. Just as humans use tools and knowledge to complete tasks, agents need to acquire additional knowledge and skills, as well as incorporate additional tools, during the process of performing complex tasks, which will improve their performance in specific domains. 
 

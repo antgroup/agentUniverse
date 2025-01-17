@@ -290,6 +290,6 @@ class Knowledge(ComponentBase):
         """
         return LangchainTool(
             name=self.name,
-            description=self.description + args_description,
+            description=self.description or '' + args_description,
             func=self.langchain_query,
         )

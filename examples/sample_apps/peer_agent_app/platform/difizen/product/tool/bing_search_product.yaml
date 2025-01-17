@@ -1,8 +1,0 @@
-id: search_api_bing_tool
-nickname: 必应web搜索工具
-type: TOOL
-avatar: ../../../resources/bing_search.jpg
-metadata:
-  type: 'PRODUCT'
-  module: 'agentuniverse_product.base.product'
-  class: 'Product'

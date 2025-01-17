@@ -62,7 +62,7 @@ In the resource configuration file, uncomment the `env` section and replace `val
 
 #### Method 2
 
-Please refer to the description at the beginning of the configuration file: [Quick Start Guide](../../../Get_Start/Quick_Start.md)
+Please refer to the description at the beginning of the configuration file: [Quick Start Guide](../../../Get_Start/3.Quick_Guide_to_Build_Single_Agent.md)
 
 ## 2. Building Resources
 

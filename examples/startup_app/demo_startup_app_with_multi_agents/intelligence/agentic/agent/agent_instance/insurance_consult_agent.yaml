@@ -1,0 +1,7 @@
+info:
+  name: 'insurance_consult_agent'
+  description: '保险智能顾问，提供某公司保险产品的智能问答'
+metadata:
+  type: 'AGENT'
+  module: 'demo_startup_app_with_multi_agents.intelligence.agentic.agent.agent_instance.insurance_consult_agent'
+  class: 'InsuranceConsultAgent'

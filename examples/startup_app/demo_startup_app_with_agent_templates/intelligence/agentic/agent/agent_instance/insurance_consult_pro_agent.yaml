@@ -1,0 +1,11 @@
+info:
+  name: 'insurance_consult_pro_agent'
+  description: '保险智能顾问，提供保险产品的智能问答'
+profile:
+  planning: 'insurance_planning_agent'
+  executing: 'insurance_executing_agent'
+  expressing: 'insurance_expressing_agent'
+metadata:
+  type: 'AGENT'
+  module: 'examples.startup_app.demo_startup_app_with_agent_templates.intelligence.agentic.agent.agent_template.insurance_agent_template'
+  class: 'InsuranceAgentTemplate'

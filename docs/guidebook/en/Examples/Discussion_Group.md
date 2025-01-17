@@ -16,36 +16,11 @@ SERPER_API_KEY='xxx'
 OPENAI_API_KEY='xxx'
 ```
 ### Modify Prompt Version
-Modify the prompt version of agents to the English version. The configuration file for the multi-agent discussion group are located in the app/core/agent/discussion_agent_case directory within the `sample_standard_app` sample project. Locate the host_agent.yaml file and change the `prompt_version` to `host_agent.en`. Similarly, find the participants' yaml file and change its `prompt_version` to `participant_agent.en`.
-
-```yaml
-info:
-  name: 'host_agent'
-  description: 'host agent'
-profile:
-  prompt_version: host_agent.en
-  llm_model:
-    name: 'demo_llm'
-    temperature: 0.6
-plan:
-  planner:
-    name: 'discussion_planner'
-    round: 2
-    participant:
-      name:
-        - 'participant_agent_one'
-        - 'participant_agent_two'
-memory:
-  name: 'demo_memory'
-metadata:
-  type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.discussion_agent_case.host_agent'
-  class: 'HostAgent'
-```
+Modify the prompt version of agents to the English version. The configuration file for the multi-agent discussion group are located in the intelligence/agentic/agent/agent_instance/discussion_agent_case directory within the `sample_apps/discussion_group_app` project. Locate the discussion_group_agent.yaml file and change the `prompt_version` to `discussion_group_agent.en`. Similarly, find the participants' yaml file and change its `prompt_version` to `participant_agent.en`.
 
 
 ### Run Discussion Group
-In the sample project of agentUnvierse `sample_standard_app`, find the `discussion_chat_bots.py` file in the app/examples directory. Enter the question you wish to pose within the chat function and then run the script.
+In the sample project of agentUniverse `sample_standard_app`, find the `discussion_agents.py` file in the intelligence/test directory. Enter the question you wish to pose within the chat function and then run the script.
 For example, you might enter the question: Which tastes better, Coca-Cola or Pepsi?
 ```python
 from agentuniverse.base.agentuniverse import AgentUniverse
@@ -56,7 +31,7 @@ AgentUniverse().start(config_path='../../config/config.toml')
 
 
 def chat(question: str):
-    instance: Agent = AgentManager().get_instance_obj('host_agent')
+    instance: Agent = AgentManager().get_instance_obj('discussion_group_agent')
     instance.run(input=question)
 
 
@@ -71,50 +46,41 @@ Which tastes better, Coca-Cola or Pepsi：
 
 ## More Details
 ### Agent Configuration
-The configuration files for the multi-agent discussion group  are located in the app/core/agent/discussion_agent_case directory within the `sample_standard_app` sample project.
+The configuration files for the multi-agent discussion group are located in the intelligence/agentic/agent/agent_instance/discussion_agent_case directory within the `sample_apps/discussion_group_app` project.
 
-The `host_agent.yaml` file corresponds to the host agent, and the `participant_agent_*.yaml`files corresponds to the participant agents.
+The `discussion_group_agent.yaml` file corresponds to the discussion group, and the `participant_agent_*.yaml`files corresponds to the participant agents.
 
+The prompts are managed by the prompt version. For example, the default prompt_version of the discussion_group_agent is `discussion_group_agent.cn`, and the corresponding prompt file is `discussion_group_agent_cn.yaml` located under the intelligence/agentic/prompt directory.
 
-The prompts are managed by the prompt version. For example, the default prompt_version of the host_agent is `host_agent.cn`, and the corresponding prompt file is `host_agent.cn.yaml` located under the app/core/prompt directory.
+If you plan to switch to another LLM Model, such as the Qwen model, you need to update the `llm_model` name information accordingly(such as the `qwen_llm` built into the agentUniverse system).
 
-If you plan to switch to another LLM Model, such as the Qwen model, you need to update the  `llm_model` name information accordingly(such as the `qwen_llm` built into the agentUniverse system).
-
-The number of discussion rounds in the agent plan defaults to 2, but users can adjust this as needed. By default,  there are two agents built into agentUniverse serving as participants. To add more members to the discussion group, you can create new agents and configuring their name as parameter in the planner.
+The number of discussion rounds in the agent defaults to 2, but users can adjust this as needed. By default, there are two agents built into agentUniverse serving as participants. To add more members to the discussion group, you can create new agents and configuring their name as parameter in the discussion group agent yaml.
 
 ```yaml
 info:
-  name: 'host_agent'
-  description: 'host agent'
+  name: 'discussion_group_agent'
+  description: 'discussion group agent'
 profile:
-  prompt_version: host_agent.cn
   llm_model:
     name: 'qwen_llm'
     temperature: 0.6
-plan:
-  planner:
-    name: 'discussion_planner'
-    round: 2
-    participant:
-      name:
-        - 'participant_agent_one'
-        - 'participant_agent_two'
+  total_round: 2
+  participant_names:
+    - 'participant_agent_one'
+    - 'participant_agent_two'
 memory:
   name: 'demo_memory'
 metadata:
   type: 'AGENT'
-  module: 'sample_standard_app.intelligence.agentic.agent.agent_instance.discussion_agent_case.host_agent'
-  class: 'HostAgent'
+  module: 'discussion_group_app.intelligence.agentic.agent.agent_template.discussion_group_template'
+  class: 'DiscussionGroupTemplate'
 ```
 
 ### Memory Configuration
-Participants in the agentUniverse discussion group configure `demo_memory` in the `sample_standard_app` sample project by default to store common memory information for the entire discussion group.
-
-### Planner Configuration
-The planner configuration file is located in the app/core/planner directory of the `sample_standard_app` sample project. The `discussion_planner.py` file contains the specific planning process code for the discussion group. If you are curious, you are welcome to review it yourself.
+Participants in the agentUniverse discussion group configure `demo_memory` in the `sample_apps/discussion_group_app` project by default to store common memory information for the entire discussion group.
 
 ### Prompt Configuration
-The prompts are managed through the prompt_version. The default prompt files for the AgentUniverse (aU) discussion group agents are configured in the app/core/prompt directory. Corresponding to both Chinese and English versions (e.g., host_agent_xx.yaml and participant_agent_xx.yaml), users can modify the prompt_version in the agent configuration to achieve rapid switching.
+The prompts are managed through the prompt_version. The default prompt files for the AgentUniverse (aU) discussion group agents are configured in the intelligence/agentic/prompt directory. Corresponding to both Chinese and English versions (e.g., discussion_group_agent_xx.yaml and participant_agent_xx.yaml), users can modify the prompt_version in the agent configuration to achieve rapid switching.
 
 ### Tool Configuration
-Two participants in the agentUniverse discussion group are configured with google_search_tool by default. Users have the option to change the `tool name` in the `participant_agent_xxx.yaml` file, located under the app/core/agent/discussion_agent_case directory within the `sample_standard_app` sample project, in order  to switch between different tool calls.
+Two participants in the agentUniverse discussion group are configured with google_search_tool by default. Users have the option to change the `tool name` in the `participant_agent_xxx.yaml` file, located under the intelligence/agentic/agent/agent_instance/discussion_agent_case directory within the `sample_apps/discussion_group_app` project, in order to switch between different tool calls.

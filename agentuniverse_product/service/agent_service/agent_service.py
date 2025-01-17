@@ -146,7 +146,8 @@ class AgentService:
         Returns:
             Iterator: Response.
         """
-        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input)
+        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input,
+                                                             AgentService().get_agent_chat_history(session_id))
 
         # init the invocation chain and token usage of the monitor module
         Monitor.init_invocation_chain()
@@ -211,7 +212,8 @@ class AgentService:
         Returns:
             AsyncIterator: Response.
         """
-        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input)
+        agent_input_dict = validate_and_assemble_agent_input(agent_id, session_id, input,
+                                                             AgentService().get_agent_chat_history(session_id))
 
         # init the invocation chain and token usage of the monitor module
         Monitor.init_invocation_chain()

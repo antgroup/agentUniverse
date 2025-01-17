@@ -72,4 +72,4 @@ class Product(ComponentBase):
         self._instance = component_manager_clz().get_instance_obj(self.id)
         if self._instance is None:
             raise ValueError(f"The aU instance corresponding to the product id does not exist,"
-                             f" please check the product type and id parameters.")
+                             f" please check the product type and id parameters, product id is: {self.id}")

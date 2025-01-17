@@ -1,5 +1,0 @@
-name: 'pet_ins_recommend_sop_service'
-description: 'demo service of consult agent'
-agent: 'pet_ins_recommend_sop_agent'
-metadata:
-  type: 'SERVICE'
