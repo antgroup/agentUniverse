@@ -31,7 +31,6 @@ class ComponentEnum(Enum):
     WORK_PATTERN = "WORK_PATTERN"
     MEMORY_COMPRESSOR = "MEMORY_COMPRESSOR"
     MEMORY_STORAGE = "MEMORY_STORAGE"
-    LOG_SINK = "LOG_SINK"
 
     @staticmethod
     def to_value_list():
