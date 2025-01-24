@@ -37,6 +37,7 @@ class AppConfiger(object):
         self.__core_memory_compressor_package_list: Optional[list[str]] = None
         self.__core_memory_storage_package_list: Optional[list[str]] = None
         self.__core_work_pattern_package_list: Optional[list[str]] = None
+        self.__core_log_sink_package_list: Optional[list[str]] = None
         self.__conversation_memory_configer: Optional[dict] = None
 
     @property
@@ -147,6 +148,11 @@ class AppConfiger(object):
         return self.__core_work_pattern_package_list
 
     @property
+    def core_log_sink_package_list(self) -> Optional[list[str]]:
+        """Return the work pattern package list of the core."""
+        return self.__core_log_sink_package_list
+
+    @property
     def conversation_memory_configer(self) -> dict:
         return self.__conversation_memory_configer
 
@@ -181,5 +187,6 @@ class AppConfiger(object):
         self.__core_memory_compressor_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_compressor')
         self.__core_memory_storage_package_list = configer.value.get('CORE_PACKAGE', {}).get('memory_storage')
         self.__core_work_pattern_package_list = configer.value.get('CORE_PACKAGE', {}).get('work_pattern')
+        self.__core_log_sink_package_list = configer.value.get('CORE_PACKAGE', {}).get('log_sink')
         self.__conversation_memory_configer = configer.value.get('CONVERSATION_MEMORY')
         return self

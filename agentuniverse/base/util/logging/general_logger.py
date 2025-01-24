@@ -9,9 +9,9 @@
 from abc import ABC, abstractmethod
 import json
 from typing import Literal
-
 import loguru
 
+from agentuniverse.base.util.logging.log_type_enum import LogTypeEnum
 from agentuniverse.base.context.framework_context_manager import FrameworkContextManager
 
 LOG_LEVEL = Literal[
@@ -52,13 +52,20 @@ def _get_source_filter(source: str) -> callable:
     """
 
     def source_filter(record) -> bool:
-        return record["extra"].get("source") == source
+        return record["extra"].get("log_type") == LogTypeEnum.default and \
+            record["extra"].get("source") == source
 
     return source_filter
 
 
 class Logger(ABC):
     """The basic class of all logger, define all level log functions."""
+
+    def get_inheritance_depth(self):
+        """
+        return the depth to base Logger
+        """
+        return self.__class__.__mro__.index(Logger)
 
     @property
     def _logger(self):
@@ -150,37 +157,43 @@ class GeneralLogger(Logger):
                                      f"has no attribute '{key}'")
 
     def warn(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).warning(msg, *args, **kwargs)
 
     def info(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).info(msg, *args, **kwargs)
 
     def error(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).error(msg, *args, **kwargs)
 
     def critical(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).critical(msg, *args, **kwargs)
 
     def trace(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).trace(msg, *args, **kwargs)
 
     def debug(self, msg, *args, **kwargs):
-        self._logger.opt(depth=1).bind(
+        self._logger.opt(depth=self.get_inheritance_depth()).bind(
+            log_type=LogTypeEnum.default,
             source=self.module_name,
             context_prefix=_get_context_prefix()
         ).debug(msg, *args, **kwargs)

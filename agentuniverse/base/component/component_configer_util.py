@@ -35,6 +35,7 @@ from agentuniverse.base.component.component_enum import ComponentEnum
 from agentuniverse.llm.llm_manager import LLMManager
 from agentuniverse.prompt.prompt_manager import PromptManager
 from agentuniverse.workflow.workflow_manager import WorkflowManager
+from agentuniverse.base.util.logging.log_sink.log_sink_manager import LogSinkManager
 
 from agentuniverse.agent.action.knowledge.embedding.embedding_manager import EmbeddingManager
 from agentuniverse.agent.action.knowledge.doc_processor.doc_processor_manager import DocProcessorManager
@@ -67,6 +68,7 @@ class ComponentConfigerUtil(object):
         ComponentEnum.MEMORY_COMPRESSOR: ComponentConfiger,
         ComponentEnum.MEMORY_STORAGE: ComponentConfiger,
         ComponentEnum.WORK_PATTERN: WorkPatternConfiger,
+        ComponentEnum.LOG_SINK: ComponentConfiger,
         ComponentEnum.DEFAULT: ComponentConfiger
     }
 
@@ -90,6 +92,7 @@ class ComponentConfigerUtil(object):
         ComponentEnum.MEMORY_COMPRESSOR: MemoryCompressorManager,
         ComponentEnum.MEMORY_STORAGE: MemoryStorageManager,
         ComponentEnum.WORK_PATTERN: WorkPatternManager,
+        ComponentEnum.LOG_SINK: LogSinkManager
     }
 
     @classmethod

@@ -6,14 +6,14 @@ AgentUniverse提供标准的工作环境镜像用于容器化部署AgentUniverse
 1.  按照AgentUniverse的标准结构目录搭建自己的项目，具体结构参考[应用工程结构及说明](../../../开始使用/1.标准应用工程结构说明.md)。为方便说明，在本文档中假设项目名称和工程目录为`sample_standard_app`。
 2.  获取所需版本的镜像:
 ```shell
-docker pull registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.9_centos8
+docker pull registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.14b1_centos8
 ```
 
 
 ## 方法一：挂载宿主机路径
 您可以通过将宿主机目录挂载您的项目至容器内路径，参考命令如下:
 ```shell
-docker run -d -p 8888:8888 -e OPENAI_API_KEY=XXX -v ./sample_standard_app/:/usr/local/etc/workspace/project/sample_standard_app registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.9_centos8
+docker run -d -p 8888:8888 -e OPENAI_API_KEY=XXX -v ./sample_standard_app/:/usr/local/etc/workspace/project/sample_standard_app registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.14b1_centos8
 ```
 其中`-p 8888:8888`为Web Server的端口映射，前面的8888表示容器内的webserver启动在8888端口，后者表示映射到宿主机的8888端口，可自行根据实际应用的启动情况调整。-e OPENAI_API_KEY=XXX可以添加容器内的环境变量。  
 `-v {local_dir}:/usr/local/etc/workspace/project/{local_dir_name}`表示把本地`local_dir`目录挂载至容器内的`/usr/local/etc/workspace/project`目录，容器内目录为固定值，不可修改,`local_dir_name`表示你本地文件夹的名字，也就是`local_dir`的最后一级目录名称。
@@ -35,7 +35,7 @@ docker run -d -p 8888:8888 -e OPENAI_API_KEY=XXX -v ./sample_standard_app/:/usr/
 ## 方法二：从Github拉取项目
 镜像中已安装git命令，您可以通过修改镜像的entrypoint，git clone您的项目后将整个工程复制到指定路径，示例命令：
 ```shell
-docker run -d -p 8888:8888 --entrypoint=/bin/bash registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.5_centos8_beta -c "git clone {repo_addr}; mv {project_dir} /usr/local/etc/workspace/project; /bin/bash --login /usr/local/etc/workspace/shell/start.sh"
+docker run -d -p 8888:8888 --entrypoint=/bin/bash registry.cn-hangzhou.aliyuncs.com/agent_universe/agent_universe:0.0.14b1_centos8 -c "git clone {repo_addr}; mv {project_dir} /usr/local/etc/workspace/project; /bin/bash --login /usr/local/etc/workspace/shell/start.sh"
 ````
 
 其中`repo_addr`是你的git项目地址，`project_dir`是工程路径，比如`sample_standard_app`在你git项目下的`project`目录，那么`project_dir`就是`project/sample_standard_app`。

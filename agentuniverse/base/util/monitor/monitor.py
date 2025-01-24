@@ -103,6 +103,18 @@ class Monitor(BaseModel):
             FrameworkContextManager().set_context(trace_id + '_invocation_chain', [])
 
     @staticmethod
+    def pop_invocation_chain():
+        """Pop the last chain node in invocation chain."""
+        trace_id = FrameworkContextManager().get_context('trace_id')
+        if trace_id is not None:
+            invocation_chain: list = FrameworkContextManager().get_context(
+                trace_id + '_invocation_chain')
+            if invocation_chain is not None:
+                invocation_chain.pop()
+                FrameworkContextManager().set_context(
+                    trace_id + '_invocation_chain', invocation_chain)
+
+    @staticmethod
     def clear_invocation_chain():
         """Clear the invocation chain in the framework context."""
         trace_id = FrameworkContextManager().get_context('trace_id')

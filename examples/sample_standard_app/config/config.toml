@@ -37,6 +37,8 @@ query_paraphraser = ['sample_standard_app.intelligence.agentic.knowledge.query_p
 memory_compressor = ['sample_standard_app.intelligence.agentic.memory.memory_compressor']
 # Scan and register memory_storage components for all paths under this list, with priority over the default.
 memory_storage = ['sample_standard_app.intelligence.agentic.memory.memory_storage']
+# Scan and register log_sink components for all paths under this list, with priority over the default.
+log_sink = ['sample_standard_app.intelligence.utils.log_sink']
 
 [SUB_CONFIG_PATH]
 # Log config file path, an absolute path or a relative path based on the dir where the current config file is located.

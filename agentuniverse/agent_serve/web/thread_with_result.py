@@ -60,6 +60,7 @@ class ThreadWithReturnValue(Thread):
 
 
 class ThreadPoolExecutorWithReturnValue(ThreadPoolExecutor):
+
     def _adjust_thread_count(self):
         # if idle threads are available, don't spin new threads
         if self._idle_semaphore.acquire(timeout=0):
