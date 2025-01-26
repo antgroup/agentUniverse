@@ -1,0 +1,8 @@
+name: 'json_output_parser_tool'
+description: ''
+tool_type: 'api'
+input_keys: ['output']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.app.core.tool.doe_tool.json_output_parser_tool'
+  class: 'JsonOutputParser'

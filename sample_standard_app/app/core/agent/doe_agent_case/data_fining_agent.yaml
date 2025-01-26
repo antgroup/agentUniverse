@@ -1,0 +1,22 @@
+info:
+  name: 'data_fining_agent'
+  description: 'data fining agent'
+profile:
+  llm_model:
+    name: 'deep_seek_llm'
+    temperature: 0.6
+plan:
+  planner:
+    name: 'serial_planner'
+    data_loader:
+      name: 'load_fund_tool'
+      type: 'tool'
+    data_processing:
+#      name: 'data_processing_agent'
+#      type: 'agent'
+      name: 'fund_data_processing_agent'
+      type: 'agent'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.data_fining_agent'
+  class: 'DataFiningAgent'
