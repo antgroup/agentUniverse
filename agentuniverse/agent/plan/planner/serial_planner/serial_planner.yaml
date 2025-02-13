@@ -1,0 +1,6 @@
+name: 'serial_planner'
+description: 'serial planner'
+metadata:
+  type: 'PLANNER'
+  module: 'agentuniverse.agent.plan.planner.serial_planner.serial_planner'
+  class: 'SerialPlanner'

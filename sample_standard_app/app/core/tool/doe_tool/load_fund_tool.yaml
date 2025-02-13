@@ -1,0 +1,8 @@
+name: 'load_fund_tool'
+description: ''
+tool_type: 'api'
+input_keys: ['fund_id']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.app.core.tool.doe_tool.load_fund_tool'
+  class: 'LoadFundInfoTool'

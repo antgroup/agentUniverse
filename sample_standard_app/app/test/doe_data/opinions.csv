@@ -1,0 +1,5 @@
+thought,type,opinion,rule
+持续超额营收能力,positive,"持续超额能力强,风控能力较强",last_six_month>0
+持续超额营收能力,negative,"持续超额不稳定,风控能力较弱",last_six_month<=0
+投资风格,positive,投资风格稳定,manager_year>3
+投资风格,negative,"投资风格不稳定,基金经理投资经验过短,基金经理任职经验过短",manager_year<=3
