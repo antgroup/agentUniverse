@@ -1,0 +1,8 @@
+name: 'load_opinion_tool'
+description: 'load opinion'
+tool_type: 'api'
+input_keys: ['opinions_path']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.app.core.tool.doe_tool.opinion_tool'
+  class: 'LoadOpinionTool'

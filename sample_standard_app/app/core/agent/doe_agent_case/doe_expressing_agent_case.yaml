@@ -1,0 +1,16 @@
+info:
+  name: 'doe_expressing_agent_case'
+  description: 'DOE expressing agent case'
+profile:
+  prompt_version: doe_expressing_agent_case.cn
+  llm_model:
+    name: 'deep_seek_llm'
+    temperature: 0.6
+action:
+plan:
+  planner:
+    name: 'rag_planner'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.doe_expressing_agent_case'
+  class: 'DOEExpressingAgent'

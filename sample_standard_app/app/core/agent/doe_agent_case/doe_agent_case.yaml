@@ -1,0 +1,15 @@
+info:
+  name: 'doe_agent_case'
+  description: 'DOE agent case'
+profile:
+action:
+plan:
+  planner:
+    name: 'doe_planner'
+    data_fining_agent: 'data_fining_agent'
+    opinion_inject_agent: 'opinion_inject_agent'
+    expressing_agent: 'doe_expressing_agent_case'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.doe_agent_case'
+  class: 'DOEAgent'

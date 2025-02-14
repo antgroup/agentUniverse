@@ -1,0 +1,8 @@
+name: 'opinion_verify_tool'
+description: 'opinion verify'
+tool_type: 'api'
+input_keys: ['opinions','data_fining_result']
+metadata:
+  type: 'TOOL'
+  module: 'sample_standard_app.app.core.tool.doe_tool.opinion_tool'
+  class: 'OpinionMatchingTool'

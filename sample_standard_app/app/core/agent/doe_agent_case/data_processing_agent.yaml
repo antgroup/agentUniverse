@@ -1,0 +1,15 @@
+info:
+  name: 'data_processing_agent'
+  description: 'data processing agent'
+profile:
+  prompt_version: data_processing_agent.cn
+  llm_model:
+    name: 'deep_seek_llm'
+    temperature: 0.6
+plan:
+  planner:
+    name: 'rag_planner'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.data_processing_agent'
+  class: 'DataProcessingAgent'

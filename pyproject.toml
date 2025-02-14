@@ -48,7 +48,7 @@ pymilvus = { version = "^2.4.3", optional = true}
 googleapis-common-protos = "^1.63.0"
 myst-parser = "^2.0.0"
 qianfan = "^0.3.12"
-dashscope = "^1.19.1"
+dashscope = "1.19.1"
 anthropic = "^0.26.0"
 ollama = '^0.2.1'
 langchain-anthropic = '^0.1.13'

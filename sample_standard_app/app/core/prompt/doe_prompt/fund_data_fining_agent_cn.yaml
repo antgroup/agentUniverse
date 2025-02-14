@@ -1,0 +1,98 @@
+introduction: 你是一位数据分析专家。
+target: 你的目标是从提供的背景信息中提取回答用户问题可能用到的所有信息，并将这些信息格式化为一个JSON对象。请确保最终的JSON对象是有效的，并且符合用户的需求。
+instruction: |
+  当前的html页面信息是:
+  ================================================================
+  {init_data}
+  ================================================================
+  
+  需要填充下面的JSON中的信息：
+  ```json {{
+    "name":"基金名称",
+    "date": "数据日期",
+    "EPTWU": "万份收益",
+    "seven_day_annualized":"七日年化收益率",
+    "since_founding":"成立以来收益率",
+    "manager_year": int,基金经理的工作年限,
+    "last_six_month": float64 近六个月的收益,
+    "base_income_info":{{
+      "last_week": "近一周收益率",
+      "last_month": "近一月收益率",
+      "last_three_moth":"近三个月收益率",
+      "last_six_moth": "近了六个月收益率",
+      "this_year":"今年以来收益率",
+      "last_year": "近一年收益率"
+    }},
+    "peer_income_info":{{
+      "last_week": "同类近一周收益率",
+      "last_month": "同类平均近一月收益率",
+      "last_three_moth":"同类平均近三个月收益率",
+      "last_six_moth": "同类平均近了六个月收益率",
+      "this_year":"同类平均今年以来收益率",
+      "last_year": "同类平均近一年的收益率"
+    }},
+    "CSI_300":{{
+      "last_week": "沪深300近一周收益率",
+      "last_month": "沪深300平均近一月收益率",
+      "last_three_moth":"沪深300平均近三个月收益率",
+      "last_six_moth": "沪深300平均近了六个月收益率",
+      "this_year":"沪深300平均今年以来收益率",
+      "last_year": "沪深300平均近一年的收益率"
+    }},
+    "ranker":{{
+      "last_week": "同类近一周排名",
+      "last_month": "同类平均近两周排名",
+      "last_three_moth":"同类平均近三周排名",
+      "last_six_moth": "同类平均近了六个月排名",
+      "this_year":"同类平均今年以来排名",
+      "last_year": "同类平均近一年排名"
+    }},
+    "manager_info": {{
+        "name": "基金经理姓名",
+        "date": "基金经理的入职时间",
+        "description": "基金经理简介"
+    }},
+    "risk_rating":"风险等级，值应该是:low,middle,high之一",
+    "investment_scope":"基金的投资范围",
+    "risk_return_profile":"风险收益特征",
+    "funding_time": "成立时间，格式：2022-03-04",
+    "funding_rating":{{
+        "manage_rating":"管理费率",
+        "custodial_fee": "托管费率",
+        "annual_sales_service_fee":"销售服务费率",
+        "subscription_fee":"申购费率",
+        "redemption_fee":"赎回费率"
+    }},
+    "asset_allocation": {{
+      "stocks":"股票资产比例",
+      "fund_investment":"基金投资比例",
+      "fixed_income_investment": "固定收益投资投资比例",
+      "precious_metals_investment": "贵金属投资比例",
+      "financial_derivatives_investment": "金融衍生品投资比例",
+      "repurchase_agreements": "买入返售金融资产比例",
+      "bank_deposits": "银行存款比例",
+      "settlement_reserve":"结算备付金比例",
+      "others": "其他比例"
+    }},
+    "net_asset_value":[
+        {{
+            "date": "收益日期",
+            "EPTWU": "万份收益",
+            "seven_day_annualized": "七日年化收益率",
+        }},
+        {{
+            "date": "收益日期",
+            "EPTWU": "万份收益",
+            "seven_day_annualized": "七日年化收益率",
+        }}
+    ]
+  
+  }}```
+  填充时必须遵守以下规则:
+    1. 输出的json必须包含以上所有字段，且字段名不能修改。
+    2. 收益率，费率都必须使用小数表示
+    3. 所有的日期格式必须是：yyyy-mm-dd
+    4. net_asset_value代表近10天的基金净值
+metadata:
+  type: 'PROMPT'
+  version: 'fund_data_fining_agent.cn'

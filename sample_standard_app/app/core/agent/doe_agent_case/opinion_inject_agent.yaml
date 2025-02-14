@@ -1,0 +1,21 @@
+info:
+  name: 'opinion_inject_agent'
+  description: 'opinion inject agent'
+profile:
+plan:
+  planner:
+    name: 'serial_planner'
+    opinion_generate:
+#      name: 'opinion_generate_agent'
+#      type: 'agent'
+      name: 'load_opinion_tool'
+      type: 'tool'
+    opinion_verify:
+      name: 'opinion_verify_agent'
+      type: 'agent'
+#      name: 'opinion_verify_tool'
+#      type: 'tool'
+metadata:
+  type: 'AGENT'
+  module: 'sample_standard_app.app.core.agent.doe_agent_case.opinion_inject_agent'
+  class: 'OpinionInjectAgent'
