@@ -273,7 +273,7 @@ class Agent(ComponentBase, ABC):
                 }
             })
             result.append(token)
-        return "".join(result)
+        return self.generate_result(result)
 
     async def async_invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict,
                                  input_object: InputObject, **kwargs):
@@ -290,7 +290,17 @@ class Agent(ComponentBase, ABC):
                 }
             })
             result.append(token)
-        return "".join(result)
+        return self.generate_result(result)
+
+    def generate_result(self, data: list[dict | str]):
+        if isinstance(data[0], str):
+            return "".join(data)
+        text = [val.get('text') for val in data]
+        reasoning_content = [val.get('reasoning_content',"") for val in data]
+        return {
+            'text': "".join(text),
+            'reasoning_content': "".join(reasoning_content)
+        }
 
     def invoke_tools(self, input_object: InputObject, **kwargs) -> str:
         tool_names = kwargs.get('tool_names') or self.agent_model.action.get('tool', [])

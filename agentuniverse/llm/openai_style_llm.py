@@ -148,8 +148,10 @@ class OpenAIStyleLLM(LLM):
         choice = chunk["choices"][0]
         message = choice.get("delta")
         text = message.get("content")
-        if not text:
-            return
+        if text is None:
+            text = ""
+        # if not text:
+        #     return
         return LLMOutput(text=text, raw=chat_completion.model_dump())
 
     def generate_stream_result(self, stream: openai.Stream):
