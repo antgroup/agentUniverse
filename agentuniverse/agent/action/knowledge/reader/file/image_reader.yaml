@@ -1,0 +1,14 @@
+name: "default_image_reader"
+description: "Default image reader that supports OCR and image description generation"
+metadata:
+  type: 'READER'
+  module: 'agentuniverse.agent.action.knowledge.reader.file.image_reader'
+  class: 'ImageReader'
+class_path: "agentuniverse.agent.action.knowledge.reader.file.image_reader.ImageReader"
+
+default_symbol: true
+languages: 
+  - "en"
+  - "ch_sim"
+use_gpu: false
+image_model: "microsoft/git-base-coco"
