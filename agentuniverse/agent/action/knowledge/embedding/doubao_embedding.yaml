@@ -1,0 +1,9 @@
+name: 'doubao_embedding'
+description: 'embedding use doubao'
+endpoint_id: ''
+ark_api_key: ''
+embedding_dims: 1024 
+metadata:
+  type: 'EMBEDDING'
+  module: 'agentuniverse.agent.action.knowledge.embedding.doubao_embedding'
+  class: 'DoubaoEmbedding'
