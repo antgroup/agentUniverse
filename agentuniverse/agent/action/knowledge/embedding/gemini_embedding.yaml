@@ -1,0 +1,7 @@
+name: 'gemini_embedding'
+description: 'embedding use gemini'
+embedding_model_name: 'text-embedding-004'
+metadata:
+  type: 'EMBEDDING'
+  module: 'agentuniverse.agent.action.knowledge.embedding.gemini_embedding'
+  class: 'GeminiEmbedding'
