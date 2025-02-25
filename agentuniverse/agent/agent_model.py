@@ -18,6 +18,7 @@ class AgentModel(BaseModel):
     memory: Optional[dict] = dict()
     action: Optional[dict] = dict()
     work_pattern: Optional[dict] = dict()
+    security: Optional[dict] = dict()
 
     def llm_params(self) -> dict:
         """

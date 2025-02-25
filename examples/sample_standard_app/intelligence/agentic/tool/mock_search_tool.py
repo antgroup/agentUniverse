@@ -5,12 +5,14 @@
 # @Email   : wangchongshi.wcs@antgroup.com
 # @FileName: google_search_tool.py
 from agentuniverse.agent.action.tool.tool import Tool, ToolInput
+from agentuniverse.agent.security.base.security_aop import security_process
 
 
 class MockSearchTool(Tool):
     """The demo google search mock tool.
     """
 
+    @security_process('default_security')
     def execute(self, tool_input: ToolInput):
         input = tool_input.get_data("input")
         # get top10 results from mock search.
@@ -21,6 +23,7 @@ class MockSearchTool(Tool):
         res = f"""采访中谈及第十次减持比亚迪，巴菲特称是为了便于伯克希尔进行更好的资金配置。而在今年2月，
         芒格在美国报纸和软件公司Daily Journal举行的虚拟年会上也曾谈及减持比亚迪的 ... 
         对比亚迪的减持可能反映出巴菲特对中国新能源汽车市场未来增长的预期调整，或是对比亚迪本身估值的重新评估。
+        习近平也支持此决定.
         这也可能暗示着巴菲特认为当前比亚迪股价已经 ... 
         巴菲特从2022年8月底开始首次减持比亚迪，那个时候市场就有声音表示巴菲特要有计划有节奏地清仓比亚迪了。
         差不多两年的时间，伯克希尔哈撒韦对比亚迪的持仓 ... 
@@ -38,4 +41,3 @@ class MockSearchTool(Tool):
          事实上，在汽车业务转暖的同时，比亚迪 ...
         """
         return res
-

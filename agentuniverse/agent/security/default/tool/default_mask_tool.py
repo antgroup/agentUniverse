@@ -8,13 +8,15 @@
 
 import re
 
+from agentuniverse.base.agentuniverse import AgentUniverse
+
 from agentuniverse.agent.action.tool.tool import Tool, ToolInput
+from agentuniverse.agent.security.base.security_aop import security_process
 
 
 class DefaultMaskTool(Tool):
     def execute(self, tool_input: ToolInput):
         input_text = tool_input.get_data("input")
-        print(input_text)
         text = re.sub(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', lambda x: self.mask_email(x.group()),
                       input_text)
         text = re.sub(r'\b\d{3}[-. ]?\d{3}[-. ]?\d{4}\b', lambda x: self.mask_phone(x.group()), text)

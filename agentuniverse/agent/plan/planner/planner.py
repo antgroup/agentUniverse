@@ -182,8 +182,6 @@ class Planner(ComponentBase):
             input_object (InputObject): Agent input object.
             data (dict): The data to be streamed.
         """
-        security_base = input_object.get_data('security')
-        security_base.compliance_check_stream(data)
         output_stream: Queue = input_object.get_data('output_stream', None)
         if output_stream is None:
             return

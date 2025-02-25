@@ -26,6 +26,7 @@ from agentuniverse.agent.memory.message import Message
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.agent.plan.planner.planner import Planner
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
+from agentuniverse.agent.security.security import Security
 from agentuniverse.agent.security.security_manager import SecurityManager
 from agentuniverse.base.annotation.trace import trace_agent
 from agentuniverse.base.component.component_base import ComponentBase
@@ -96,11 +97,8 @@ class Agent(ComponentBase, ABC):
         """
         self.input_check(kwargs)
         input_object = InputObject(kwargs)
-        security_base = SecurityManager().get_instance_obj(self.agent_model.security)
-        security_base.pre_invoke(input_object)
 
         agent_input = self.pre_parse_input(input_object)
-        input_object.add_data('security', security_base)
 
         planner_result = self.execute(input_object, agent_input)
 
@@ -108,7 +106,6 @@ class Agent(ComponentBase, ABC):
 
         self.output_check(agent_result)
         output_object = OutputObject(agent_result)
-        security_base.final_invoke(output_object)
         return output_object
 
     @trace_agent
@@ -173,6 +170,9 @@ class Agent(ComponentBase, ABC):
         for key in self.input_keys():
             if key not in kwargs.keys():
                 raise Exception(f'Input must have key: {key}.')
+        if self.agent_model.security:
+            security_base: Security = SecurityManager().get_instance_obj(self.agent_model.security)
+            security_base.input_process(kwargs)
 
     def output_check(self, kwargs: dict):
         """Agent result check."""
@@ -181,6 +181,9 @@ class Agent(ComponentBase, ABC):
         for key in self.output_keys():
             if key not in kwargs.keys():
                 raise Exception(f'Output must have key: {key}.')
+        if self.agent_model.security:
+            security_base: Security = SecurityManager().get_instance_obj(self.agent_model.security)
+            security_base.output_process(kwargs)
 
     def initialize_by_component_configer(self, component_configer: AgentConfiger) -> 'Agent':
         """Initialize the Agent by the AgentConfiger object.

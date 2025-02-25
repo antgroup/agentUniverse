@@ -53,6 +53,7 @@ class AgentUniverse(object):
         self.__system_default_memory_storage_package = ['agentuniverse.agent.memory.memory_storage']
         self.__system_default_work_pattern_package = ['agentuniverse.agent.work_pattern']
         self.__system_default_log_sink_package = ['agentuniverse.base.util.logging.log_sink.log_sink']
+        self.__system_default_security_package = ['agentuniverse.agent.security.default']
 
     def start(self, config_path: str = None, core_mode: bool = False):
         """Start the agentUniverse framework.
@@ -137,7 +138,8 @@ class AgentUniverse(object):
                                  + self.__system_default_llm_package)
         core_planner_package_list = ((app_configer.core_planner_package_list or app_configer.core_default_package_list)
                                      + self.__system_default_planner_package)
-        core_tool_package_list = app_configer.core_tool_package_list or app_configer.core_default_package_list
+        core_tool_package_list = ((app_configer.core_tool_package_list or app_configer.core_default_package_list)
+                                    + self.__system_default_security_package)
         core_service_package_list = app_configer.core_service_package_list or app_configer.core_default_package_list
         core_sqldb_wrapper_package_list = app_configer.core_sqldb_wrapper_package_list or app_configer.core_default_package_list
         core_memory_package_list = ((app_configer.core_memory_package_list or app_configer.core_default_package_list)
@@ -164,6 +166,8 @@ class AgentUniverse(object):
                                             + self.__system_default_work_pattern_package)
         core_log_sink_package_list = ((app_configer.core_log_sink_package_list or app_configer.core_default_package_list)
                                           + self.__system_default_log_sink_package)
+        core_security_package_list = ((app_configer.core_security_package_list or app_configer.core_default_package_list)
+                                          + self.__system_default_security_package)
 
         component_package_map = {
             ComponentEnum.AGENT: core_agent_package_list,
@@ -185,7 +189,8 @@ class AgentUniverse(object):
             ComponentEnum.MEMORY_COMPRESSOR: core_memory_compressor_package_list,
             ComponentEnum.MEMORY_STORAGE: core_memory_storage_package_list,
             ComponentEnum.WORK_PATTERN: core_work_pattern_package_list,
-            ComponentEnum.LOG_SINK: core_log_sink_package_list
+            ComponentEnum.LOG_SINK: core_log_sink_package_list,
+            ComponentEnum.SECURITY: core_security_package_list
         }
 
         component_configer_list_map = {}

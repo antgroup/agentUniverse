@@ -15,9 +15,11 @@ from agentuniverse.agent.memory.memory_compressor.memory_compressor_manager impo
 from agentuniverse.agent.memory.memory_manager import MemoryManager
 from agentuniverse.agent.memory.memory_storage.memory_storage_manager import MemoryStorageManager
 from agentuniverse.agent.plan.planner.planner_manager import PlannerManager
+from agentuniverse.agent.security.security_manager import SecurityManager
 from agentuniverse.agent.work_pattern.work_pattern_manager import WorkPatternManager
 from agentuniverse.agent_serve.service_manager import ServiceManager
 from agentuniverse.agent_serve.service_configer import ServiceConfiger
+from agentuniverse.base.config.component_configer.configers.security_configer import SecurityConfiger
 from agentuniverse.base.config.component_configer.configers.work_pattern_configer import WorkPatternConfiger
 from agentuniverse.base.config.component_configer.configers.workflow_configer import WorkflowConfiger
 from agentuniverse.database.sqldb_wrapper_manager import SQLDBWrapperManager
@@ -69,7 +71,8 @@ class ComponentConfigerUtil(object):
         ComponentEnum.MEMORY_STORAGE: ComponentConfiger,
         ComponentEnum.WORK_PATTERN: WorkPatternConfiger,
         ComponentEnum.LOG_SINK: ComponentConfiger,
-        ComponentEnum.DEFAULT: ComponentConfiger
+        ComponentEnum.DEFAULT: ComponentConfiger,
+        ComponentEnum.SECURITY: SecurityConfiger
     }
 
     __COMPONENT_MANAGER_CLZ_MAP = {
@@ -92,7 +95,8 @@ class ComponentConfigerUtil(object):
         ComponentEnum.MEMORY_COMPRESSOR: MemoryCompressorManager,
         ComponentEnum.MEMORY_STORAGE: MemoryStorageManager,
         ComponentEnum.WORK_PATTERN: WorkPatternManager,
-        ComponentEnum.LOG_SINK: LogSinkManager
+        ComponentEnum.LOG_SINK: LogSinkManager,
+        ComponentEnum.SECURITY: SecurityManager
     }
 
     @classmethod

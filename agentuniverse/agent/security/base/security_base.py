@@ -46,6 +46,12 @@ class ComplianceWorker(BaseModel):
         self.default_output = config.get('default_output') or self.default_output
         self.input_key = config.get('input_key') or self.input_key
 
+    def input_check(self):
+        return
+
+    def output_check(self):
+        return
+
     def execute(self, input_text: str):
         input_param = {self.input_key: input_text}
         if self.type == ComponentEnum.TOOL.value:
