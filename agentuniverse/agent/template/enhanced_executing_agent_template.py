@@ -29,7 +29,6 @@ from agentuniverse.prompt.prompt import Prompt
 
 class EnhancedExecutingAgentTemplate(AgentTemplate):
     _context_values: Optional[dict] = {}
-    _split_subtask: bool = True
 
     class Config:
         arbitrary_types_allowed = True
