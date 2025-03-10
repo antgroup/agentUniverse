@@ -38,6 +38,7 @@ class Monitor(BaseModel):
             config: dict = configer.value.get('MONITOR', {})
             self.dir = config.get('dir', './monitor')
             self.activate = config.get('activate', False)
+            self.log_activate = config.get('log_activate', True)
 
     def trace_llm_input(self, source: str, llm_input: Union[str, dict]) -> None:
         """Trace the llm input."""
@@ -185,7 +186,7 @@ class Monitor(BaseModel):
         if trace_id is not None:
             invocation_chain: list = FrameworkContextManager().get_context(
                 trace_id + '_invocation_chain')
-            if invocation_chain is not None:
+            if invocation_chain:
                 invocation_chain.pop()
                 FrameworkContextManager().set_context(
                     trace_id + '_invocation_chain', invocation_chain)

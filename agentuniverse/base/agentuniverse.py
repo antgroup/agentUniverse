@@ -262,13 +262,15 @@ class AgentUniverse(object):
             configer_instance.default_llm_configer = default_llm_configer
             if component_enum.value == ComponentEnum.AGENT.value:
                 # Extract LLM names and tool names from the agent's profile and action attributes
-                if hasattr(configer_instance, 'profile') and configer_instance.profile:
+                if (hasattr(configer_instance, 'profile') and configer_instance.profile
+                        and isinstance(configer_instance.profile, dict)):
                     llm_name = configer_instance.profile.get('llm_model', {}).get('name')
-                    if llm_name:
+                    if llm_name and isinstance(llm_name, str):
                         self.__config_container.app_configer.agent_llm_set.add(llm_name)
-                if hasattr(configer_instance, 'action') and configer_instance.action:
-                    tool_name_list = configer_instance.action.get('tool', [])
-                    if tool_name_list:
+                if (hasattr(configer_instance, 'action') and configer_instance.action
+                        and isinstance(configer_instance.action, dict)):
+                    tool_name_list = configer_instance.action.get('tool')
+                    if tool_name_list and isinstance(tool_name_list, list):
                         self.__config_container.app_configer.agent_tool_set.update(tool_name_list)
             elif component_enum.value == ComponentEnum.LLM.value:
                 # Register LLM components only if llm names are already in the agent LLM set

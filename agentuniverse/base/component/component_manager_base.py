@@ -35,8 +35,9 @@ class ComponentManagerBase(Generic[ComponentTypeVar]):
                 LOGGER.info(f"Component name '{component_instance_name}' is already registered. "
                             f"Skipping system built-in component in favor of user-configured component.")
                 return
-            raise ValueError(f"{self._component_type.value} component object instance with name "
-                             f"'{component_instance_name}' already exists.")
+            LOGGER.warn(f"{self._component_type.value} component object instance with name "
+                        f"'{component_instance_name}' already exists.")
+            return
         self._instance_obj_map[component_instance_name] = component_instance_obj
         if component_instance_obj.default_symbol:
             self._instance_obj_map["__default_instance__"] = component_instance_obj
