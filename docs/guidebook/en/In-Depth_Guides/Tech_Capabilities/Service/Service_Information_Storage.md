@@ -21,7 +21,7 @@ class RequestORM(Base):
     """SQLAlchemy ORM Model for RequestDO."""
     __tablename__ = 'request_task'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    request_id = Column(String(20), nullable=False)
+    request_id = Column(String(50), nullable=False)
     query = Column(Text)
     session_id = Column(String(50))
     state = Column(String(20))

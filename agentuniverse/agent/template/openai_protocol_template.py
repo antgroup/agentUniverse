@@ -152,7 +152,7 @@ class OpenAIProtocolTemplate(AgentTemplate):
 
     def invoke_chain(self, chain: RunnableSerializable[Any, str], agent_input: dict, input_object: InputObject,
                      **kwargs):
-        if not input_object.get_data('output_stream'):
+        if not self.judge_chain_stream(chain):
             res = chain.invoke(input=agent_input, config=self.get_run_config())
             return res
         result = []
