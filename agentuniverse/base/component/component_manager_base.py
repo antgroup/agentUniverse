@@ -14,7 +14,7 @@ from agentuniverse.base.component.component_enum import ComponentEnum
 from agentuniverse.base.util.logging.logging_util import LOGGER
 from agentuniverse.base.util.system_util import is_system_builtin
 
-# 添加类型范型限定
+# 添加类型泛型限定
 ComponentTypeVar = TypeVar("ComponentTypeVar", bound=ComponentBase)
 
 
