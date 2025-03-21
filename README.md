@@ -42,7 +42,7 @@ The LLM model integration can be accomplished with simple configuration, current
 |<img src="https://github.com/user-attachments/assets/fe265f24-4ea6-4ff2-9b50-58ab6706a5f5" height="25">|BaiChuan|baichuan2-turbo、baichuan2-13b-chat-v1、…|
 |<img src="https://github.com/user-attachments/assets/41ffe268-392f-4ab9-b42d-e30dbd70d66b" height="25">|Doubao|Doubao-pro-128k、Doubao-pro-32k、Doubao-lite-128k、…|
 
-For example, to use deepseek model, you can simply set DEEPSEEK_API_KEY value in the custom_key.toml file, and set the llm_model name in the agent configuration file to 'default_deepseek_llm' and you're all set. For more infomation about llm configuration, please refer to [switch-the-llm](https://github.com/antgroup/agentUniverse/blob/master/docs/guidebook/en/Get_Start/2.Run_Your_First_Tutorial_Example.md#switch-the-llm).
+For example, to use deepseek model, you can simply set DEEPSEEK_API_KEY value in the custom_key.toml file, and set the llm_model name in the agent configuration file to 'default_deepseek_llm' and you're all set. For more infomation about llm configuration, please refer to [switch-the-llm](https://github.com/agentuniverse-ai/agentUniverse/blob/master/docs/guidebook/en/Get_Start/2.Run_Your_First_Tutorial_Example.md#switch-the-llm).
 
 
 ****************************************
@@ -198,7 +198,7 @@ https://private-user-images.githubusercontent.com/39180831/355437700-192f712d-1b
 ## Support
 
 ### Submit Questions via GitHub Issues
-😊 We recommend submitting your queries using [GitHub Issues](https://github.com/antgroup/agentUniverse/issues), we typically respond within 2 business days.
+😊 We recommend submitting your queries using [GitHub Issues](https://github.com/agentuniverse-ai/agentUniverse/issues), we typically respond within 2 business days.
 
 ### Contact Us via Discord
 😊 Join our [Discord Channel](https://discord.gg/DHFcdkWAhn) to interact with us.

@@ -182,7 +182,7 @@ https://private-user-images.githubusercontent.com/39180831/355437700-192f712d-1b
 
 ### 支持
 #### 通过github issue提交疑问
-😊 我们建议您使用[github issue](https://github.com/antgroup/agentUniverse/issues) 提交您的疑问, 我们通常会在2日内回复。
+😊 我们建议您使用[github issue](https://github.com/agentuniverse-ai/agentUniverse/issues) 提交您的疑问, 我们通常会在2日内回复。
 
 #### 通过Discord联系我们
 😊 加入我们的 [Discord频道](https://discord.gg/DHFcdkWAhn) 与我们进行交流。

@@ -1,6 +1,6 @@
 ### Support
 #### Submit Questions via GitHub Issues
-😊 We recommend submitting your queries using [GitHub Issues](https://github.com/antgroup/agentUniverse/issues), we typically respond within 2 days.
+😊 We recommend submitting your queries using [GitHub Issues](https://github.com/agentuniverse-ai/agentUniverse/issues), we typically respond within 2 days.
 
 #### Contact Us via Discord
 😊 Join our [Discord Channel](https://discord.gg/DHFcdkWAhn) to interact with us.
